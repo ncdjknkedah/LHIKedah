@@ -383,6 +383,8 @@ const CONFIG = {
     agree:    'AQ',  // Agreed to Further Screening
     xray:     'CU'   // Chest X-ray done
   },
+  // Gabungan daerah: nama di kiri dipaparkan sebagai nama di kanan (tidak sensitif huruf besar/kecil)
+  DISTRICT_MERGE: { 'Pokok Sena': 'Kota Setar' },
   SMOKER_VALUES: ['active', 'ex_smoker_gt15', 'ex_smoker_lt15'],
   YES_VALUES: ['yes', 'ya', 'y', 'true', '1'],
 
@@ -461,7 +463,7 @@ async function fetchSheet() {
     const d = parseDate(c[idx[C.date]]);
     const rec = {
       date: d, day: dkey(d),
-      district: get(C.district) || NA,
+      district: mapDistrict(get(C.district)) || NA,
       program: get(C.program) || NA,
       clinic: get(C.clinic) || NA,
       smoking: lc(get(C.smoking)),
@@ -489,9 +491,10 @@ function demoData() {
   const ds = Object.keys(dist);
   for (let i = 0; i < 1400; i++) {
     const district = rnd() < 0.3 ? 'Pendang' : pick(ds);
+    const rawDistrict = rnd() < 0.15 ? 'POKOK SENA' : district;
     const d = new Date(start + rnd() * (end - start));
     const agree = rnd() < 0.88 ? 'yes' : 'no';
-    rows.push({ date: d, day: dkey(d), district, clinic: pick(dist[district]), program: pick(progs),
+    rows.push({ date: d, day: dkey(d), district: mapDistrict(rawDistrict), clinic: rawDistrict === 'POKOK SENA' ? 'KK Pokok Sena' : pick(dist[district]), program: pick(progs),
       smoking: pick(smk), agree, xray: agree === 'yes' && rnd() < 0.78 ? 'yes' : 'no',
       dx: (() => { const x = rnd(); return x < 0.012 ? 'Lung Cancer' : x < 0.04 ? 'Pulmonary TB' : x < 0.09 ? 'Asthma' : x < 0.15 ? 'COPD' : x < 0.5 ? 'Normal' : ''; })() });
   }
@@ -507,6 +510,12 @@ function hasDx(text, o) {
   const parts = text.split(/[;,\/\n+]|\band\b|\bdan\b/i).filter(p => o.match.test(p));
   return parts.some(p => !CONFIG.OUTCOME_EXCLUDE.test(p));
 }
+function mapDistrict(d) {
+  const k = lc(d);
+  for (const [from, to] of Object.entries(CONFIG.DISTRICT_MERGE || {})) if (lc(from) === k) return to;
+  return norm(d);
+}
+const byName = (a, b) => String(a).localeCompare(String(b), 'ms', { sensitivity: 'base' });
 const isSmoker = r => CONFIG.SMOKER_VALUES.includes(r.smoking);
 const isYes = v => CONFIG.YES_VALUES.includes(v);
 function metrics(rows) {
@@ -647,7 +656,8 @@ function renderArea(rows) {
   const key = byDistrict ? 'district' : 'clinic';
   $('ttlArea').textContent = byDistrict ? 'Saringan mengikut daerah' : 'Saringan mengikut fasiliti kesihatan';
   $('subArea').textContent = byDistrict ? 'Bilangan saringan, Negeri Kedah' : 'Bilangan saringan, Daerah ' + state.district;
-  const g = [...groupBy(rows, key)].map(([k, v]) => [k, v.length]).sort((a, b) => b[1] - a[1]);
+  const g = [...groupBy(rows, key)].map(([k, v]) => [k, v.length])
+    .sort(byDistrict ? (a, b) => byName(a[0], b[0]) : (a, b) => b[1] - a[1]);
   hbars($('chArea'), g.map(([k, n]) => ({ label: k, value: n, text: fmt(n),
     color: state.clinic !== ALL && k !== state.clinic ? css('--bar-2') : css('--bar'),
     tip: `<b>${esc(k)}</b>${fmt(n)} saringan · ${pctTxt(pct(n, rows.length))} daripada skop` })));
@@ -663,7 +673,7 @@ function renderKpi(rows, total) {
   const key = byDistrict ? 'district' : 'clinic';
   $('ttlKpi').textContent = byDistrict ? 'KPI mengikut daerah · Negeri Kedah' : 'KPI mengikut fasiliti kesihatan · Daerah ' + state.district;
   const g = [...groupBy(rows, key)].map(([k, v]) => ({ k, ...metrics(v) }))
-    .sort((a, b) => (b.kpi ?? -1) - (a.kpi ?? -1) || b.elig - a.elig);
+    .sort(byDistrict ? (a, b) => byName(a.k, b.k) : (a, b) => (b.kpi ?? -1) - (a.kpi ?? -1) || b.elig - a.elig);
   const T = CONFIG.KPI_TARGET;
   hbars($('chKpi'), g.filter(x => x.elig > 0).map(x => ({ label: x.k, value: x.kpi, text: pctTxt(x.kpi),
     color: x.kpi >= T ? css('--bar') : css('--s2'),
