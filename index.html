@@ -63,14 +63,17 @@
 
             <!-- External Links (2x2 Grid) -->
             <div class="grid grid-cols-2 gap-2 w-full lg:w-auto">
-                <a href="https://drive.google.com/drive/folders/19vabHyWyAMegeP0ppkRRGiCc0whTSjHE?usp=sharing" target="_blank" class="px-3 py-2 bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-md text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-2 text-center">
+                <a href="https://drive.google.com/drive/folders/19vabHyWyAMegeP0ppkRRGiCc0whTSjHE?usp=sharing" target="_blank" class="px-3 py-2 bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-md text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-2 text-center shadow-sm border border-blue-200">
                     <i class="fa-solid fa-folder-open"></i> Sumber Rujukan
                 </a>
-                <a href="https://nalury.mrichealthcare.com/" target="_blank" class="px-3 py-2 bg-teal-50 text-teal-700 hover:bg-teal-100 rounded-md text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-2 text-center">
+                <a href="https://nalury.mrichealthcare.com/" target="_blank" class="px-3 py-2 bg-teal-50 text-teal-700 hover:bg-teal-100 rounded-md text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-2 text-center shadow-sm border border-teal-200">
                     <i class="fa-solid fa-laptop-medical"></i> Sistem NaLuRy
                 </a>
-                <button onclick="openAdminModal()" class="col-span-2 px-3 py-2 bg-gray-100 text-gray-600 hover:bg-gray-200 rounded-md text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-2 text-center shadow-sm">
-                    <i class="fa-solid fa-lock"></i> Panel Admin
+                <button onclick="openAdminModal()" class="px-3 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-md text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-2 text-center shadow-sm border border-gray-300">
+                    <i class="fa-solid fa-lock"></i> Admin
+                </button>
+                <button onclick="refreshData()" class="px-3 py-2 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-md text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-2 text-center shadow-sm border border-indigo-200">
+                    <i class="fa-solid fa-rotate-right"></i> Refresh
                 </button>
             </div>
         </div>
@@ -249,41 +252,42 @@
         let chartClinicObj = null;
         let chartKpiDistrictObj = null;
 
-        // Constants for Column Headers (Adjust if exact headers in Google Sheet differ slightly)
+        // Array Keywords for Column Headers (Lebih selamat & anjal)
         const COL = {
-            TIMESTAMP: 'Timestamp',
-            DISTRICT: 'District',
-            CLINIC: 'Clinic / Designation',
-            PROGRAM: 'Program',
-            SMOKING_STATUS: 'Smoking Status',
-            AGREE_SCREENING: 'Agree to Further Screening',
-            XRAY_DONE: 'X-ray done',
-            // Outcomes (Assuming standard naming, modify if actual headers differ)
-            CANCER: 'Kanser Paru-paru', 
-            TB: 'Tibi Pulmonari',
-            ASTHMA: 'Asma',
-            COPD: 'COPD'
+            TIMESTAMP: ['Timestamp', 'Waktu', 'Date'],
+            DISTRICT: ['District', 'Daerah'],
+            CLINIC: ['Clinic', 'Designation', 'Fasiliti'],
+            PROGRAM: ['Program'],
+            SMOKING_STATUS: ['Smoking Status', 'Status Merokok', 'Smoking'],
+            AGREE_SCREENING: ['Agree to Further Screening', 'Setuju', 'Agree'],
+            XRAY_DONE: ['X-ray done', 'Xray', 'X-ray', 'done'],
+            CANCER: ['Kanser Paru-paru', 'Kanser', 'Cancer'], 
+            TB: ['Tibi Pulmonari', 'Tibi', 'TB'],
+            ASTHMA: ['Asma', 'Asthma'],
+            COPD: ['COPD']
         };
 
         // Initialize App
         document.addEventListener('DOMContentLoaded', () => {
-            // Register Chart.js DataLabels plugin
             Chart.register(ChartDataLabels);
             fetchData();
             setupEventListeners();
         });
 
         function setupEventListeners() {
-            // Auto-filter: Tapis data serta-merta apabila pengguna menukar pilihan
             document.getElementById('dateFrom').addEventListener('change', applyFilters);
             document.getElementById('dateTo').addEventListener('change', applyFilters);
             document.getElementById('districtFilter').addEventListener('change', handleDistrictChange);
             document.getElementById('clinicFilter').addEventListener('change', applyFilters);
         }
 
-        // Fetch Data from Google Sheet CSV Export
+        function refreshData() {
+            document.getElementById('dashboardContent').style.display = 'none';
+            document.getElementById('loadingIndicator').style.display = 'flex';
+            fetchData();
+        }
+
         function fetchData() {
-            // Public CSV export link for the provided Google Sheet
             const sheetId = '1PtcLb5XQPzAjYzE3PyLIJfWUzlS9ekJDwV0C6VBSYMk';
             const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
 
@@ -292,7 +296,6 @@
                 header: true,
                 skipEmptyLines: true,
                 complete: function(results) {
-                    // Gabungkan data Pokok Sena ke Kota Setar
                     globalData = results.data.map(row => {
                         let distKey = Object.keys(row).find(k => k.toLowerCase().includes('district'));
                         if (distKey && row[distKey]) {
@@ -309,26 +312,47 @@
                 },
                 error: function(error) {
                     console.error('Error fetching data:', error);
-                    document.getElementById('loadingIndicator').innerHTML = `<div class="text-red-600 p-4 bg-red-50 rounded-md border border-red-200">Gagal memuat turun data. Sila pastikan Google Sheet dikongsi sebagai "Anyone with the link can view". Error: ${error.message}</div>`;
+                    document.getElementById('loadingIndicator').innerHTML = `<div class="text-red-600 p-4 bg-red-50 rounded-md border border-red-200 shadow-sm text-center font-semibold"><i class="fa-solid fa-triangle-exclamation mr-2"></i> Gagal memuat turun data. Sila pastikan Google Sheet dikongsi sebagai "Anyone with the link can view".</div>`;
                 }
             });
+        }
+
+        // Fungsi membaca CSV kolom yang jauh lebih pintar & kebal ralat
+        function getSafeValue(row, possibleNames) {
+            if (!Array.isArray(possibleNames)) possibleNames = [possibleNames];
+            const keys = Object.keys(row);
+            
+            // 1. Exact Match
+            for (let name of possibleNames) {
+                if (row[name] !== undefined && row[name] !== null && row[name] !== '') return row[name];
+            }
+
+            // 2. Fuzzy Match (buang ruang & karakter khas)
+            for (let name of possibleNames) {
+                const cleanName = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+                for (let key of keys) {
+                    const cleanKey = key.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    if (cleanKey === cleanName || cleanKey.includes(cleanName)) {
+                        if(row[key]) return row[key];
+                    }
+                }
+            }
+            return '';
         }
 
         function processInitialData() {
             if (!globalData || globalData.length === 0) return;
 
-            // Update Last Date
             let latestDateStr = '';
-            const dates = globalData.map(row => row[COL.TIMESTAMP]).filter(Boolean);
+            const dates = globalData.map(row => getSafeValue(row, COL.TIMESTAMP)).filter(Boolean);
             if (dates.length > 0) {
-                // Assuming format like '2026-10-08 15:59:21'
                 latestDateStr = dates.sort().reverse()[0].split(' ')[0];
                 document.getElementById('lastUpdateText').innerText = `Tarikh Saringan Sehingga: ${latestDateStr}`;
             }
 
-            // Populate District Dropdown
-            const districts = [...new Set(globalData.map(row => row[COL.DISTRICT]).filter(Boolean))].sort();
+            const districts = [...new Set(globalData.map(row => getSafeValue(row, COL.DISTRICT)).filter(Boolean))].sort();
             const distSelect = document.getElementById('districtFilter');
+            distSelect.innerHTML = '<option value="ALL">Semua Daerah</option>';
             districts.forEach(d => {
                 const opt = document.createElement('option');
                 opt.value = d;
@@ -336,7 +360,6 @@
                 distSelect.appendChild(opt);
             });
 
-            // Initial Render
             applyFilters();
         }
 
@@ -344,7 +367,6 @@
             const district = document.getElementById('districtFilter').value;
             const clinicSelect = document.getElementById('clinicFilter');
             
-            // Reset Clinic Filter
             clinicSelect.innerHTML = '<option value="ALL">Semua Fasiliti</option>';
             
             if (district === 'ALL') {
@@ -352,10 +374,9 @@
                 clinicSelect.innerHTML = '<option value="ALL">Semua Fasiliti (Pilih Daerah Dahulu)</option>';
             } else {
                 clinicSelect.disabled = false;
-                // Get clinics for this district
                 const clinics = [...new Set(globalData
-                    .filter(row => row[COL.DISTRICT] === district)
-                    .map(row => row[COL.CLINIC])
+                    .filter(row => getSafeValue(row, COL.DISTRICT) === district)
+                    .map(row => getSafeValue(row, COL.CLINIC))
                     .filter(Boolean))].sort();
                     
                 clinics.forEach(c => {
@@ -365,8 +386,6 @@
                     clinicSelect.appendChild(opt);
                 });
             }
-            
-            // Tapis data automatik selepas daerah ditukar
             applyFilters();
         }
 
@@ -378,15 +397,17 @@
 
             filteredData = globalData.filter(row => {
                 let match = true;
-                const rowDateStr = row[COL.TIMESTAMP] ? row[COL.TIMESTAMP].split(' ')[0] : null;
+                const rowTimestamp = getSafeValue(row, COL.TIMESTAMP);
+                const rowDateStr = rowTimestamp ? String(rowTimestamp).split(' ')[0] : null;
                 
-                // Date filter (simple string comparison works for YYYY-MM-DD)
                 if (dateFrom && rowDateStr && rowDateStr < dateFrom) match = false;
                 if (dateTo && rowDateStr && rowDateStr > dateTo) match = false;
                 
-                // District & Clinic filter
-                if (district !== 'ALL' && row[COL.DISTRICT] !== district) match = false;
-                if (district !== 'ALL' && clinic !== 'ALL' && row[COL.CLINIC] !== clinic) match = false;
+                const rowDist = getSafeValue(row, COL.DISTRICT);
+                const rowClinic = getSafeValue(row, COL.CLINIC);
+
+                if (district !== 'ALL' && rowDist !== district) match = false;
+                if (district !== 'ALL' && clinic !== 'ALL' && rowClinic !== clinic) match = false;
                 
                 return match;
             });
@@ -394,34 +415,26 @@
             updateDashboard();
         }
 
-        // Helper function untuk mendapatkan nilai lajur dengan lebih selamat (mengatasi masalah space pada header CSV)
-        function getSafeValue(row, colName) {
-            if (row[colName] !== undefined && row[colName] !== null) return row[colName];
-            const searchKey = colName.toLowerCase().replace(/[^a-z0-9]/g, '');
-            const key = Object.keys(row).find(k => k.toLowerCase().replace(/[^a-z0-9]/g, '').includes(searchKey));
-            return key ? row[key] : '';
-        }
-
         function updateDashboard() {
             const total = filteredData.length;
-            
-            // 1. Total Screenings
             document.getElementById('cardTotalScreenings').innerText = total.toLocaleString();
 
-            // 2. Calculate KPI Smoker
+            // Calculate KPI Smoker
             let eligibleSmokers = 0;
             let xrayDone = 0;
 
             filteredData.forEach(row => {
-                // Guna helper getSafeValue untuk elak ralat nama lajur
-                const smokeStatus = (getSafeValue(row, COL.SMOKING_STATUS) || '').toLowerCase().trim();
-                // Deteksi status perokok yang lebih fleksibel
+                const smokeStatus = String(getSafeValue(row, COL.SMOKING_STATUS)).toLowerCase().trim();
+                const agreedStatus = String(getSafeValue(row, COL.AGREE_SCREENING)).toLowerCase().trim();
+                const xrayStatus = String(getSafeValue(row, COL.XRAY_DONE)).toLowerCase().trim();
+
                 const isSmoker = smokeStatus.includes('active') || smokeStatus.includes('ex_smoker') || smokeStatus.includes('bekas');
-                const agreed = /yes|ya/i.test(getSafeValue(row, COL.AGREE_SCREENING) || '');
+                const agreed = agreedStatus === 'yes' || agreedStatus === 'ya' || agreedStatus.includes('yes');
+                const doneXray = xrayStatus === 'yes' || xrayStatus === 'ya' || xrayStatus.includes('yes');
                 
                 if (isSmoker && agreed) {
                     eligibleSmokers++;
-                    if (/yes|ya/i.test(getSafeValue(row, COL.XRAY_DONE) || '')) {
+                    if (doneXray) {
                         xrayDone++;
                     }
                 }
@@ -431,54 +444,45 @@
             document.getElementById('cardKpiSmoker').innerText = `${kpiPercentage}%`;
             document.getElementById('cardKpiSmokerDetail').innerText = `${xrayDone} / ${eligibleSmokers} Disaring`;
 
-            // 3. Outcomes
-            // Helper function to safely check 'yes' logic
-            const isYes = (val) => (val || '').toString().toLowerCase().trim() === 'yes';
-            
+            // Outcomes
+            const isYes = (val) => String(val || '').toLowerCase().trim() === 'yes' || String(val || '').toLowerCase().trim() === 'ya';
             let cancerCount = 0, tbCount = 0, asthmaCount = 0, copdCount = 0;
             
             filteredData.forEach(row => {
-                // If specific columns don't exist exactly, this gracefully returns 0
-                if (isYes(row[COL.CANCER])) cancerCount++;
-                if (isYes(row[COL.TB])) tbCount++;
-                if (isYes(row[COL.ASTHMA])) asthmaCount++;
-                if (isYes(row[COL.COPD])) copdCount++;
+                if (isYes(getSafeValue(row, COL.CANCER))) cancerCount++;
+                if (isYes(getSafeValue(row, COL.TB))) tbCount++;
+                if (isYes(getSafeValue(row, COL.ASTHMA))) asthmaCount++;
+                if (isYes(getSafeValue(row, COL.COPD))) copdCount++;
             });
 
             const calcPct = (count) => total > 0 ? ((count / total) * 100).toFixed(1) : 0;
             
             document.getElementById('cardCancer').innerText = `${cancerCount} (${calcPct(cancerCount)}%)`;
             document.getElementById('barCancer').style.width = `${calcPct(cancerCount)}%`;
-
             document.getElementById('cardTb').innerText = `${tbCount} (${calcPct(tbCount)}%)`;
             document.getElementById('barTb').style.width = `${calcPct(tbCount)}%`;
-
             document.getElementById('cardAsthma').innerText = `${asthmaCount} (${calcPct(asthmaCount)}%)`;
             document.getElementById('barAsthma').style.width = `${calcPct(asthmaCount)}%`;
-
             document.getElementById('cardCopd').innerText = `${copdCount} (${calcPct(copdCount)}%)`;
             document.getElementById('barCopd').style.width = `${calcPct(copdCount)}%`;
 
-            // 4. Update Charts
             renderCharts();
         }
 
         function renderCharts() {
-            // Helper for aggregations
-            const countByField = (data, field) => {
+            const countByField = (data, fieldColDef) => {
                 return data.reduce((acc, row) => {
-                    const val = row[field] || 'Tidak Dinyatakan';
+                    const val = getSafeValue(row, fieldColDef) || 'Tidak Dinyatakan';
                     acc[val] = (acc[val] || 0) + 1;
                     return acc;
                 }, {});
             };
 
-            // Chart Colors
             const colors = ['#0052CC', '#00875A', '#FF991F', '#DE350B', '#6554C0', '#00B8D9', '#FF5630', '#36B37E', '#FFC400'];
 
-            // --- Chart 1: District ---
+            // Chart 1: District
             const distCounts = countByField(filteredData, COL.DISTRICT);
-            const distLabels = Object.keys(distCounts).sort((a,b) => a.localeCompare(b)); // Sort secara abjad
+            const distLabels = Object.keys(distCounts).sort((a,b) => a.localeCompare(b));
             const distData = distLabels.map(l => distCounts[l]);
 
             if (chartDistrictObj) chartDistrictObj.destroy();
@@ -502,7 +506,7 @@
                 }
             });
 
-            // --- Chart 2: Program ---
+            // Chart 2: Program
             const progCounts = countByField(filteredData, COL.PROGRAM);
             const progLabels = Object.keys(progCounts);
             const progData = progLabels.map(l => progCounts[l]);
@@ -528,7 +532,7 @@
                 }
             });
 
-            // --- Chart 3: Clinics ---
+            // Chart 3: Clinics
             const isDistrictSelected = document.getElementById('districtFilter').value !== 'ALL';
             document.getElementById('clinicChartTitle').innerText = isDistrictSelected ? 
                 `Saringan Mengikut Klinik (Daerah ${document.getElementById('districtFilter').value})` : 
@@ -536,7 +540,6 @@
 
             const clinicCounts = countByField(filteredData, COL.CLINIC);
             let clinicLabels = Object.keys(clinicCounts).sort((a,b) => clinicCounts[b] - clinicCounts[a]);
-            // Show only top 15 if showing all districts to prevent overcrowding
             if (!isDistrictSelected && clinicLabels.length > 15) {
                 clinicLabels = clinicLabels.slice(0, 15);
             }
@@ -546,7 +549,7 @@
             chartClinicObj = new Chart(document.getElementById('chartClinic'), {
                 type: 'bar',
                 data: {
-                    labels: clinicLabels.map(l => l.length > 20 ? l.substring(0, 20)+'...' : l), // Truncate long names
+                    labels: clinicLabels.map(l => l.length > 20 ? l.substring(0, 20)+'...' : l),
                     datasets: [{
                         label: 'Jumlah Saringan',
                         data: clinicData,
@@ -556,7 +559,7 @@
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
-                    indexAxis: 'y', // Horizontal bar for clinics
+                    indexAxis: 'y',
                     plugins: { 
                         legend: { display: false }, 
                         tooltip: { callbacks: { title: (ctx) => clinicLabels[ctx[0].dataIndex] } },
@@ -566,20 +569,24 @@
                 }
             });
 
-            // --- Chart 4: KPI By District ---
-            // Calculate KPI per district
+            // Chart 4: KPI By District
             const kpiDistricts = Object.keys(countByField(filteredData, COL.DISTRICT)).sort((a,b) => a.localeCompare(b));
             const kpiRates = kpiDistricts.map(d => {
                 let e = 0, x = 0;
                 filteredData.forEach(row => {
-                    if (getSafeValue(row, COL.DISTRICT) === d) {
-                        const s = (getSafeValue(row, COL.SMOKING_STATUS) || '').toLowerCase().trim();
-                        const isSmoker = s.includes('active') || s.includes('ex_smoker') || s.includes('bekas');
-                        const agreed = /yes|ya/i.test(getSafeValue(row, COL.AGREE_SCREENING) || '');
+                    const rowDistrict = getSafeValue(row, COL.DISTRICT);
+                    if (rowDistrict === d) {
+                        const smokeStatus = String(getSafeValue(row, COL.SMOKING_STATUS)).toLowerCase().trim();
+                        const agreedStatus = String(getSafeValue(row, COL.AGREE_SCREENING)).toLowerCase().trim();
+                        const xrayStatus = String(getSafeValue(row, COL.XRAY_DONE)).toLowerCase().trim();
+
+                        const isSmoker = smokeStatus.includes('active') || smokeStatus.includes('ex_smoker') || smokeStatus.includes('bekas');
+                        const agreed = agreedStatus === 'yes' || agreedStatus === 'ya' || agreedStatus.includes('yes');
+                        const doneXray = xrayStatus === 'yes' || xrayStatus === 'ya' || xrayStatus.includes('yes');
                         
                         if (isSmoker && agreed) {
                             e++;
-                            if (/yes|ya/i.test(getSafeValue(row, COL.XRAY_DONE) || '')) x++;
+                            if (doneXray) x++;
                         }
                     }
                 });
@@ -609,10 +616,8 @@
             });
         }
 
-        // --- Admin Modal Functions ---
         function openAdminModal() {
             document.getElementById('adminModal').classList.remove('hidden');
-            // Reset state upon opening
             document.getElementById('adminPassword').value = '';
             document.getElementById('adminErrorMsg').classList.add('hidden');
             document.getElementById('adminLoginView').classList.remove('hidden');
@@ -636,11 +641,8 @@
             }
         }
         
-        // Membenarkan pengguna tekan "Enter" untuk submit password
         document.getElementById('adminPassword').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                verifyAdmin();
-            }
+            if (e.key === 'Enter') verifyAdmin();
         });
     </script>
 </body>
