@@ -56,7 +56,26 @@ header .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-con
 h1{font-size:24px;line-height:1.2;margin:0;color:var(--brand-ink)}
 .asof{margin:6px 0 0;font-size:14px;color:#c9dad6}
 .asof b{color:var(--brand-ink)}
-.hdr-actions{display:flex;gap:8px;align-items:center}
+.hdr-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;min-width:300px}
+.hdr-actions .btn{justify-content:center;white-space:nowrap}
+@media (max-width:520px){.hdr-actions{min-width:0;width:100%}}
+/* Brand strip (logo & nama jabatan) — sentiasa latar cerah */
+.brandbar{background:#ffffff;border-bottom:1px solid #e5e7eb}
+.brand-inner{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+@media (min-width:1024px){.brand-inner{justify-content:flex-start}}
+.brand-inner .logo-jata{height:64px;object-fit:contain}
+.brand-inner .logo-lhi{height:48px;object-fit:contain}
+.brand-text{display:flex;flex-direction:column;justify-content:center;padding:0 16px;border-left:2px solid #d1d5db;border-right:2px solid #d1d5db;text-align:center}
+@media (min-width:1024px){.brand-text{text-align:left}}
+.brand-text span{font-size:14px;font-weight:700;line-height:1.25;text-transform:uppercase}
+.brand-text .kkm{color:#0b3d91}
+.brand-text .jkn{color:#374151}
+/* Password field with eye toggle */
+.pwd-wrap{position:relative;margin-bottom:8px}
+.pwd-wrap input{margin-bottom:0!important;padding-right:44px!important}
+.eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--muted);width:34px;height:34px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.eye:hover{background:var(--surface-2);color:var(--ink)}
+.eye svg{width:20px;height:20px}
 .btn{border:1px solid var(--border);background:var(--surface);color:var(--ink);padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
 .btn:hover{background:var(--surface-2)}
 .btn-ghost{background:transparent;color:var(--brand-ink);border-color:rgba(246,244,239,.35)}
@@ -179,16 +198,32 @@ footer{font-size:12px;color:var(--muted);padding:0 0 30px}
 </head>
 <body>
 
+<!-- Text & Logos -->
+<div class="brandbar">
+  <div class="wrap brand-inner">
+    <!-- TUKAR URL GAMBAR DI SINI UNTUK HOSTING GITHUB -->
+    <img src="JATA NEGARA.png" alt="Jata Negara" class="logo-jata" onerror="this.onerror=null;this.src='https://placehold.co/100x100/eeeeee/333333?text=Jata+Negara'">
+    <div class="brand-text">
+      <span class="kkm">Kementerian Kesihatan Malaysia</span>
+      <span class="jkn">Jabatan Kesihatan Negeri Kedah</span>
+    </div>
+    <!-- TUKAR URL GAMBAR DI SINI UNTUK HOSTING GITHUB -->
+    <img src="LHI.png" alt="Logo LHI" class="logo-lhi" onerror="this.onerror=null;this.src='https://placehold.co/120x50/eeeeee/333333?text=LHI+Logo'">
+  </div>
+</div>
+
 <header>
   <div class="wrap">
     <div>
-      <p class="eyebrow">Jabatan Kesihatan Negeri Kedah · Unit NCD</p>
+      <p class="eyebrow">Unit Penyakit Tidak Berjangkit (NCD)</p>
       <h1>Dashboard Saringan Inisiatif Kesihatan Paru-paru (LHI)</h1>
       <p class="asof">Tarikh Saringan Sehingga: <b id="asOf">—</b></p>
     </div>
     <div class="hdr-actions">
+      <a class="btn btn-ghost" id="lnkRujukan" target="_blank" rel="noopener">📁 Sumber Rujukan</a>
+      <a class="btn btn-ghost" id="lnkNalury" target="_blank" rel="noopener">🫁 Sistem NaLuRy</a>
+      <button class="btn btn-ghost" id="btnAdmin" type="button">🔒 Admin</button>
       <button class="btn btn-ghost" id="btnRefresh" type="button" title="Muat semula data">↻ Muat semula</button>
-      <button class="btn btn-ghost" id="btnAdmin" type="button">Admin</button>
     </div>
   </div>
 </header>
@@ -278,7 +313,7 @@ footer{font-size:12px;color:var(--muted);padding:0 0 30px}
       <!-- 6: Outcome -->
       <p class="section-title">Hasil (outcome) pengesanan penyakit</p>
       <div class="grid g4" id="outcomeCards"></div>
-      <p style="font-size:12px;color:var(--muted);margin:-10px 0 0">% dikira berdasarkan jumlah saringan bagi skop penapis semasa.</p>
+      <p style="font-size:12px;color:var(--muted);margin:-10px 0 0">Sumber: kolum Final Diagnosis. % dikira berdasarkan jumlah saringan bagi skop penapis semasa.</p>
 
       <footer>
         * Perokok termasuk bekas perokok: Smoking Status = active, ex_smoker_lt15 atau ex_smoker_gt15. Layak &amp; bersetuju: Agreed to Further Screening = Yes.<br>
@@ -295,7 +330,7 @@ footer{font-size:12px;color:var(--muted);padding:0 0 30px}
   <div class="modal-card">
     <h3 id="mLoginT">Log masuk Admin</h3>
     <p>Masukkan kata laluan admin.</p>
-    <input type="password" id="pwd" autocomplete="current-password" aria-label="Kata laluan">
+    <div class="pwd-wrap"><input type="password" id="pwd" autocomplete="current-password" aria-label="Kata laluan"><button type="button" class="eye" id="btnEye" aria-label="Tunjuk kata laluan" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
     <p class="err-text" id="pwdErr"></p>
     <div class="modal-actions">
       <button class="btn" type="button" data-close>Batal</button>
@@ -329,6 +364,9 @@ const CONFIG = {
   // Google Sheet sumber data (mesti dikongsi "Anyone with the link: Viewer")
   SHEET_ID: '1PtcLb5XQPzAjYzE3PyLIJfWUzlS9ekJDwV0C6VBSYMk',
   SHEET_NAME: '',            // kosong = tab pertama. Atau isi nama tab, cth 'Sheet1'
+  // Pautan butang di bahagian atas
+  RUJUKAN_URL: 'https://drive.google.com/drive/folders/19vabHyWyAMegeP0ppkRRGiCc0whTSjHE?usp=drive_link',
+  NALURY_URL: 'https://nalury.mrichealthcare.com/',
   // Pautan yang dibuka oleh butang Admin
   ADMIN_SHEET_URL: 'https://docs.google.com/spreadsheets/d/1PtcLb5XQPzAjYzE3PyLIJfWUzlS9ekJDwV0C6VBSYMk/edit?usp=drive_link',
   // SHA-256 bagi kata laluan admin (bukan kata laluan sebenar)
@@ -348,13 +386,18 @@ const CONFIG = {
   SMOKER_VALUES: ['active', 'ex_smoker_gt15', 'ex_smoker_lt15'],
   YES_VALUES: ['yes', 'ya', 'y', 'true', '1'],
 
-  // Hasil pengesanan penyakit: isi huruf kolum diagnosis disahkan, dan nilai yang dikira "positif".
-  // col: '' = belum ditetapkan (kad akan papar "Kolum belum ditetapkan").
+  // Hasil pengesanan penyakit — dibaca daripada kolum EJ (Final Diagnosis).
+  // Satu rekod dikira positif jika teks diagnosis sepadan dengan 'match' dan TIDAK sepadan dengan 'exclude'.
+  // Satu pesakit boleh dikira dalam lebih daripada satu penyakit (cth. Asthma-COPD overlap).
+  // Ubah corak di sini jika label dalam kolum EJ berbeza.
+  OUTCOME_COL: 'EJ',
+  OUTCOME_EXCLUDE: /(rule[sd]?\s*out|\br\/o\b|tiada|negati|normal|\bno\b|not\s+(detected|consistent))/i,
   OUTCOMES: [
-    { key: 'kanser', label: 'Kanser paru-paru', target: 2, col: '', positive: ['yes'] },
-    { key: 'tibi',   label: 'Tibi pulmonari',   target: 5, col: '', positive: ['yes'] },
-    { key: 'asma',   label: 'Asma',             target: 5, col: '', positive: ['yes'] },
-    { key: 'copd',   label: 'COPD',             target: 5, col: '', positive: ['yes'] }
+    { key: 'kanser', label: 'Kanser paru-paru', target: 2, match: /(lung\s*(cancer|ca\b|carcinoma|malignan|neoplasm)|kanser\s*paru|\bn?sclc\b|bronchogenic)/i },
+    { key: 'tibi',   label: 'Tibi pulmonari',   target: 5, match: /(\bptb\b|pulmonary\s*(tb|tuberculosis)|tibi\s*paru|\btb\b|tuberculosis|tibi)/i,
+      exclude: /(latent|\bltbi\b|contact|kontak|extra\s*-?\s*pulmonary|\beptb\b)/i },
+    { key: 'asma',   label: 'Asma',             target: 5, match: /(asthma|\basma\b)/i },
+    { key: 'copd',   label: 'COPD',             target: 5, match: /(copd|chronic\s*obstructive|\bpppk\b)/i }
   ]
 };
 
@@ -378,7 +421,7 @@ let loadedAt = null;
 /* ---------- Data loading (Google Visualization API, JSON) ---------- */
 function colLetters() {
   const set = new Set(Object.values(CONFIG.COL));
-  CONFIG.OUTCOMES.forEach(o => { if (o.col) set.add(o.col.toUpperCase()); });
+  if (CONFIG.OUTCOME_COL) set.add(CONFIG.OUTCOME_COL.toUpperCase());
   return [...set];
 }
 
@@ -424,9 +467,8 @@ async function fetchSheet() {
       smoking: lc(get(C.smoking)),
       agree: lc(get(C.agree)),
       xray: lc(get(C.xray)),
-      out: {}
+      dx: CONFIG.OUTCOME_COL ? get(CONFIG.OUTCOME_COL.toUpperCase()) : ''
     };
-    CONFIG.OUTCOMES.forEach(o => { if (o.col) rec.out[o.key] = lc(get(o.col.toUpperCase())); });
     return rec;
   }).filter(r => r.date);
 }
@@ -451,13 +493,20 @@ function demoData() {
     const agree = rnd() < 0.88 ? 'yes' : 'no';
     rows.push({ date: d, day: dkey(d), district, clinic: pick(dist[district]), program: pick(progs),
       smoking: pick(smk), agree, xray: agree === 'yes' && rnd() < 0.78 ? 'yes' : 'no',
-      out: { kanser: rnd() < 0.01 ? 'yes' : 'no', tibi: rnd() < 0.03 ? 'yes' : 'no', asma: rnd() < 0.05 ? 'yes' : 'no', copd: rnd() < 0.06 ? 'yes' : 'no' } });
+      dx: (() => { const x = rnd(); return x < 0.012 ? 'Lung Cancer' : x < 0.04 ? 'Pulmonary TB' : x < 0.09 ? 'Asthma' : x < 0.15 ? 'COPD' : x < 0.5 ? 'Normal' : ''; })() });
   }
-  rows.push({ date: new Date(end), day: dkey(new Date(end)), district: 'Pendang', clinic: 'KK Pendang', program: 'Klinik Kesihatan', smoking: 'active', agree: 'yes', xray: 'yes', out: {} });
+  rows.push({ date: new Date(end), day: dkey(new Date(end)), district: 'Pendang', clinic: 'KK Pendang', program: 'Klinik Kesihatan', smoking: 'active', agree: 'yes', xray: 'yes', dx: '' });
   return rows;
 }
 
 /* ---------- Metrics ---------- */
+function hasDx(text, o) {
+  if (!o.match.test(text)) return false;
+  if (o.exclude && o.exclude.test(text)) return false;
+  // exclusion umum dinilai pada segmen diagnosis yang sepadan sahaja
+  const parts = text.split(/[;,\/\n+]|\band\b|\bdan\b/i).filter(p => o.match.test(p));
+  return parts.some(p => !CONFIG.OUTCOME_EXCLUDE.test(p));
+}
 const isSmoker = r => CONFIG.SMOKER_VALUES.includes(r.smoking);
 const isYes = v => CONFIG.YES_VALUES.includes(v);
 function metrics(rows) {
@@ -465,7 +514,7 @@ function metrics(rows) {
   const out = {}; CONFIG.OUTCOMES.forEach(o => out[o.key] = 0);
   for (const r of rows) {
     if (isSmoker(r) && isYes(r.agree)) { elig++; if (isYes(r.xray)) xray++; }
-    for (const o of CONFIG.OUTCOMES) if (o.col && o.positive.includes(r.out[o.key])) out[o.key]++;
+    if (r.dx) for (const o of CONFIG.OUTCOMES) if (hasDx(r.dx, o)) out[o.key]++;
   }
   return { total, elig, xray, kpi: pct(xray, elig), out };
 }
@@ -628,7 +677,6 @@ function renderKpi(rows, total) {
 
 function renderOutcomes(m) {
   $('outcomeCards').innerHTML = CONFIG.OUTCOMES.map(o => {
-    if (!o.col) return `<div class="card stat outcome"><p class="label">${esc(o.label)}</p><p class="value">—</p><p class="note">Kolum belum ditetapkan</p></div>`;
     const n = m.out[o.key], p = pct(n, m.total);
     return `<div class="card stat outcome"><p class="label">${esc(o.label)}</p><p class="value">${fmt(n)}<span class="pct">${pctTxt(p)}</span></p><p class="target">Sasaran pengesanan ${o.target}%</p></div>`;
   }).join('');
@@ -702,7 +750,7 @@ async function sha256(s) {
 }
 $('btnAdmin').addEventListener('click', () => {
   if (isAdmin()) { $('mAdmin').classList.remove('hidden'); return; }
-  $('pwd').value = ''; $('pwdErr').textContent = '';
+  $('pwd').value = ''; $('pwd').type = 'password'; $('btnEye').innerHTML = EYE_OPEN; $('pwdErr').textContent = '';
   $('mLogin').classList.remove('hidden'); setTimeout(() => $('pwd').focus(), 50);
 });
 async function tryLogin() {
@@ -715,6 +763,18 @@ $('btnLogin').addEventListener('click', tryLogin);
 $('pwd').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
 $('btnLogout').addEventListener('click', () => { try { sessionStorage.removeItem('lhiAdmin'); } catch {} closeModals(); });
 $('lnkSheet').href = CONFIG.ADMIN_SHEET_URL;
+$('lnkRujukan').href = CONFIG.RUJUKAN_URL;
+$('lnkNalury').href = CONFIG.NALURY_URL;
+const EYE_OPEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+const EYE_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.1 10.1 0 0 1 12 19c-6.5 0-10-7-10-7a18.4 18.4 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.1 9.1 0 0 1 12 4c6.5 0 10 7 10 7a18.5 18.5 0 0 1-2.16 3.19"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="2" y1="2" x2="22" y2="22"/></svg>';
+$('btnEye').addEventListener('click', () => {
+  const show = $('pwd').type === 'password';
+  $('pwd').type = show ? 'text' : 'password';
+  $('btnEye').innerHTML = show ? EYE_OFF : EYE_OPEN;
+  $('btnEye').setAttribute('aria-pressed', show);
+  $('btnEye').setAttribute('aria-label', show ? 'Sembunyi kata laluan' : 'Tunjuk kata laluan');
+  $('pwd').focus();
+});
 document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', closeModals));
 document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if (e.target === m) closeModals(); }));
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModals(); });
