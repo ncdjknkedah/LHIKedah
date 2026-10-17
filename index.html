@@ -1,649 +1,806 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ms">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard LHI Kedah</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Chart.js DataLabels Plugin -->
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-    <!-- PapaParse for CSV reading -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        kkm: {
-                            blue: '#003366',
-                            green: '#008000',
-                            light: '#f0f9ff'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
-        .glass-card { background: white; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); padding: 1.5rem; }
-        .hidden-admin { display: none; }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard Saringan LHI Kedah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* =====================================================================
+   Dashboard Saringan LHI Negeri Kedah
+   Unit NCD, Jabatan Kesihatan Negeri Kedah
+   ===================================================================== */
+:root{
+  color-scheme: light;
+  --bg:#f3f4f1; --surface:#fcfcfb; --surface-2:#eef1ef; --border:#dde2df;
+  --ink:#13343b; --ink-2:#3e4e52; --muted:#5f6f73;
+  --brand:#13343b; --brand-ink:#f6f4ef; --accent:#b4502a;
+  --bar:#2a78d6; --bar-2:#86b6ef;
+  --good:#1e7a3a; --good-bg:#e3f2e6; --warn:#a85a00; --warn-bg:#fdf0dc;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#6250d6;
+  --grid:#e6e9e7;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --bg:#121615; --surface:#1a1f1e; --surface-2:#222827; --border:#2f3735;
+    --ink:#eef1ef; --ink-2:#c9d2cf; --muted:#9aa7a4;
+    --brand:#0d262b; --brand-ink:#f6f4ef; --accent:#f0a27e;
+    --bar:#3987e5; --bar-2:#1c5cab;
+    --good:#7fd093; --good-bg:#183021; --warn:#f2b45c; --warn-bg:#33260f;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#9085e9;
+    --grid:#2a302f;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#121615; --surface:#1a1f1e; --surface-2:#222827; --border:#2f3735;
+  --ink:#eef1ef; --ink-2:#c9d2cf; --muted:#9aa7a4;
+  --brand:#0d262b; --brand-ink:#f6f4ef; --accent:#f0a27e;
+  --bar:#3987e5; --bar-2:#1c5cab;
+  --good:#7fd093; --good-bg:#183021; --warn:#f2b45c; --warn-bg:#33260f;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#9085e9;
+  --grid:#2a302f;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink-2);font-family:'Public Sans',Arial,sans-serif;font-size:15px;line-height:1.45}
+button,input,select{font:inherit}
+.wrap{max-width:1280px;margin:0 auto;padding:0 20px}
+
+/* Header */
+header{background:var(--brand);color:var(--brand-ink)}
+header .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding-top:22px;padding-bottom:22px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#f0a27e;margin:0 0 4px}
+h1{font-size:24px;line-height:1.2;margin:0;color:var(--brand-ink)}
+.asof{margin:6px 0 0;font-size:14px;color:#c9dad6}
+.asof b{color:var(--brand-ink)}
+.hdr-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;min-width:300px}
+.hdr-actions .btn{justify-content:center;white-space:nowrap}
+@media (max-width:520px){.hdr-actions{min-width:0;width:100%}}
+/* Brand strip (logo & nama jabatan) — sentiasa latar cerah */
+.brandbar{background:#ffffff;border-bottom:1px solid #e5e7eb}
+.brand-inner{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+@media (min-width:1024px){.brand-inner{justify-content:flex-start}}
+.brand-inner .logo-jata{height:64px;object-fit:contain}
+.brand-inner .logo-lhi{height:48px;object-fit:contain}
+.brand-text{display:flex;flex-direction:column;justify-content:center;padding:0 16px 0 4px;border-right:2px solid #d1d5db;text-align:center}
+@media (min-width:1024px){.brand-text{text-align:left}}
+.brand-text span{font-size:14px;font-weight:700;line-height:1.25;text-transform:uppercase}
+.brand-text .kkm{color:#0b3d91}
+.brand-text .jkn{color:#374151}
+/* Password field with eye toggle */
+.pwd-wrap{position:relative;margin-bottom:8px}
+.pwd-wrap input{margin-bottom:0!important;padding-right:44px!important}
+.eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--muted);width:34px;height:34px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.eye:hover{background:var(--surface-2);color:var(--ink)}
+.eye svg{width:20px;height:20px}
+.btn{border:1px solid var(--border);background:var(--surface);color:var(--ink);padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{background:var(--surface-2)}
+.btn-ghost{background:transparent;color:var(--brand-ink);border-color:rgba(246,244,239,.35)}
+.btn-ghost:hover{background:rgba(246,244,239,.1)}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn-primary:hover{filter:brightness(1.05);background:var(--accent)}
+:focus-visible{outline:2px solid var(--bar);outline-offset:2px}
+
+/* Filters */
+.filters{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--border)}
+.filters .wrap{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;padding-top:14px;padding-bottom:14px}
+.f{display:flex;flex-direction:column;gap:4px;min-width:0}
+.f label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.f input,.f select{border:1px solid var(--border);background:var(--surface);color:var(--ink);border-radius:8px;padding:7px 10px;height:38px;max-width:100%}
+.f select{min-width:180px}
+.f-grow{flex:1 1 220px}
+.f-grow select{width:100%}
+.scope{margin-left:auto;font-size:13px;color:var(--muted);align-self:center}
+.scope b{color:var(--ink)}
+
+main .wrap{padding-top:22px;padding-bottom:40px;display:flex;flex-direction:column;gap:22px}
+.section-title{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:6px 0 -8px}
+
+/* Cards */
+.grid{display:grid;gap:16px}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g-5-7{grid-template-columns:5fr 7fr}
+@media (max-width:980px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g-5-7,.g2{grid-template-columns:1fr}}
+@media (max-width:520px){.g4{grid-template-columns:1fr}.scope{margin-left:0}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 20px;min-width:0}
+.card h2{font-size:16px;margin:0 0 2px;color:var(--ink)}
+.card .sub{font-size:13px;color:var(--muted);margin:0 0 12px}
+.stat .label{font-size:13px;font-weight:600;color:var(--muted);margin:0}
+.stat .value{font-size:36px;font-weight:700;color:var(--ink);line-height:1.1;margin:8px 0 4px;font-variant-numeric:tabular-nums}
+.stat .note{font-size:13px;color:var(--muted);margin:0}
+.stat.hero{background:var(--brand);border-color:var(--brand)}
+.stat.hero .label,.stat.hero .note{color:#c9dad6}
+.stat.hero .value{color:var(--brand-ink)}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.pill.good{background:var(--good-bg);color:var(--good)}
+.pill.warn{background:var(--warn-bg);color:var(--warn)}
+.meter{height:8px;border-radius:999px;background:var(--surface-2);overflow:hidden;margin:10px 0 6px;position:relative}
+.meter span{display:block;height:100%;border-radius:999px;background:var(--bar)}
+.meter i{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);left:80%}
+
+.chart-box{position:relative;height:320px}
+.chart-box.tall{height:420px}
+.legend{display:flex;flex-direction:column;gap:6px;margin-top:12px;font-size:13px}
+.legend div{display:flex;align-items:center;gap:8px;color:var(--ink-2)}
+.legend i{width:12px;height:12px;border-radius:3px;flex:none}
+.legend span.n{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--ink)}
+.donut-row{display:grid;grid-template-columns:200px 1fr;gap:16px;align-items:center}
+@media (max-width:520px){.donut-row{grid-template-columns:1fr}}
+.donut-row .chart-box{height:200px}
+
+/* Tables */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:9px 8px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+tbody tr:hover{background:var(--surface-2)}
+tfoot td{font-weight:700;color:var(--ink);border-top:2px solid var(--border)}
+.view-toggle{display:flex;gap:6px;margin-left:auto}
+.view-toggle button{border:1px solid var(--border);background:var(--surface);color:var(--muted);padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer}
+.view-toggle button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.card-head{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+
+.outcome .value{font-size:30px}
+.outcome .pct{font-size:15px;font-weight:600;color:var(--muted);margin-left:6px}
+.outcome .target{font-size:12px;color:var(--muted)}
+
+/* States */
+.banner{border-radius:10px;padding:12px 16px;font-size:14px}
+.banner.err{background:var(--warn-bg);color:var(--warn);border:1px solid var(--warn)}
+.banner.demo{background:var(--surface-2);color:var(--ink);border:1px dashed var(--muted)}
+.loading{display:flex;align-items:center;gap:10px;color:var(--muted);padding:40px 0;justify-content:center}
+.spin{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--bar);border-radius:50%;animation:s 1s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}}
+.hidden{display:none!important}
+.empty{color:var(--muted);font-size:14px;padding:30px 0;text-align:center}
+
+/* Bars (no external library) */
+.bars{display:flex;flex-direction:column;gap:6px;position:relative}
+.bar-row{display:grid;grid-template-columns:minmax(120px,38%) 1fr;gap:10px;align-items:center;font-size:13px;border-radius:6px;padding:2px 0}
+.bar-row:hover{background:var(--surface-2)}
+.bar-row .bl{color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-track{position:relative;height:22px}
+.bar-fill{position:absolute;left:0;top:2px;bottom:2px;border-radius:0 4px 4px 0;min-width:2px}
+.bar-val{position:absolute;top:50%;transform:translateY(-50%);font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;padding-left:6px}
+.bar-target{position:absolute;top:-4px;bottom:-4px;border-left:2px dashed var(--ink);opacity:.7;pointer-events:none}
+.target-cap{display:grid;grid-template-columns:minmax(120px,38%) 1fr;gap:10px;font-size:11px;font-weight:700;color:var(--muted);margin-bottom:2px}
+.target-cap span{position:relative;height:14px}
+.target-cap b{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.axis{display:grid;grid-template-columns:minmax(120px,38%) 1fr;gap:10px;font-size:11px;color:var(--muted);margin-top:4px}
+.axis span{display:flex;justify-content:space-between}
+.donut svg{width:100%;height:100%;display:block}
+.donut path{cursor:pointer;transition:opacity .15s}
+.donut:hover path{opacity:.55}.donut path:hover{opacity:1}
+.donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+.donut-center b{font-size:22px;color:var(--ink)}.donut-center small{font-size:11px;color:var(--muted)}
+#tip{position:fixed;z-index:30;pointer-events:none;background:var(--ink);color:var(--surface);font-size:12px;padding:8px 10px;border-radius:8px;max-width:280px;line-height:1.4;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+#tip b{display:block;margin-bottom:2px}
+@media (max-width:700px){.filters{position:static}}
+body{min-height:100vh;display:flex;flex-direction:column}
+main{flex:1 0 auto}
+.site-footer{background:#ffffff;border-top:1px solid #e5e7eb;margin-top:auto;padding:0}
+.site-footer .inner{max-width:1280px;margin:0 auto;padding:16px;text-align:center;font-size:12px;color:#6b7280}
+footer{font-size:12px;color:var(--muted);padding:0 0 30px}
+
+/* Modal */
+.modal{position:fixed;inset:0;background:rgba(10,20,22,.55);display:flex;align-items:center;justify-content:center;padding:16px;z-index:20}
+.modal-card{background:var(--surface);color:var(--ink-2);border-radius:14px;padding:22px;width:100%;max-width:420px;border:1px solid var(--border)}
+.modal-card h3{margin:0 0 6px;color:var(--ink);font-size:18px}
+.modal-card p{margin:0 0 14px;font-size:14px}
+.modal-card input{width:100%;border:1px solid var(--border);background:var(--surface);color:var(--ink);border-radius:8px;padding:9px 12px;margin-bottom:8px}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px;flex-wrap:wrap}
+.err-text{color:var(--warn);font-size:13px;min-height:18px;margin:0}
+.admin-list{display:flex;flex-direction:column;gap:8px;font-size:14px;margin:12px 0}
+.admin-list div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--border);padding-bottom:6px}
+.admin-list b{color:var(--ink)}
+</style>
 </head>
-<body class="text-gray-800 antialiased min-h-screen flex flex-col">
+<body>
 
-    <header class="bg-white shadow-md border-b-4 border-kkm-blue sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col lg:flex-row justify-between items-center gap-4">
-            
-            <!-- Text & Logos -->
-            <div class="flex items-center gap-4 flex-wrap justify-center">
-                <!-- TUKAR URL GAMBAR DI SINI UNTUK HOSTING GITHUB -->
-                <img src="JATA NEGARA.png" alt="Jata Negara" class="h-16 object-contain" onerror="this.src='https://placehold.co/100x100/eeeeee/333333?text=Jata+Negara'">
-                
-                <div class="flex flex-col justify-center px-4 border-l-2 border-r-2 border-gray-300 text-center lg:text-left">
-                    <span class="text-sm font-bold text-kkm-blue leading-tight uppercase">Kementerian Kesihatan Malaysia</span>
-                    <span class="text-sm font-bold text-gray-700 leading-tight uppercase">Jabatan Kesihatan Negeri Kedah</span>
-                </div>
-                
-                <!-- TUKAR URL GAMBAR DI SINI UNTUK HOSTING GITHUB -->
-                <img src="LHI.png" alt="Logo LHI" class="h-12 object-contain" onerror="this.src='https://placehold.co/120x50/eeeeee/333333?text=LHI+Logo'">
-            </div>
-
-            <!-- Center Title -->
-            <div class="text-center hidden xl:block flex-grow">
-                <h1 class="text-2xl font-extrabold text-gray-800 tracking-tight">DASHBOARD PRESTASI LHI</h1>
-                <p id="lastUpdateText" class="text-xs text-gray-500 font-medium mt-1">Tarikh Saringan Sehingga: Memuatkan...</p>
-            </div>
-
-            <!-- External Links (2x2 Grid) -->
-            <div class="grid grid-cols-2 gap-2 w-full lg:w-auto">
-                <a href="https://drive.google.com/drive/folders/19vabHyWyAMegeP0ppkRRGiCc0whTSjHE?usp=sharing" target="_blank" class="px-3 py-2 bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-md text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-2 text-center shadow-sm border border-blue-200">
-                    <i class="fa-solid fa-folder-open"></i> Sumber Rujukan
-                </a>
-                <a href="https://nalury.mrichealthcare.com/" target="_blank" class="px-3 py-2 bg-teal-50 text-teal-700 hover:bg-teal-100 rounded-md text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-2 text-center shadow-sm border border-teal-200">
-                    <i class="fa-solid fa-laptop-medical"></i> Sistem NaLuRy
-                </a>
-                <button onclick="openAdminModal()" class="px-3 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-md text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-2 text-center shadow-sm border border-gray-300">
-                    <i class="fa-solid fa-lock"></i> Admin
-                </button>
-                <button onclick="refreshData()" class="px-3 py-2 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-md text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-2 text-center shadow-sm border border-indigo-200">
-                    <i class="fa-solid fa-rotate-right"></i> Refresh
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
-        
-        <!-- Filters Section -->
-        <section class="glass-card mb-6 bg-blue-50/50 border border-blue-100">
-            <div class="flex flex-col md:flex-row gap-4 items-end">
-                <div class="w-full md:w-1/4">
-                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Dari Tarikh</label>
-                    <input type="date" id="dateFrom" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border">
-                </div>
-                <div class="w-full md:w-1/4">
-                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Hingga Tarikh</label>
-                    <input type="date" id="dateTo" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border">
-                </div>
-                <div class="w-full md:w-1/4">
-                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Daerah</label>
-                    <select id="districtFilter" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border">
-                        <option value="ALL">Semua Daerah</option>
-                    </select>
-                </div>
-                <div class="w-full md:w-1/4">
-                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Fasiliti Kesihatan</label>
-                    <select id="clinicFilter" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border" disabled>
-                        <option value="ALL">Semua Fasiliti (Pilih Daerah Dahulu)</option>
-                    </select>
-                </div>
-            </div>
-        </section>
-
-        <!-- Loading Indicator -->
-        <div id="loadingIndicator" class="flex justify-center items-center py-12">
-            <i class="fa-solid fa-circle-notch fa-spin text-4xl text-blue-600"></i>
-            <span class="ml-3 text-lg text-gray-600 font-medium">Memuat turun data dari Google Sheets...</span>
-        </div>
-
-        <div id="dashboardContent" class="hidden">
-            <!-- Scorecards Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <!-- Total Screenings -->
-                <div class="glass-card bg-gradient-to-br from-blue-500 to-blue-700 text-white">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="text-blue-100 text-xs font-bold uppercase tracking-wider">Jumlah Saringan</p>
-                            <h3 id="cardTotalScreenings" class="text-4xl font-extrabold mt-1">0</h3>
-                        </div>
-                        <div class="p-2 bg-white/20 rounded-lg"><i class="fa-solid fa-users text-2xl"></i></div>
-                    </div>
-                </div>
-
-                <!-- KPI Smoker -->
-                <div class="glass-card bg-gradient-to-br from-teal-500 to-teal-700 text-white">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="text-teal-100 text-xs font-bold uppercase tracking-wider">KPI Liputan Perokok (X-Ray)</p>
-                            <h3 id="cardKpiSmoker" class="text-4xl font-extrabold mt-1">0%</h3>
-                            <p id="cardKpiSmokerDetail" class="text-xs mt-1 opacity-80">0 / 0 Disaring</p>
-                        </div>
-                        <div class="p-2 bg-white/20 rounded-lg"><i class="fa-solid fa-smoking text-2xl"></i></div>
-                    </div>
-                </div>
-
-                <!-- Lung Cancer & TB -->
-                <div class="glass-card flex flex-col justify-center border-l-4 border-red-500">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-sm font-bold text-gray-600 uppercase">Kanser Paru-Paru</span>
-                        <span id="cardCancer" class="text-xl font-bold text-red-600">0 (0%)</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4"><div id="barCancer" class="bg-red-500 h-1.5 rounded-full" style="width: 0%"></div></div>
-                    
-                    <div class="flex justify-between items-center mb-1">
-                        <span class="text-sm font-bold text-gray-600 uppercase">Tibi Pulmonari</span>
-                        <span id="cardTb" class="text-xl font-bold text-orange-500">0 (0%)</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-1.5"><div id="barTb" class="bg-orange-500 h-1.5 rounded-full" style="width: 0%"></div></div>
-                </div>
-
-                <!-- Asthma & COPD -->
-                <div class="glass-card flex flex-col justify-center border-l-4 border-blue-500">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-sm font-bold text-gray-600 uppercase">Asma</span>
-                        <span id="cardAsthma" class="text-xl font-bold text-blue-600">0 (0%)</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4"><div id="barAsthma" class="bg-blue-500 h-1.5 rounded-full" style="width: 0%"></div></div>
-                    
-                    <div class="flex justify-between items-center mb-1">
-                        <span class="text-sm font-bold text-gray-600 uppercase">COPD</span>
-                        <span id="cardCopd" class="text-xl font-bold text-indigo-500">0 (0%)</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-1.5"><div id="barCopd" class="bg-indigo-500 h-1.5 rounded-full" style="width: 0%"></div></div>
-                </div>
-            </div>
-
-            <!-- Charts Row 1 -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-                <div class="glass-card lg:col-span-2">
-                    <h3 class="text-sm font-bold text-gray-700 uppercase mb-4">Prestasi Saringan Mengikut Daerah</h3>
-                    <div class="relative h-64 w-full">
-                        <canvas id="chartDistrict"></canvas>
-                    </div>
-                </div>
-                <div class="glass-card">
-                    <h3 class="text-sm font-bold text-gray-700 uppercase mb-4">Saringan Mengikut Program</h3>
-                    <div class="relative h-64 w-full flex justify-center">
-                        <canvas id="chartProgram"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Charts Row 2 -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="glass-card">
-                    <h3 id="clinicChartTitle" class="text-sm font-bold text-gray-700 uppercase mb-4">Prestasi Saringan Mengikut Fasiliti Kesihatan</h3>
-                    <div class="relative h-72 w-full">
-                        <canvas id="chartClinic"></canvas>
-                    </div>
-                </div>
-                <div class="glass-card">
-                    <h3 class="text-sm font-bold text-gray-700 uppercase mb-4">Pencapaian KPI Liputan Perokok Mengikut Daerah</h3>
-                    <div class="relative h-72 w-full">
-                        <canvas id="chartKpiDistrict"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Admin Modal UI -->
-    <div id="adminModal" class="fixed inset-0 bg-black/50 z-[100] hidden flex justify-center items-center backdrop-blur-sm">
-        <div class="bg-white rounded-xl shadow-xl p-6 w-full max-w-md mx-4 relative transform transition-all">
-            <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-            
-            <h2 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2"><i class="fa-solid fa-shield-halved text-blue-600 mr-2"></i>Akses Admin</h2>
-            
-            <!-- Login View -->
-            <div id="adminLoginView">
-                <p class="text-sm text-gray-600 mb-4">Sila masukkan kata laluan untuk mengakses Pangkalan Data LHI.</p>
-                <input type="password" id="adminPassword" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border mb-3" placeholder="Kata Laluan Admin">
-                <p id="adminErrorMsg" class="text-xs text-red-600 hidden mb-3"><i class="fa-solid fa-circle-exclamation"></i> Kata laluan tidak sah.</p>
-                <button onclick="verifyAdmin()" class="w-full px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-md text-sm font-bold transition">Log Masuk</button>
-            </div>
-
-            <!-- Logged In View (Hidden by default) -->
-            <div id="adminDataView" class="hidden">
-                <div class="p-4 bg-green-50 border border-green-200 rounded-lg text-center">
-                    <i class="fa-solid fa-circle-check text-green-500 text-3xl mb-3"></i>
-                    <p class="text-sm text-green-800 font-semibold mb-4">Akses berjaya disahkan.</p>
-                    <a href="https://docs.google.com/spreadsheets/d/1PtcLb5XQPzAjYzE3PyLIJfWUzlS9ekJDwV0C6VBSYMk/edit?usp=drive_link" target="_blank" class="inline-flex items-center justify-center gap-2 px-4 py-3 bg-green-600 text-white hover:bg-green-700 rounded-md text-sm font-bold transition w-full shadow-sm">
-                        <i class="fa-solid fa-file-excel text-lg"></i> Buka Pangkalan Data Google Sheets
-                    </a>
-                </div>
-            </div>
-        </div>
+<!-- Text & Logos -->
+<div class="brandbar">
+  <div class="wrap brand-inner">
+    <!-- TUKAR URL GAMBAR DI SINI UNTUK HOSTING GITHUB -->
+    <img src="JATA NEGARA.png" alt="Jata Negara" class="logo-jata" onerror="this.onerror=null;this.src='https://placehold.co/100x100/eeeeee/333333?text=Jata+Negara'">
+    <div class="brand-text">
+      <span class="kkm">Kementerian Kesihatan Malaysia</span>
+      <span class="jkn">Jabatan Kesihatan Negeri Kedah</span>
     </div>
+    <!-- TUKAR URL GAMBAR DI SINI UNTUK HOSTING GITHUB -->
+    <img src="LHI.png" alt="Logo LHI" class="logo-lhi" onerror="this.onerror=null;this.src='https://placehold.co/120x50/eeeeee/333333?text=LHI+Logo'">
+  </div>
+</div>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 py-4 text-center text-xs text-gray-500">
-            &copy; 2026 Inisiatif Kesihatan Paru-Paru Kebangsaan (LHI) - Jabatan Kesihatan Negeri Kedah. 
+<header>
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Unit Penyakit Tidak Berjangkit (NCD)</p>
+      <h1>Dashboard Saringan Inisiatif Kesihatan Paru-paru (LHI)</h1>
+      <p class="asof">Tarikh Saringan Sehingga: <b id="asOf">—</b></p>
+    </div>
+    <div class="hdr-actions">
+      <a class="btn btn-ghost" id="lnkRujukan" target="_blank" rel="noopener">📁 Sumber Rujukan</a>
+      <a class="btn btn-ghost" id="lnkNalury" target="_blank" rel="noopener">🫁 Sistem NaLuRy</a>
+      <button class="btn btn-ghost" id="btnAdmin" type="button">🔒 Admin</button>
+      <button class="btn btn-ghost" id="btnRefresh" type="button" title="Muat semula data">↻ Muat semula</button>
+    </div>
+  </div>
+</header>
+
+<section class="filters" aria-label="Penapis">
+  <div class="wrap">
+    <div class="f"><label for="fFrom">Tarikh dari</label><input type="date" id="fFrom"></div>
+    <div class="f"><label for="fTo">Tarikh hingga</label><input type="date" id="fTo"></div>
+    <div class="f"><label for="fDistrict">Daerah</label><select id="fDistrict"></select></div>
+    <div class="f f-grow"><label for="fClinic">Fasiliti kesihatan</label><select id="fClinic"></select></div>
+    <button class="btn" id="btnReset" type="button">Set semula</button>
+    <div class="scope" id="scopeText"></div>
+  </div>
+</section>
+
+<main>
+  <div class="wrap">
+    <div id="banner" class="hidden"></div>
+    <div id="loading" class="loading"><div class="spin"></div>Memuatkan data saringan…</div>
+
+    <div id="content" class="hidden" style="display:flex;flex-direction:column;gap:22px">
+
+      <!-- 1 & 5: Scorecards -->
+      <p class="section-title">Ringkasan</p>
+      <div class="grid g4">
+        <div class="card stat hero">
+          <p class="label" id="lblTotal">Jumlah saringan · Negeri Kedah</p>
+          <p class="value" id="vTotal">0</p>
+          <p class="note" id="nTotal"></p>
         </div>
-    </footer>
+        <div class="card stat">
+          <p class="label">Perokok* layak &amp; bersetuju disaring</p>
+          <p class="value" id="vElig">0</p>
+          <p class="note">Penyebut KPI</p>
+        </div>
+        <div class="card stat">
+          <p class="label">Perokok* layak yang menjalani X-ray dada</p>
+          <p class="value" id="vXray">0</p>
+          <p class="note">Pengangka KPI</p>
+        </div>
+        <div class="card stat">
+          <p class="label">KPI Liputan Saringan Perokok</p>
+          <p class="value" id="vKpi">—</p>
+          <div class="meter" aria-hidden="true"><span id="kpiBar" style="width:0%"></span><i title="Sasaran 80%"></i></div>
+          <p class="note"><span id="kpiPill"></span> Sasaran 80%</p>
+        </div>
+      </div>
 
-    <script>
-        // Global Variables
-        let globalData = [];
-        let filteredData = [];
-        
-        // Chart Instances
-        let chartDistrictObj = null;
-        let chartProgramObj = null;
-        let chartClinicObj = null;
-        let chartKpiDistrictObj = null;
+      <!-- 2, 3, 4 -->
+      <p class="section-title">Prestasi saringan</p>
+      <div class="grid g-5-7">
+        <div class="card">
+          <h2>Saringan mengikut program</h2>
+          <p class="sub">Bilangan saringan mengikut saluran program</p>
+          <div class="donut-row">
+            <div class="chart-box donut" id="chProgram" role="img" aria-label="Carta donut saringan mengikut program"></div>
+            <div class="legend" id="lgProgram"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2 id="ttlArea">Saringan mengikut daerah</h2>
+              <p class="sub" id="subArea">Bilangan saringan, Negeri Kedah</p>
+            </div>
+            <div class="view-toggle" role="group" aria-label="Paparan">
+              <button type="button" data-view="chart" aria-pressed="true">Carta</button>
+              <button type="button" data-view="table" aria-pressed="false">Jadual</button>
+            </div>
+          </div>
+          <div id="areaChartBox"><div class="bars" id="chArea"></div></div>
+          <div id="areaTableBox" class="tbl-wrap hidden"></div>
+        </div>
+      </div>
 
-        // Array Keywords for Column Headers (Lebih selamat & anjal)
-        const COL = {
-            TIMESTAMP: ['Timestamp', 'Waktu', 'Date'],
-            DISTRICT: ['District', 'Daerah'],
-            CLINIC: ['Clinic', 'Designation', 'Fasiliti'],
-            PROGRAM: ['Program'],
-            SMOKING_STATUS: ['Smoking Status', 'Status Merokok', 'Smoking'],
-            AGREE_SCREENING: ['Agree to Further Screening', 'Setuju', 'Agree'],
-            XRAY_DONE: ['X-ray done', 'Xray', 'X-ray', 'done'],
-            CANCER: ['Kanser Paru-paru', 'Kanser', 'Cancer'], 
-            TB: ['Tibi Pulmonari', 'Tibi', 'TB'],
-            ASTHMA: ['Asma', 'Asthma'],
-            COPD: ['COPD']
-        };
+      <!-- 5: KPI breakdown -->
+      <p class="section-title">KPI Liputan Saringan Perokok</p>
+      <div class="card">
+        <h2 id="ttlKpi">KPI mengikut daerah</h2>
+        <p class="sub">KPI = perokok* layak &amp; bersetuju yang menjalani X-ray dada ÷ perokok* layak &amp; bersetuju disaring × 100. Sasaran 80%.</p>
+        <div class="grid g-5-7">
+          <div><div class="bars" id="chKpi"></div></div>
+          <div class="tbl-wrap" id="kpiTable"></div>
+        </div>
+      </div>
 
-        // Initialize App
-        document.addEventListener('DOMContentLoaded', () => {
-            Chart.register(ChartDataLabels);
-            fetchData();
-            setupEventListeners();
-        });
+      <!-- 6: Outcome -->
+      <p class="section-title">Hasil (outcome) pengesanan penyakit</p>
+      <div class="grid g4" id="outcomeCards"></div>
+      <p style="font-size:12px;color:var(--muted);margin:-10px 0 0">Sumber: kolum Final Diagnosis. % dikira berdasarkan jumlah saringan bagi skop penapis semasa.</p>
 
-        function setupEventListeners() {
-            document.getElementById('dateFrom').addEventListener('change', applyFilters);
-            document.getElementById('dateTo').addEventListener('change', applyFilters);
-            document.getElementById('districtFilter').addEventListener('change', handleDistrictChange);
-            document.getElementById('clinicFilter').addEventListener('change', applyFilters);
-        }
+      <footer>
+        * Perokok termasuk bekas perokok: Smoking Status = active, ex_smoker_lt15 atau ex_smoker_gt15. Layak &amp; bersetuju: Agreed to Further Screening = Yes.<br>
+        Sumber data: Database LHI Kedah (Google Sheet). <span id="loadedAt"></span>
+      </footer>
+    </div>
+  </div>
+</main>
 
-        function refreshData() {
-            document.getElementById('dashboardContent').style.display = 'none';
-            document.getElementById('loadingIndicator').style.display = 'flex';
-            fetchData();
-        }
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="inner">
+    &copy; 2026 Inisiatif Kesihatan Paru-Paru Kebangsaan (LHI) - Jabatan Kesihatan Negeri Kedah.
+  </div>
+</footer>
 
-        function fetchData() {
-            const sheetId = '1PtcLb5XQPzAjYzE3PyLIJfWUzlS9ekJDwV0C6VBSYMk';
-            const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
+<div id="tip" class="hidden" role="tooltip"></div>
 
-            Papa.parse(csvUrl, {
-                download: true,
-                header: true,
-                skipEmptyLines: true,
-                complete: function(results) {
-                    globalData = results.data.map(row => {
-                        let distKey = Object.keys(row).find(k => k.toLowerCase().includes('district'));
-                        if (distKey && row[distKey]) {
-                            let distVal = row[distKey].trim();
-                            if (distVal.toLowerCase() === 'pokok sena') {
-                                row[distKey] = 'Kota Setar';
-                            }
-                        }
-                        return row;
-                    });
-                    processInitialData();
-                    document.getElementById('loadingIndicator').style.display = 'none';
-                    document.getElementById('dashboardContent').style.display = 'block';
-                },
-                error: function(error) {
-                    console.error('Error fetching data:', error);
-                    document.getElementById('loadingIndicator').innerHTML = `<div class="text-red-600 p-4 bg-red-50 rounded-md border border-red-200 shadow-sm text-center font-semibold"><i class="fa-solid fa-triangle-exclamation mr-2"></i> Gagal memuat turun data. Sila pastikan Google Sheet dikongsi sebagai "Anyone with the link can view".</div>`;
-                }
-            });
-        }
+<!-- Admin login -->
+<div class="modal hidden" id="mLogin" role="dialog" aria-modal="true" aria-labelledby="mLoginT">
+  <div class="modal-card">
+    <h3 id="mLoginT">Log masuk Admin</h3>
+    <p>Masukkan kata laluan admin.</p>
+    <div class="pwd-wrap"><input type="password" id="pwd" autocomplete="current-password" aria-label="Kata laluan"><button type="button" class="eye" id="btnEye" aria-label="Tunjuk kata laluan" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
+    <p class="err-text" id="pwdErr"></p>
+    <div class="modal-actions">
+      <button class="btn" type="button" data-close>Batal</button>
+      <button class="btn btn-primary" type="button" id="btnLogin">Log masuk</button>
+    </div>
+  </div>
+</div>
 
-        // Fungsi membaca CSV kolom yang jauh lebih pintar & kebal ralat
-        function getSafeValue(row, possibleNames) {
-            if (!Array.isArray(possibleNames)) possibleNames = [possibleNames];
-            const keys = Object.keys(row);
-            
-            // 1. Exact Match
-            for (let name of possibleNames) {
-                if (row[name] !== undefined && row[name] !== null && row[name] !== '') return row[name];
-            }
+<!-- Admin panel -->
+<div class="modal hidden" id="mAdmin" role="dialog" aria-modal="true" aria-labelledby="mAdminT">
+  <div class="modal-card">
+    <h3 id="mAdminT">Panel Admin</h3>
+    <div class="admin-list">
+      <div><span>Jumlah rekod dimuatkan</span><b id="aRows">—</b></div>
+      <div><span>Rekod terkini</span><b id="aLast">—</b></div>
+      <div><span>Data dimuatkan pada</span><b id="aLoaded">—</b></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" type="button" id="btnLogout">Log keluar</button>
+      <button class="btn" type="button" id="btnReload2">↻ Muat semula data</button>
+      <a class="btn btn-primary" id="lnkSheet" target="_blank" rel="noopener">Buka Google Sheet ↗</a>
+    </div>
+  </div>
+</div>
 
-            // 2. Fuzzy Match (buang ruang & karakter khas)
-            for (let name of possibleNames) {
-                const cleanName = name.toLowerCase().replace(/[^a-z0-9]/g, '');
-                for (let key of keys) {
-                    const cleanKey = key.toLowerCase().replace(/[^a-z0-9]/g, '');
-                    if (cleanKey === cleanName || cleanKey.includes(cleanName)) {
-                        if(row[key]) return row[key];
-                    }
-                }
-            }
-            return '';
-        }
+<script>
+/* =====================================================================
+   KONFIGURASI — ubah di sini sahaja
+   ===================================================================== */
+const CONFIG = {
+  // Google Sheet sumber data (mesti dikongsi "Anyone with the link: Viewer")
+  SHEET_ID: '1PtcLb5XQPzAjYzE3PyLIJfWUzlS9ekJDwV0C6VBSYMk',
+  SHEET_NAME: '',            // kosong = tab pertama. Atau isi nama tab, cth 'Sheet1'
+  // Pautan butang di bahagian atas
+  RUJUKAN_URL: 'https://drive.google.com/drive/folders/19vabHyWyAMegeP0ppkRRGiCc0whTSjHE?usp=drive_link',
+  NALURY_URL: 'https://nalury.mrichealthcare.com/',
+  // Pautan yang dibuka oleh butang Admin
+  ADMIN_SHEET_URL: 'https://docs.google.com/spreadsheets/d/1PtcLb5XQPzAjYzE3PyLIJfWUzlS9ekJDwV0C6VBSYMk/edit?usp=drive_link',
+  // SHA-256 bagi kata laluan admin (bukan kata laluan sebenar)
+  ADMIN_HASH: '1ce52cb8cc1eae14755b14c5b9ecfb4f0decba3c7acd2f7b23fadac486bc356f',
+  KPI_TARGET: 80,
 
-        function processInitialData() {
-            if (!globalData || globalData.length === 0) return;
+  // Huruf kolum dalam Google Sheet
+  COL: {
+    date:     'A',   // Submission Date & Time
+    district: 'L',   // District
+    program:  'O',   // Program
+    clinic:   'R',   // Clinic / Designation
+    smoking:  'S',   // Smoking Status
+    agree:    'AQ',  // Agreed to Further Screening
+    xray:     'CU'   // Chest X-ray done
+  },
+  // Gabungan daerah: nama di kiri dipaparkan sebagai nama di kanan (tidak sensitif huruf besar/kecil)
+  DISTRICT_MERGE: { 'Pokok Sena': 'Kota Setar' },
+  SMOKER_VALUES: ['active', 'ex_smoker_gt15', 'ex_smoker_lt15'],
+  YES_VALUES: ['yes', 'ya', 'y', 'true', '1'],
 
-            let latestDateStr = '';
-            const dates = globalData.map(row => getSafeValue(row, COL.TIMESTAMP)).filter(Boolean);
-            if (dates.length > 0) {
-                latestDateStr = dates.sort().reverse()[0].split(' ')[0];
-                document.getElementById('lastUpdateText').innerText = `Tarikh Saringan Sehingga: ${latestDateStr}`;
-            }
+  // Hasil pengesanan penyakit — dibaca daripada kolum EJ (Final Diagnosis).
+  // Satu rekod dikira positif jika teks diagnosis sepadan dengan 'match' dan TIDAK sepadan dengan 'exclude'.
+  // Satu pesakit boleh dikira dalam lebih daripada satu penyakit (cth. Asthma-COPD overlap).
+  // Ubah corak di sini jika label dalam kolum EJ berbeza.
+  OUTCOME_COL: 'EJ',
+  OUTCOME_EXCLUDE: /(rule[sd]?\s*out|\br\/o\b|tiada|negati|normal|\bno\b|not\s+(detected|consistent))/i,
+  OUTCOMES: [
+    { key: 'kanser', label: 'Kanser paru-paru', target: 2, match: /(lung\s*(cancer|ca\b|carcinoma|malignan|neoplasm)|kanser\s*paru|\bn?sclc\b|bronchogenic)/i },
+    { key: 'tibi',   label: 'Tibi pulmonari',   target: 5, match: /(\bptb\b|pulmonary\s*(tb|tuberculosis)|tibi\s*paru|\btb\b|tuberculosis|tibi)/i,
+      exclude: /(latent|\bltbi\b|contact|kontak|extra\s*-?\s*pulmonary|\beptb\b)/i },
+    { key: 'asma',   label: 'Asma',             target: 5, match: /(asthma|\basma\b)/i },
+    { key: 'copd',   label: 'COPD',             target: 5, match: /(copd|chronic\s*obstructive|\bpppk\b)/i }
+  ]
+};
 
-            const districts = [...new Set(globalData.map(row => getSafeValue(row, COL.DISTRICT)).filter(Boolean))].sort();
-            const distSelect = document.getElementById('districtFilter');
-            distSelect.innerHTML = '<option value="ALL">Semua Daerah</option>';
-            districts.forEach(d => {
-                const opt = document.createElement('option');
-                opt.value = d;
-                opt.innerText = d;
-                distSelect.appendChild(opt);
-            });
+/* ===================================================================== */
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString('ms-MY');
+const pct = (a, b) => b > 0 ? (a / b * 100) : null;
+const pctTxt = v => v == null ? '—' : (v >= 10 ? v.toFixed(1) : v.toFixed(2)).replace(/\.?0+$/, '') + '%';
+const norm = s => (s == null ? '' : String(s)).trim();
+const lc = s => norm(s).toLowerCase();
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const esc = s => norm(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ALL = '__all__';
+const NA = '(Tidak dinyatakan)';
 
-            applyFilters();
-        }
+let DATA = [];
+let charts = {};
+let state = { from: '', to: '', district: ALL, clinic: ALL, view: 'chart' };
+let loadedAt = null;
 
-        function handleDistrictChange() {
-            const district = document.getElementById('districtFilter').value;
-            const clinicSelect = document.getElementById('clinicFilter');
-            
-            clinicSelect.innerHTML = '<option value="ALL">Semua Fasiliti</option>';
-            
-            if (district === 'ALL') {
-                clinicSelect.disabled = true;
-                clinicSelect.innerHTML = '<option value="ALL">Semua Fasiliti (Pilih Daerah Dahulu)</option>';
-            } else {
-                clinicSelect.disabled = false;
-                const clinics = [...new Set(globalData
-                    .filter(row => getSafeValue(row, COL.DISTRICT) === district)
-                    .map(row => getSafeValue(row, COL.CLINIC))
-                    .filter(Boolean))].sort();
-                    
-                clinics.forEach(c => {
-                    const opt = document.createElement('option');
-                    opt.value = c;
-                    opt.innerText = c;
-                    clinicSelect.appendChild(opt);
-                });
-            }
-            applyFilters();
-        }
+/* ---------- Data loading (Google Visualization API, JSON) ---------- */
+function colLetters() {
+  const set = new Set(Object.values(CONFIG.COL));
+  if (CONFIG.OUTCOME_COL) set.add(CONFIG.OUTCOME_COL.toUpperCase());
+  return [...set];
+}
 
-        function applyFilters() {
-            const dateFrom = document.getElementById('dateFrom').value;
-            const dateTo = document.getElementById('dateTo').value;
-            const district = document.getElementById('districtFilter').value;
-            const clinic = document.getElementById('clinicFilter').value;
+function parseDate(cell) {
+  if (!cell) return null;
+  const v = cell.v;
+  if (typeof v === 'string') {
+    const m = v.match(/^Date\((\d+),(\d+),(\d+)(?:,(\d+),(\d+),(\d+))?/);
+    if (m) return new Date(+m[1], +m[2], +m[3], +(m[4]||0), +(m[5]||0), +(m[6]||0));
+    const t = v.trim().match(/^(\d{4})-(\d{1,2})-(\d{1,2})(?:[ T](\d{1,2}):(\d{2})(?::(\d{2}))?)?/);
+    if (t) return new Date(+t[1], +t[2]-1, +t[3], +(t[4]||0), +(t[5]||0), +(t[6]||0));
+    const d = v.trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?/);
+    if (d) return new Date(+d[3], +d[2]-1, +d[1], +(d[4]||0), +(d[5]||0), +(d[6]||0));
+  }
+  if (cell.f) { const p = parseDate({ v: cell.f }); if (p) return p; }
+  return null;
+}
+const dkey = d => d ? `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}` : '';
 
-            filteredData = globalData.filter(row => {
-                let match = true;
-                const rowTimestamp = getSafeValue(row, COL.TIMESTAMP);
-                const rowDateStr = rowTimestamp ? String(rowTimestamp).split(' ')[0] : null;
-                
-                if (dateFrom && rowDateStr && rowDateStr < dateFrom) match = false;
-                if (dateTo && rowDateStr && rowDateStr > dateTo) match = false;
-                
-                const rowDist = getSafeValue(row, COL.DISTRICT);
-                const rowClinic = getSafeValue(row, COL.CLINIC);
+async function fetchSheet() {
+  const letters = colLetters();
+  const q = 'select ' + letters.join(',') + ' where ' + CONFIG.COL.date + ' is not null';
+  let url = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:json&headers=1&tq=${encodeURIComponent(q)}`;
+  if (CONFIG.SHEET_NAME) url += '&sheet=' + encodeURIComponent(CONFIG.SHEET_NAME);
+  url += '&_=' + Date.now();
+  const res = await fetch(url, { cache: 'no-store' });
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  const text = await res.text();
+  const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
+  if (json.status === 'error') throw new Error((json.errors || []).map(e => e.detailed_message || e.message).join('; '));
+  const idx = {}; letters.forEach((L, i) => idx[L] = i);
+  const C = CONFIG.COL;
+  const cellText = c => c == null ? '' : norm(c.f != null && typeof c.v !== 'string' ? c.f : c.v);
+  return (json.table.rows || []).map(r => {
+    const c = r.c || [];
+    const get = L => cellText(c[idx[L]]);
+    const d = parseDate(c[idx[C.date]]);
+    const rec = {
+      date: d, day: dkey(d),
+      district: mapDistrict(get(C.district)) || NA,
+      program: get(C.program) || NA,
+      clinic: get(C.clinic) || NA,
+      smoking: lc(get(C.smoking)),
+      agree: lc(get(C.agree)),
+      xray: lc(get(C.xray)),
+      dx: CONFIG.OUTCOME_COL ? get(CONFIG.OUTCOME_COL.toUpperCase()) : ''
+    };
+    return rec;
+  }).filter(r => r.date);
+}
 
-                if (district !== 'ALL' && rowDist !== district) match = false;
-                if (district !== 'ALL' && clinic !== 'ALL' && rowClinic !== clinic) match = false;
-                
-                return match;
-            });
+/* ---------- Demo data (?demo=1) for previewing without the sheet ---------- */
+function demoData() {
+  const dist = {
+    'Kota Setar':['KK Bandar Alor Setar','KK Dato’ Kumbar','KK Pokok Sena','KK Simpang Empat','KK Simpang Kuala','KK Langgar'],
+    'Kubang Pasu':['KK Tunjang','KK Changlun','KK Kepala Batas'], 'Pendang':['KK Pendang'], 'Padang Terap':['KK Naka'],
+    'Yan':['KK Guar Chempedak'], 'Kuala Muda':['KK Bandar Sungai Petani','KK Taman Intan'], 'Kulim':['KK Kulim'],
+    'Bandar Baharu':['KK Serdang'], 'Sik':['KK Jeniang'], 'Langkawi':['KK Padang Matsirat','KK Air Hangat','KK Kuah'], 'Baling':['KK Baling']
+  };
+  const progs = ['Klinik Kesihatan','Klinik Kesihatan','Klinik Kesihatan','KBM','NHSI','Outreach'];
+  const smk = ['never','never','active','active','ex_smoker_lt15','ex_smoker_gt15'];
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const pick = a => a[Math.floor(rnd() * a.length)];
+  const rows = []; const start = new Date(2025, 6, 7).getTime(), end = new Date(2026, 9, 8, 15, 59).getTime();
+  const ds = Object.keys(dist);
+  for (let i = 0; i < 1400; i++) {
+    const district = rnd() < 0.3 ? 'Pendang' : pick(ds);
+    const rawDistrict = rnd() < 0.15 ? 'POKOK SENA' : district;
+    const d = new Date(start + rnd() * (end - start));
+    const agree = rnd() < 0.88 ? 'yes' : 'no';
+    rows.push({ date: d, day: dkey(d), district: mapDistrict(rawDistrict), clinic: rawDistrict === 'POKOK SENA' ? 'KK Pokok Sena' : pick(dist[district]), program: pick(progs),
+      smoking: pick(smk), agree, xray: agree === 'yes' && rnd() < 0.78 ? 'yes' : 'no',
+      dx: (() => { const x = rnd(); return x < 0.012 ? 'Lung Cancer' : x < 0.04 ? 'Pulmonary TB' : x < 0.09 ? 'Asthma' : x < 0.15 ? 'COPD' : x < 0.5 ? 'Normal' : ''; })() });
+  }
+  rows.push({ date: new Date(end), day: dkey(new Date(end)), district: 'Pendang', clinic: 'KK Pendang', program: 'Klinik Kesihatan', smoking: 'active', agree: 'yes', xray: 'yes', dx: '' });
+  return rows;
+}
 
-            updateDashboard();
-        }
+/* ---------- Metrics ---------- */
+function hasDx(text, o) {
+  if (!o.match.test(text)) return false;
+  if (o.exclude && o.exclude.test(text)) return false;
+  // exclusion umum dinilai pada segmen diagnosis yang sepadan sahaja
+  const parts = text.split(/[;,\/\n+]|\band\b|\bdan\b/i).filter(p => o.match.test(p));
+  return parts.some(p => !CONFIG.OUTCOME_EXCLUDE.test(p));
+}
+function mapDistrict(d) {
+  const k = lc(d);
+  for (const [from, to] of Object.entries(CONFIG.DISTRICT_MERGE || {})) if (lc(from) === k) return to;
+  return norm(d);
+}
+const byName = (a, b) => String(a).localeCompare(String(b), 'ms', { sensitivity: 'base' });
+const isSmoker = r => CONFIG.SMOKER_VALUES.includes(r.smoking);
+const isYes = v => CONFIG.YES_VALUES.includes(v);
+function metrics(rows) {
+  let total = rows.length, elig = 0, xray = 0;
+  const out = {}; CONFIG.OUTCOMES.forEach(o => out[o.key] = 0);
+  for (const r of rows) {
+    if (isSmoker(r) && isYes(r.agree)) { elig++; if (isYes(r.xray)) xray++; }
+    if (r.dx) for (const o of CONFIG.OUTCOMES) if (hasDx(r.dx, o)) out[o.key]++;
+  }
+  return { total, elig, xray, kpi: pct(xray, elig), out };
+}
+function groupBy(rows, key) {
+  const m = new Map();
+  for (const r of rows) { const k = r[key]; if (!m.has(k)) m.set(k, []); m.get(k).push(r); }
+  return m;
+}
 
-        function updateDashboard() {
-            const total = filteredData.length;
-            document.getElementById('cardTotalScreenings').innerText = total.toLocaleString();
+/* ---------- Filters ---------- */
+function filtered() {
+  return DATA.filter(r =>
+    (!state.from || r.day >= state.from) && (!state.to || r.day <= state.to) &&
+    (state.district === ALL || r.district === state.district) &&
+    (state.clinic === ALL || r.clinic === state.clinic));
+}
+const sortAlpha = arr => arr.sort((a, b) => a.localeCompare(b, 'ms'));
+function fillDistricts() {
+  const ds = sortAlpha([...new Set(DATA.map(r => r.district))]);
+  $('fDistrict').innerHTML = `<option value="${ALL}">Semua daerah</option>` + ds.map(d => `<option value="${esc(d)}">${esc(d)}</option>`).join('');
+  $('fDistrict').value = ds.includes(state.district) ? state.district : ALL;
+  if ($('fDistrict').value === ALL) state.district = ALL;
+}
+function fillClinics() {
+  const src = state.district === ALL ? DATA : DATA.filter(r => r.district === state.district);
+  const cs = sortAlpha([...new Set(src.map(r => r.clinic))]);
+  $('fClinic').innerHTML = `<option value="${ALL}">Semua fasiliti${state.district === ALL ? '' : ' di ' + esc(state.district)}</option>` + cs.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
+  if (!cs.includes(state.clinic)) state.clinic = ALL;
+  $('fClinic').value = state.clinic;
+}
 
-            // Calculate KPI Smoker
-            let eligibleSmokers = 0;
-            let xrayDone = 0;
+/* ---------- Rendering ---------- */
 
-            filteredData.forEach(row => {
-                const smokeStatus = String(getSafeValue(row, COL.SMOKING_STATUS)).toLowerCase().trim();
-                const agreedStatus = String(getSafeValue(row, COL.AGREE_SCREENING)).toLowerCase().trim();
-                const xrayStatus = String(getSafeValue(row, COL.XRAY_DONE)).toLowerCase().trim();
+function scopeName() {
+  if (state.clinic !== ALL) return state.clinic;
+  if (state.district !== ALL) return 'Daerah ' + state.district;
+  return 'Negeri Kedah';
+}
 
-                const isSmoker = smokeStatus.includes('active') || smokeStatus.includes('ex_smoker') || smokeStatus.includes('bekas');
-                const agreed = agreedStatus === 'yes' || agreedStatus === 'ya' || agreedStatus.includes('yes');
-                const doneXray = xrayStatus === 'yes' || xrayStatus === 'ya' || xrayStatus.includes('yes');
-                
-                if (isSmoker && agreed) {
-                    eligibleSmokers++;
-                    if (doneXray) {
-                        xrayDone++;
-                    }
-                }
-            });
+function render() {
+  const rows = filtered();
+  const m = metrics(rows);
+  const sName = scopeName();
 
-            const kpiPercentage = eligibleSmokers > 0 ? ((xrayDone / eligibleSmokers) * 100).toFixed(1) : 0;
-            document.getElementById('cardKpiSmoker').innerText = `${kpiPercentage}%`;
-            document.getElementById('cardKpiSmokerDetail').innerText = `${xrayDone} / ${eligibleSmokers} Disaring`;
+  $('scopeText').innerHTML = `Skop: <b>${esc(sName)}</b>${state.from || state.to ? ` · ${state.from || '…'} hingga ${state.to || '…'}` : ''}`;
+  $('lblTotal').textContent = 'Jumlah saringan · ' + sName;
+  $('vTotal').textContent = fmt(m.total);
+  $('nTotal').textContent = rows.length ? `${fmt(new Set(rows.map(r => r.clinic)).size)} fasiliti · ${fmt(new Set(rows.map(r => r.district)).size)} daerah` : 'Tiada rekod dalam julat ini';
+  $('vElig').textContent = fmt(m.elig);
+  $('vXray').textContent = fmt(m.xray);
+  $('vKpi').textContent = pctTxt(m.kpi);
+  $('kpiBar').style.width = Math.min(100, m.kpi || 0) + '%';
+  $('kpiPill').innerHTML = statusPill(m.kpi);
 
-            // Outcomes
-            const isYes = (val) => String(val || '').toLowerCase().trim() === 'yes' || String(val || '').toLowerCase().trim() === 'ya';
-            let cancerCount = 0, tbCount = 0, asthmaCount = 0, copdCount = 0;
-            
-            filteredData.forEach(row => {
-                if (isYes(getSafeValue(row, COL.CANCER))) cancerCount++;
-                if (isYes(getSafeValue(row, COL.TB))) tbCount++;
-                if (isYes(getSafeValue(row, COL.ASTHMA))) asthmaCount++;
-                if (isYes(getSafeValue(row, COL.COPD))) copdCount++;
-            });
+  renderProgram(rows);
+  renderArea(rows);
+  renderKpi(rows, m);
+  renderOutcomes(m);
+}
 
-            const calcPct = (count) => total > 0 ? ((count / total) * 100).toFixed(1) : 0;
-            
-            document.getElementById('cardCancer').innerText = `${cancerCount} (${calcPct(cancerCount)}%)`;
-            document.getElementById('barCancer').style.width = `${calcPct(cancerCount)}%`;
-            document.getElementById('cardTb').innerText = `${tbCount} (${calcPct(tbCount)}%)`;
-            document.getElementById('barTb').style.width = `${calcPct(tbCount)}%`;
-            document.getElementById('cardAsthma').innerText = `${asthmaCount} (${calcPct(asthmaCount)}%)`;
-            document.getElementById('barAsthma').style.width = `${calcPct(asthmaCount)}%`;
-            document.getElementById('cardCopd').innerText = `${copdCount} (${calcPct(copdCount)}%)`;
-            document.getElementById('barCopd').style.width = `${calcPct(copdCount)}%`;
+function statusPill(v) {
+  if (v == null) return '<span class="pill warn">Tiada data</span>';
+  return v >= CONFIG.KPI_TARGET ? '<span class="pill good">✓ Capai</span>' : '<span class="pill warn">▼ Bawah</span>';
+}
 
-            renderCharts();
-        }
+/* ---------- Lightweight charts (pure HTML/SVG) ---------- */
+const tip = () => $('tip');
+function showTip(e, html) { const t = tip(); t.innerHTML = html; t.classList.remove('hidden'); moveTip(e); }
+function moveTip(e) { const t = tip(); const x = Math.min(e.clientX + 14, innerWidth - t.offsetWidth - 8); const y = Math.min(e.clientY + 14, innerHeight - t.offsetHeight - 8); t.style.left = x + 'px'; t.style.top = y + 'px'; }
+function hideTip() { tip().classList.add('hidden'); }
+function bindTips(root) {
+  root.querySelectorAll('[data-tip]').forEach(el => {
+    el.addEventListener('mouseenter', e => showTip(e, el.dataset.tip));
+    el.addEventListener('mousemove', moveTip);
+    el.addEventListener('mouseleave', hideTip);
+  });
+}
+function niceMax(v) { if (v <= 0) return 1; const p = Math.pow(10, Math.floor(Math.log10(v))); for (const m of [1, 2, 2.5, 5, 10]) if (m * p >= v) return m * p; return 10 * p; }
 
-        function renderCharts() {
-            const countByField = (data, fieldColDef) => {
-                return data.reduce((acc, row) => {
-                    const val = getSafeValue(row, fieldColDef) || 'Tidak Dinyatakan';
-                    acc[val] = (acc[val] || 0) + 1;
-                    return acc;
-                }, {});
-            };
+/* items: [{label, value, text, color, tip}] */
+function hbars(el, items, opts = {}) {
+  if (!items.length) { el.innerHTML = '<div class="empty">Tiada data untuk penapis ini</div>'; return; }
+  const max = opts.max || niceMax(Math.max(...items.map(i => i.value)));
+  const tgt = opts.target != null ? (opts.target / max * 100) : null;
+  let h = '';
+  if (tgt != null) h += `<div class="target-cap"><i></i><span><b style="left:${tgt}%">Sasaran ${opts.target}%</b></span></div>`;
+  h += items.map(i => {
+    const w = Math.max(0, Math.min(100, i.value / max * 100));
+    const inside = w > 82;
+    return `<div class="bar-row" data-tip="${esc(i.tip)}"><div class="bl" title="${esc(i.label)}">${esc(i.label)}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${w}%;background:${i.color}"></div>
+      ${tgt != null ? `<div class="bar-target" style="left:${tgt}%"></div>` : ''}
+      <span class="bar-val" style="${inside ? `right:${100 - w}%;padding-right:6px;color:#fff` : `left:${w}%`}">${esc(i.text)}</span></div></div>`;
+  }).join('');
+  h += `<div class="axis"><i></i><span><em style="font-style:normal">0</em><em style="font-style:normal">${opts.suffix ? max + opts.suffix : fmt(max)}</em></span></div>`;
+  el.innerHTML = h;
+  bindTips(el);
+}
 
-            const colors = ['#0052CC', '#00875A', '#FF991F', '#DE350B', '#6554C0', '#00B8D9', '#FF5630', '#36B37E', '#FFC400'];
+function donut(el, items, total) {
+  if (!total) { el.innerHTML = '<div class="empty">Tiada data</div>'; return; }
+  const R = 90, r = 56, C = 100; let a0 = -Math.PI / 2;
+  const pt = (rad, a) => [C + rad * Math.cos(a), C + rad * Math.sin(a)];
+  const paths = items.map(it => {
+    const frac = it.value / total; let a1 = a0 + frac * Math.PI * 2;
+    if (frac >= 0.9999) a1 = a0 + Math.PI * 2 - 0.0001;
+    const large = a1 - a0 > Math.PI ? 1 : 0;
+    const [x0, y0] = pt(R, a0), [x1, y1] = pt(R, a1), [x2, y2] = pt(r, a1), [x3, y3] = pt(r, a0);
+    const d = `M${x0},${y0} A${R},${R} 0 ${large} 1 ${x1},${y1} L${x2},${y2} A${r},${r} 0 ${large} 0 ${x3},${y3} Z`;
+    a0 = a1;
+    return `<path d="${d}" fill="${it.color}" stroke="${css('--surface')}" stroke-width="2" data-tip="${esc(it.tip)}"></path>`;
+  }).join('');
+  el.innerHTML = `<svg viewBox="0 0 200 200" aria-hidden="true">${paths}</svg><div class="donut-center"><b>${fmt(total)}</b><small>saringan</small></div>`;
+  bindTips(el);
+}
 
-            // Chart 1: District
-            const distCounts = countByField(filteredData, COL.DISTRICT);
-            const distLabels = Object.keys(distCounts).sort((a,b) => a.localeCompare(b));
-            const distData = distLabels.map(l => distCounts[l]);
+function renderProgram(rows) {
+  const g = [...groupBy(rows, 'program')].map(([k, v]) => [k, v.length]).sort((a, b) => b[1] - a[1]);
+  let items = g;
+  if (g.length > 6) { const rest = g.slice(5).reduce((s, x) => s + x[1], 0); items = [...g.slice(0, 5), ['Lain-lain', rest]]; }
+  const colors = ['--s1','--s2','--s3','--s4','--s5','--s6'].map(css);
+  const total = rows.length;
+  $('lgProgram').innerHTML = items.length ? items.map(([k, n], i) =>
+    `<div><i style="background:${colors[i]}"></i>${esc(k)}<span class="n">${fmt(n)} <span style="color:var(--muted)">(${pctTxt(pct(n, total))})</span></span></div>`).join('') : '';
+  donut($('chProgram'), items.map(([k, n], i) => ({ value: n, color: colors[i], tip: `<b>${esc(k)}</b>${fmt(n)} saringan (${pctTxt(pct(n, total))})` })), total);
+}
 
-            if (chartDistrictObj) chartDistrictObj.destroy();
-            chartDistrictObj = new Chart(document.getElementById('chartDistrict'), {
-                type: 'bar',
-                data: {
-                    labels: distLabels,
-                    datasets: [{
-                        label: 'Jumlah Saringan',
-                        data: distData,
-                        backgroundColor: '#0052CC',
-                        borderRadius: 4
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { 
-                        legend: { display: false },
-                        datalabels: { color: '#fff', anchor: 'end', align: 'bottom', font: { weight: 'bold' } }
-                    }
-                }
-            });
+function renderArea(rows) {
+  const byDistrict = state.district === ALL;
+  const key = byDistrict ? 'district' : 'clinic';
+  $('ttlArea').textContent = byDistrict ? 'Saringan mengikut daerah' : 'Saringan mengikut fasiliti kesihatan';
+  $('subArea').textContent = byDistrict ? 'Bilangan saringan, Negeri Kedah' : 'Bilangan saringan, Daerah ' + state.district;
+  const g = [...groupBy(rows, key)].map(([k, v]) => [k, v.length])
+    .sort(byDistrict ? (a, b) => byName(a[0], b[0]) : (a, b) => b[1] - a[1]);
+  hbars($('chArea'), g.map(([k, n]) => ({ label: k, value: n, text: fmt(n),
+    color: state.clinic !== ALL && k !== state.clinic ? css('--bar-2') : css('--bar'),
+    tip: `<b>${esc(k)}</b>${fmt(n)} saringan · ${pctTxt(pct(n, rows.length))} daripada skop` })));
+  const head = byDistrict ? 'Daerah' : 'Fasiliti kesihatan';
+  $('areaTableBox').innerHTML = `<table><thead><tr><th>${head}</th><th class="num">Saringan</th><th class="num">% skop</th></tr></thead><tbody>` +
+    g.map(([k, n]) => `<tr><td>${esc(k)}</td><td class="num">${fmt(n)}</td><td class="num">${pctTxt(pct(n, rows.length))}</td></tr>`).join('') +
+    `</tbody><tfoot><tr><td>Jumlah</td><td class="num">${fmt(rows.length)}</td><td class="num">100%</td></tr></tfoot></table>`;
+  applyView();
+}
 
-            // Chart 2: Program
-            const progCounts = countByField(filteredData, COL.PROGRAM);
-            const progLabels = Object.keys(progCounts);
-            const progData = progLabels.map(l => progCounts[l]);
+function renderKpi(rows, total) {
+  const byDistrict = state.district === ALL;
+  const key = byDistrict ? 'district' : 'clinic';
+  $('ttlKpi').textContent = byDistrict ? 'KPI mengikut daerah · Negeri Kedah' : 'KPI mengikut fasiliti kesihatan · Daerah ' + state.district;
+  const g = [...groupBy(rows, key)].map(([k, v]) => ({ k, ...metrics(v) }))
+    .sort(byDistrict ? (a, b) => byName(a.k, b.k) : (a, b) => (b.kpi ?? -1) - (a.kpi ?? -1) || b.elig - a.elig);
+  const T = CONFIG.KPI_TARGET;
+  hbars($('chKpi'), g.filter(x => x.elig > 0).map(x => ({ label: x.k, value: x.kpi, text: pctTxt(x.kpi),
+    color: x.kpi >= T ? css('--bar') : css('--s2'),
+    tip: `<b>${esc(x.k)}</b>KPI ${pctTxt(x.kpi)} · ${x.kpi >= T ? 'capai' : 'bawah'} sasaran<br>X-ray ${fmt(x.xray)} / layak &amp; setuju ${fmt(x.elig)}` })),
+    { max: 100, target: T, suffix: '%' });
+  const head = byDistrict ? 'Daerah' : 'Fasiliti kesihatan';
+  $('kpiTable').innerHTML = `<table><thead><tr><th>${head}</th><th class="num">Layak &amp; setuju*</th><th class="num">X-ray</th><th class="num">KPI</th><th>Status</th></tr></thead><tbody>` +
+    g.map(x => `<tr><td>${esc(x.k)}</td><td class="num">${fmt(x.elig)}</td><td class="num">${fmt(x.xray)}</td><td class="num">${pctTxt(x.kpi)}</td><td>${statusPill(x.kpi)}</td></tr>`).join('') +
+    `</tbody><tfoot><tr><td>${esc(byDistrict ? 'Negeri Kedah' : 'Daerah ' + state.district)}</td><td class="num">${fmt(total.elig)}</td><td class="num">${fmt(total.xray)}</td><td class="num">${pctTxt(total.kpi)}</td><td>${statusPill(total.kpi)}</td></tr></tfoot></table>`;
+}
 
-            if (chartProgramObj) chartProgramObj.destroy();
-            chartProgramObj = new Chart(document.getElementById('chartProgram'), {
-                type: 'doughnut',
-                data: {
-                    labels: progLabels,
-                    datasets: [{
-                        data: progData,
-                        backgroundColor: colors.slice(0, progLabels.length),
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { 
-                        legend: { position: 'right', labels: { boxWidth: 12 } },
-                        datalabels: { color: '#fff', font: { weight: 'bold' }, formatter: (value) => value > 0 ? value : '' }
-                    },
-                    cutout: '60%'
-                }
-            });
+function renderOutcomes(m) {
+  $('outcomeCards').innerHTML = CONFIG.OUTCOMES.map(o => {
+    const n = m.out[o.key], p = pct(n, m.total);
+    return `<div class="card stat outcome"><p class="label">${esc(o.label)}</p><p class="value">${fmt(n)}<span class="pct">${pctTxt(p)}</span></p><p class="target">Sasaran pengesanan ${o.target}%</p></div>`;
+  }).join('');
+}
 
-            // Chart 3: Clinics
-            const isDistrictSelected = document.getElementById('districtFilter').value !== 'ALL';
-            document.getElementById('clinicChartTitle').innerText = isDistrictSelected ? 
-                `Saringan Mengikut Klinik (Daerah ${document.getElementById('districtFilter').value})` : 
-                'Top 15 Klinik Keseluruhan Negeri';
+function applyView() {
+  document.querySelectorAll('.view-toggle button').forEach(b => b.setAttribute('aria-pressed', b.dataset.view === state.view));
+  $('areaChartBox').classList.toggle('hidden', state.view !== 'chart');
+  $('areaTableBox').classList.toggle('hidden', state.view !== 'table');
+}
 
-            const clinicCounts = countByField(filteredData, COL.CLINIC);
-            let clinicLabels = Object.keys(clinicCounts).sort((a,b) => clinicCounts[b] - clinicCounts[a]);
-            if (!isDistrictSelected && clinicLabels.length > 15) {
-                clinicLabels = clinicLabels.slice(0, 15);
-            }
-            const clinicData = clinicLabels.map(l => clinicCounts[l]);
+/* ---------- Load ---------- */
+async function load() {
+  $('loading').classList.remove('hidden');
+  $('content').classList.add('hidden');
+  $('banner').className = 'hidden';
+  const demo = new URLSearchParams(location.search).has('demo');
+  try {
+    DATA = demo ? demoData() : await fetchSheet();
+    loadedAt = new Date();
+    if (demo) { $('banner').className = 'banner demo'; $('banner').textContent = 'Mod DEMO: data rekaan untuk tujuan paparan sahaja.'; }
+    if (!DATA.length) throw new Error('Tiada rekod ditemui dalam Google Sheet.');
+    const last = DATA.reduce((a, r) => r.date > a ? r.date : a, DATA[0].date);
+    const first = DATA.reduce((a, r) => r.date < a ? r.date : a, DATA[0].date);
+    $('asOf').textContent = dkey(last);
+    $('fFrom').min = $('fTo').min = dkey(first);
+    $('fFrom').max = $('fTo').max = dkey(last);
+    $('loadedAt').textContent = `${fmt(DATA.length)} rekod · dimuatkan ${loadedAt.toLocaleString('ms-MY')}.`;
+    $('aRows').textContent = fmt(DATA.length);
+    $('aLast').textContent = last.toLocaleString('ms-MY');
+    $('aLoaded').textContent = loadedAt.toLocaleString('ms-MY');
+    fillDistricts(); fillClinics();
+    $('loading').classList.add('hidden');
+    $('content').classList.remove('hidden');
+    render();
+  } catch (e) {
+    console.error(e);
+    $('loading').classList.add('hidden');
+    $('banner').className = 'banner err';
+    $('banner').innerHTML = `<b>Data tidak dapat dimuatkan.</b> Pastikan Google Sheet dikongsi sebagai “Anyone with the link: Viewer” dan SHEET_ID dalam CONFIG betul. <br><small>Butiran: ${esc(e.message)}</small>`;
+  }
+}
 
-            if (chartClinicObj) chartClinicObj.destroy();
-            chartClinicObj = new Chart(document.getElementById('chartClinic'), {
-                type: 'bar',
-                data: {
-                    labels: clinicLabels.map(l => l.length > 20 ? l.substring(0, 20)+'...' : l),
-                    datasets: [{
-                        label: 'Jumlah Saringan',
-                        data: clinicData,
-                        backgroundColor: '#00875A',
-                        borderRadius: 4
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    indexAxis: 'y',
-                    plugins: { 
-                        legend: { display: false }, 
-                        tooltip: { callbacks: { title: (ctx) => clinicLabels[ctx[0].dataIndex] } },
-                        datalabels: { color: '#fff', anchor: 'end', align: 'left', font: { weight: 'bold' } }
-                    },
-                    scales: { x: { beginAtZero: true } }
-                }
-            });
+/* ---------- Events ---------- */
+$('fFrom').addEventListener('change', e => { state.from = e.target.value; render(); });
+$('fTo').addEventListener('change', e => { state.to = e.target.value; render(); });
+$('fDistrict').addEventListener('change', e => { state.district = e.target.value; state.clinic = ALL; fillClinics(); render(); });
+$('fClinic').addEventListener('change', e => {
+  state.clinic = e.target.value;
+  if (state.clinic !== ALL && state.district === ALL) {
+    const r = DATA.find(x => x.clinic === state.clinic);
+    if (r) { state.district = r.district; $('fDistrict').value = r.district; fillClinics(); }
+  }
+  render();
+});
+$('btnReset').addEventListener('click', () => {
+  state = { ...state, from: '', to: '', district: ALL, clinic: ALL };
+  $('fFrom').value = $('fTo').value = ''; $('fDistrict').value = ALL; fillClinics(); render();
+});
+document.querySelectorAll('.view-toggle button').forEach(b => b.addEventListener('click', () => { state.view = b.dataset.view; applyView(); }));
+$('btnRefresh').addEventListener('click', load);
+$('btnReload2').addEventListener('click', () => { closeModals(); load(); });
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => DATA.length && render());
 
-            // Chart 4: KPI By District
-            const kpiDistricts = Object.keys(countByField(filteredData, COL.DISTRICT)).sort((a,b) => a.localeCompare(b));
-            const kpiRates = kpiDistricts.map(d => {
-                let e = 0, x = 0;
-                filteredData.forEach(row => {
-                    const rowDistrict = getSafeValue(row, COL.DISTRICT);
-                    if (rowDistrict === d) {
-                        const smokeStatus = String(getSafeValue(row, COL.SMOKING_STATUS)).toLowerCase().trim();
-                        const agreedStatus = String(getSafeValue(row, COL.AGREE_SCREENING)).toLowerCase().trim();
-                        const xrayStatus = String(getSafeValue(row, COL.XRAY_DONE)).toLowerCase().trim();
+/* ---------- Admin ---------- */
+function closeModals() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); }
+function isAdmin() { try { return sessionStorage.getItem('lhiAdmin') === '1'; } catch { return false; } }
+async function sha256(s) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+}
+$('btnAdmin').addEventListener('click', () => {
+  if (isAdmin()) { $('mAdmin').classList.remove('hidden'); return; }
+  $('pwd').value = ''; $('pwd').type = 'password'; $('btnEye').innerHTML = EYE_OPEN; $('pwdErr').textContent = '';
+  $('mLogin').classList.remove('hidden'); setTimeout(() => $('pwd').focus(), 50);
+});
+async function tryLogin() {
+  const ok = (await sha256($('pwd').value)) === CONFIG.ADMIN_HASH;
+  if (!ok) { $('pwdErr').textContent = 'Kata laluan tidak sah.'; return; }
+  try { sessionStorage.setItem('lhiAdmin', '1'); } catch {}
+  closeModals(); $('mAdmin').classList.remove('hidden');
+}
+$('btnLogin').addEventListener('click', tryLogin);
+$('pwd').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
+$('btnLogout').addEventListener('click', () => { try { sessionStorage.removeItem('lhiAdmin'); } catch {} closeModals(); });
+$('lnkSheet').href = CONFIG.ADMIN_SHEET_URL;
+$('lnkRujukan').href = CONFIG.RUJUKAN_URL;
+$('lnkNalury').href = CONFIG.NALURY_URL;
+const EYE_OPEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+const EYE_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.1 10.1 0 0 1 12 19c-6.5 0-10-7-10-7a18.4 18.4 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.1 9.1 0 0 1 12 4c6.5 0 10 7 10 7a18.5 18.5 0 0 1-2.16 3.19"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="2" y1="2" x2="22" y2="22"/></svg>';
+$('btnEye').addEventListener('click', () => {
+  const show = $('pwd').type === 'password';
+  $('pwd').type = show ? 'text' : 'password';
+  $('btnEye').innerHTML = show ? EYE_OFF : EYE_OPEN;
+  $('btnEye').setAttribute('aria-pressed', show);
+  $('btnEye').setAttribute('aria-label', show ? 'Sembunyi kata laluan' : 'Tunjuk kata laluan');
+  $('pwd').focus();
+});
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', closeModals));
+document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if (e.target === m) closeModals(); }));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModals(); });
 
-                        const isSmoker = smokeStatus.includes('active') || smokeStatus.includes('ex_smoker') || smokeStatus.includes('bekas');
-                        const agreed = agreedStatus === 'yes' || agreedStatus === 'ya' || agreedStatus.includes('yes');
-                        const doneXray = xrayStatus === 'yes' || xrayStatus === 'ya' || xrayStatus.includes('yes');
-                        
-                        if (isSmoker && agreed) {
-                            e++;
-                            if (doneXray) x++;
-                        }
-                    }
-                });
-                return e > 0 ? ((x/e)*100).toFixed(1) : 0;
-            });
-
-            if (chartKpiDistrictObj) chartKpiDistrictObj.destroy();
-            chartKpiDistrictObj = new Chart(document.getElementById('chartKpiDistrict'), {
-                type: 'bar',
-                data: {
-                    labels: kpiDistricts,
-                    datasets: [{
-                        label: 'Pencapaian KPI (%)',
-                        data: kpiRates,
-                        backgroundColor: '#00B8D9',
-                        borderRadius: 4
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { 
-                        legend: { display: false },
-                        datalabels: { color: '#000', anchor: 'end', align: 'top', font: { weight: 'bold' }, formatter: (value) => value + '%' }
-                    },
-                    scales: { y: { beginAtZero: true, max: 100, ticks: { callback: function(value){return value+"%"} } } }
-                }
-            });
-        }
-
-        function openAdminModal() {
-            document.getElementById('adminModal').classList.remove('hidden');
-            document.getElementById('adminPassword').value = '';
-            document.getElementById('adminErrorMsg').classList.add('hidden');
-            document.getElementById('adminLoginView').classList.remove('hidden');
-            document.getElementById('adminDataView').classList.add('hidden');
-        }
-
-        function closeAdminModal() {
-            document.getElementById('adminModal').classList.add('hidden');
-        }
-
-        function verifyAdmin() {
-            const pwd = document.getElementById('adminPassword').value;
-            const errorMsg = document.getElementById('adminErrorMsg');
-            
-            if (pwd === "LHIKEDAH123") {
-                errorMsg.classList.add('hidden');
-                document.getElementById('adminLoginView').classList.add('hidden');
-                document.getElementById('adminDataView').classList.remove('hidden');
-            } else {
-                errorMsg.classList.remove('hidden');
-            }
-        }
-        
-        document.getElementById('adminPassword').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') verifyAdmin();
-        });
-    </script>
+load();
+</script>
 </body>
 </html>
