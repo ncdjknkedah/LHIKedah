@@ -156,7 +156,7 @@ section.alt .card{background:var(--bg);box-shadow:none}
 .thumb{height:150px;border-radius:10px;background:linear-gradient(135deg,var(--surface-2),#fff);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .thumb .mini{display:flex;flex-direction:column;gap:6px;align-items:center;width:60%}
 .thumb .mini i{display:block;height:12px;border-radius:4px;background:var(--navy);opacity:.85}
-.thumb .mini i.t{background:var(--teal)} .thumb .mini i.c{background:var(--coral)}
+.thumb .mini i.t{background:var(--teal)} .thumb .mini i.g{background:var(--gold)} .thumb .mini i.c{background:var(--coral)}
 .thumb .tag{position:absolute;top:10px;left:10px}
 .dl{display:flex;gap:8px;flex-wrap:wrap}
 
@@ -463,7 +463,11 @@ const CONFIG = {
     { team: 'KK', title: 'Carta alir saringan', desc: 'Aliran saringan di bilik konsultasi untuk PP & FMS.', a4: 'carta/KK_Carta_Alir_A4.pdf', a3: 'carta/KK_Carta_Alir_A3.pdf', color: 'teal' },
     { team: 'KK', title: 'Rujukan pantas saringan', desc: 'Kelayakan, kriteria LDCT, rujukan pakar dan NaLuRy.', a4: 'carta/KK_Rujukan_Pantas_A4.pdf', a3: 'carta/KK_Rujukan_Pantas_A3.pdf', color: 'teal' },
     { team: 'Radiologi', title: 'Carta alir LDCT', desc: 'Dari semakan kriteria hingga kemas kini NaLuRy.', a4: 'carta/Radiologi_Carta_Alir_A4.pdf', a3: 'carta/Radiologi_Carta_Alir_A3.pdf', color: 'coral' },
-    { team: 'Radiologi', title: 'Rujukan pantas LDCT', desc: 'Kriteria, verifikasi CXR, Lung-RADS dan pemetaan KK.', a4: 'carta/Radiologi_Rujukan_Pantas_A4.pdf', a3: 'carta/Radiologi_Rujukan_Pantas_A3.pdf', color: 'coral' }
+    { team: 'Radiologi', title: 'Rujukan pantas LDCT', desc: 'Kriteria, verifikasi CXR, Lung-RADS dan pemetaan KK.', a4: 'carta/Radiologi_Rujukan_Pantas_A4.pdf', a3: 'carta/Radiologi_Rujukan_Pantas_A3.pdf', color: 'coral' },
+    { team: 'Respiratori', title: 'Carta alir Respiratori', desc: 'Pengurusan lanjutan kanser, asma, COPD dan Tibi di hospital.', a4: 'carta/Respiratori_Carta_Alir_A4.pdf', a3: 'carta/Respiratori_Carta_Alir_A3.pdf', color: 'navy' },
+    { team: 'Respiratori', title: 'Rujukan pantas Respiratori', desc: 'Kriteria rujukan Lampiran E, sasaran, MDT dan NaLuRy.', a4: 'carta/Respiratori_Rujukan_Pantas_A4.pdf', a3: 'carta/Respiratori_Rujukan_Pantas_A3.pdf', color: 'navy' },
+    { team: 'Patologi', title: 'Carta alir Patologi', desc: 'Pengesahan diagnosis kanser paru-paru dan Tibi.', a4: 'carta/Patologi_Carta_Alir_A4.pdf', a3: 'carta/Patologi_Carta_Alir_A3.pdf', color: 'gold' },
+    { team: 'Patologi', title: 'Rujukan pantas Patologi', desc: 'Spesimen, ujian, keutamaan dan aliran laporan.', a4: 'carta/Patologi_Rujukan_Pantas_A4.pdf', a3: 'carta/Patologi_Rujukan_Pantas_A3.pdf', color: 'gold' }
   ],
 
   // Hospital
@@ -576,10 +580,10 @@ const TEAMS = [
       'Asma / COPD: PUMA ≥5 → spirometri (± FeNO).',
       'Kanser / Tibi: X-ray dada ± ujian kahak. Abnormal → rujuk Pakar Respiratori / Perubatan.',
       'CXR normal + risiko tinggi (50–70 tahun dan ≥20 pack-years, atau hazard + sejarah penyakit) → FMS rujuk LDCT.',
-      'CXR konvensional: hantar filem / DICOM ke Radiologi bersama borang LDCT. KK Pendang guna laporan AI.',
+      'CXR konvensional: hantar filem / DICOM ke Radiologi bersama permohonan LDCT. KK Pendang guna laporan AI.',
       'Semak keputusan LDCT dalam NaLuRy. Lung-RADS 4A/4B/4X/S → rujuk segera Pakar Respiratori.'],
-    nalury: ['BSLHI_KKM', 'Keputusan CXR, spirometri, FeNO', 'Borang rujukan', 'Susulan keputusan hospital'],
-    note: 'Cop rasmi <b>INISIATIF KESIHATAN PARU-PARU KEBANGSAAN (LHI)</b> wajib pada semua borang X-ray, LDCT dan rujukan.' },
+    nalury: ['BSLHI_KKM', 'Keputusan CXR, spirometri, FeNO', 'Rujukan (borang / e-HIS / CCMS)', 'Susulan keputusan hospital'],
+    note: 'Penanda rasmi <b>INISIATIF KESIHATAN PARU-PARU KEBANGSAAN (LHI)</b> wajib pada semua permohonan X-ray, LDCT dan rujukan: <b>cop</b> pada borang fizikal, atau <b>catatan LHI dalam e-HIS / CCMS</b> bagi rujukan atas talian.' },
   { id: 'outreach', label: 'Outreach', icon: ICON.walk, chartsFor: 'KK',
     intro: 'Pasukan PP, PPP, JK, JM, sukarelawan KOSPEN dan NGO menjalankan saringan di komuniti dan institusi rentan. Sasaran liputan outreach 30%.',
     tasks: ['Jalankan NHSI di komuniti sasaran atau institusi (penjara, pusat jagaan, komuniti Orang Asli).',
@@ -592,7 +596,7 @@ const TEAMS = [
     note: 'Klien bergejala teruk (contohnya batuk berdarah atau sesak nafas) perlu dirujuk segera ke KK atau hospital berdekatan.' },
   { id: 'radio', label: 'Radiologi', icon: ICON.scan, chartsFor: 'Radiologi',
     intro: 'Jabatan Radiologi di 6 hospital rujukan mengesahkan CXR dan menjalankan LDCT bagi pesakit berisiko tinggi dengan CXR normal.',
-    tasks: ['Terima borang permohonan LDCT bercop LHI daripada FMS KK.',
+    tasks: ['Terima permohonan LDCT bertanda LHI daripada FMS KK: borang bercop, atau rujukan atas talian e-HIS / CCMS.',
       'Semak kriteria: CXR normal + umur 50–70 tahun + Kategori 1 (≥20 pack-years) atau Kategori 2 (hazard + sejarah penyakit).',
       'KK AI-CXR (KK Pendang): terima laporan AI. CXR konvensional: baca filem / DICOM yang dihantar KK.',
       'CXR abnormal: laporkan dan maklum FMS (bukan untuk LDCT).',
@@ -600,7 +604,7 @@ const TEAMS = [
       'Laporkan ikut Lung-RADS v2022. 4A/4B/4X/S → kemas kini dapatan dan maklum segera FMS.'],
     nalury: ['Tarikh janji temu & kehadiran', 'Tarikh LDCT & dapatan', 'Kategori Lung-RADS & laporan'],
     note: 'Rujukan ke Pakar Respiratori dibuat oleh FMS KK selepas menerima keputusan LDCT.' },
-  { id: 'respi', label: 'Respiratori', icon: ICON.lung, chartsFor: '',
+  { id: 'respi', label: 'Respiratori', icon: ICON.lung, chartsFor: 'Respiratori',
     intro: 'Pakar Respiratori / Perubatan Dalaman di HSB, HSAH dan Hospital Kulim menjadi pasukan utama diagnosis dan pengurusan MDT.',
     tasks: ['Terima rujukan FMS: CXR abnormal, LDCT Lung-RADS 4A/4B/4X/S, asma / COPD dan Tibi mengikut kriteria Lampiran E.',
       'Siasatan lanjut: CECT / PET untuk origin, staging dan resectability.',
@@ -610,14 +614,14 @@ const TEAMS = [
       'Asma sukar dirawat → Severe Asthma Network; COPD frequent exacerbator → penilaian semula dan MDT.'],
     nalury: ['Siasatan respiratori & kehadiran', 'Outcome (resectable / tidak)', 'Diagnosis akhir', 'Pelan rawatan'],
     note: 'Diagnosis akhir dalam NaLuRy membolehkan KK membuat susulan dan diperlukan untuk indikator pengesanan (detection yield).' },
-  { id: 'patho', label: 'Patologi', icon: ICON.micro, chartsFor: '',
+  { id: 'patho', label: 'Patologi', icon: ICON.micro, chartsFor: 'Patologi',
     intro: 'Jabatan Patologi Anatomik di HSB, HSAH dan Hospital Kulim menyokong pengesahan diagnosis kanser paru-paru dan Tibi.',
-    tasks: ['Proses spesimen biopsi / sitologi daripada bronkoskopi, EBUS, pleuroskopi atau biopsi berpandu imej.',
-      'Klasifikasi histopatologi dan IHC (contohnya TTF1, Napsin A, p40).',
-      'Ujian molekular bila diperlukan (contohnya EGFR, ALK, ROS1).',
-      'Ujian Tibi: GeneXpert MTB/RIF, kultur dan sensitiviti.',
-      'Segerakan laporan kes bercop LHI untuk menyokong sasaran diagnosis ≤4 minggu.'],
-    nalury: ['Klasifikasi histopatologi', 'Tarikh siasatan', 'IHC & ujian molekular', 'Keputusan ujian Tibi'],
+    tasks: ['Terima spesimen bertanda LHI (cop borang atau e-HIS / CCMS) sebagai keutamaan: bronchial lavage, brushing, endobronchial biopsy, EBUS, image-guided biopsy, pleuroscopy, surgical biopsy / resection.',
+      'Pemeriksaan histopatologi / sitologi untuk pengesahan diagnosis kanser.',
+      'Ujian molekular mengikut keperluan, sebelum keputusan MDT.',
+      'Ujian Tibi: AFB smear, Xpert MTB/RIF / Ultra dan kultur mycobacteria.',
+      'Salurkan laporan segera kepada pasukan klinikal untuk menyokong sasaran diagnosis ≤4 minggu.'],
+    nalury: ['Laporan histopatologi & molekular → pasukan klinikal', 'Keputusan ujian Tibi → pasukan klinikal', 'Pasukan klinikal kemas kini laporan biopsi & diagnosis akhir'],
     note: 'Keputusan TB juga perlu direkod dalam sistem Registri TB Kebangsaan mengikut amalan sedia ada.' }
 ];
 $('tabs').innerHTML = TEAMS.map((t, i) => `<button class="tab" role="tab" id="tab-${t.id}" aria-controls="panel-${t.id}" aria-selected="${i === 0}">${t.icon}${esc(t.label)}</button>`).join('');
@@ -650,8 +654,8 @@ selectTab(0);
 
 /* ---------- Charts ---------- */
 $('chartGrid').innerHTML = CONFIG.CHARTS.map(c => `<article class="card chart-card">
-  <div class="thumb"><span class="pill ${c.color === 'coral' ? 'p-coral' : 'p-teal'} tag">${esc(c.team)}</span>
-    <div class="mini"><i style="width:80%"></i><i style="width:60%;opacity:.35"></i><i class="${c.color === 'coral' ? 'c' : 't'}" style="width:70%"></i><i style="width:50%;opacity:.35"></i><i class="${c.color === 'coral' ? 'c' : 't'}" style="width:65%"></i></div></div>
+  <div class="thumb"><span class="pill ${({coral:'p-coral',navy:'p-navy',gold:'p-gold'})[c.color] || 'p-teal'} tag">${esc(c.team)}</span>
+    <div class="mini"><i style="width:80%"></i><i style="width:60%;opacity:.35"></i><i class="${({coral:'c',navy:'',gold:'g'})[c.color] ?? 't'}" style="width:70%"></i><i style="width:50%;opacity:.35"></i><i class="${({coral:'c',navy:'',gold:'g'})[c.color] ?? 't'}" style="width:65%"></i></div></div>
   <h3>${esc(c.title)}</h3><p>${esc(c.desc)}</p>
   <div class="dl"><a class="btn btn-primary" href="${esc(c.a4)}" download>${ICON.dl}A4 (PDF)</a><a class="btn btn-outline" href="${esc(c.a3)}" download>${ICON.dl}A3 (PDF)</a></div></article>`).join('');
 
