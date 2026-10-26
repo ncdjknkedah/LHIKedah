@@ -33,12 +33,16 @@ button,select,input{font:inherit}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 
 /* ---------- Brand strip & nav ---------- */
-.brandbar{background:#fff;border-bottom:1px solid var(--border)}
-.brandbar .wrap{display:flex;align-items:center;gap:16px;padding-top:10px;padding-bottom:10px}
-.brandbar img{height:56px;width:auto}
-.brandbar .org{display:flex;flex-direction:column;padding-left:14px;border-left:2px solid #d1d5db}
-.brandbar .org b{font-size:13px;color:#0b3d91;text-transform:uppercase;letter-spacing:.02em}
-.brandbar .org span{font-size:13px;color:#374151;font-weight:700;text-transform:uppercase}
+.brandbar{background:#fff;border-bottom:1px solid #e5e7eb}
+.brand-inner{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+@media (min-width:1024px){.brand-inner{justify-content:flex-start}}
+.brand-inner .logo-jata{height:64px;object-fit:contain}
+.brand-inner .logo-lhi{height:48px;object-fit:contain}
+.brand-text{display:flex;flex-direction:column;justify-content:center;padding:0 16px 0 4px;border-right:2px solid #d1d5db;text-align:center}
+@media (min-width:1024px){.brand-text{text-align:left}}
+.brand-text span{font-size:14px;font-weight:700;line-height:1.25;text-transform:uppercase}
+.brand-text .kkm{color:#0b3d91}
+.brand-text .jkn{color:#374151}
 nav.top{position:sticky;top:0;z-index:20;background:var(--navy);box-shadow:0 2px 10px rgba(0,0,0,.12)}
 nav.top .wrap{display:flex;align-items:center;gap:6px;height:60px}
 nav.top .brand{color:var(--on-dark);font-weight:800;text-decoration:none;margin-right:auto;display:flex;align-items:center;gap:10px;font-size:17px}
@@ -51,7 +55,6 @@ nav.top .links a:hover{background:rgba(255,255,255,.08);color:#fff}
   .menu-btn{display:inline-flex}
   nav.top .links{display:none;position:absolute;left:0;right:0;top:60px;background:var(--navy);flex-direction:column;padding:8px 20px 16px}
   nav.top .links.open{display:flex}
-  .brandbar img{height:44px}
 }
 
 /* ---------- Hero ---------- */
@@ -212,10 +215,14 @@ footer.site{background:#fff;border-top:1px solid var(--border);padding:18px 0;fo
 
 <!-- Logo & nama jabatan -->
 <div class="brandbar">
-  <div class="wrap">
-    <!-- Letakkan fail logo-jkn-kedah.png dalam folder yang sama di GitHub -->
-    <img src="logo-jkn-kedah.png" alt="Jata Negara · Kementerian Kesihatan Malaysia · Jabatan Kesihatan Negeri Kedah" onerror="this.style.display='none'">
-    <div class="org"><b>Kementerian Kesihatan Malaysia</b><span>Jabatan Kesihatan Negeri Kedah</span></div>
+  <div class="wrap brand-inner">
+    <!-- Logo: letak "JATA NEGARA.png" dan "LHI.png" dalam repo ini; jika tiada, guna fail dari repo dashboard -->
+    <img src="JATA NEGARA.png" alt="Jata Negara" class="logo-jata" onerror="this.onerror=null;this.src='https://ncdjknkedah.github.io/LHIKedah/JATA%20NEGARA.png'">
+    <div class="brand-text">
+      <span class="kkm">Kementerian Kesihatan Malaysia</span>
+      <span class="jkn">Jabatan Kesihatan Negeri Kedah</span>
+    </div>
+    <img src="LHI.png" alt="Logo Inisiatif Kesihatan Paru-paru Kebangsaan" class="logo-lhi" onerror="this.onerror=null;this.src='https://ncdjknkedah.github.io/LHIKedah/LHI.png'">
   </div>
 </div>
 
@@ -441,7 +448,7 @@ footer.site{background:#fff;border-top:1px solid var(--border);padding:18px 0;fo
 const CONFIG = {
   NALURY_URL: 'https://nalury.mrichealthcare.com',
   NALURY_REG_URL: 'https://nalury.mrichealthcare.com/registration',
-  FULL_DASHBOARD_URL: '',          // pautan dashboard saringan penuh (GitHub Pages), kosong = sembunyi butang
+  FULL_DASHBOARD_URL: 'https://ncdjknkedah.github.io/LHIKedah/',          // pautan dashboard saringan penuh (GitHub Pages), kosong = sembunyi butang
 
   // Dokumen rujukan. url kosong = butang menghala ke folder Sumber Rujukan.
   REF_FOLDER: 'https://drive.google.com/drive/folders/19vabHyWyAMegeP0ppkRRGiCc0whTSjHE?usp=drive_link',
