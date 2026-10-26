@@ -3,64 +3,37 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dashboard Saringan LHI Kedah</title>
+<title>Hub Rujukan LHI Kedah</title>
+<meta name="description" content="Hub rujukan sehenti Inisiatif Kesihatan Paru-paru Kebangsaan (LHI) Negeri Kedah">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 /* =====================================================================
-   Dashboard Saringan LHI Negeri Kedah
-   Unit NCD, Jabatan Kesihatan Negeri Kedah
+   Hub Rujukan Sehenti LHI Kedah · Unit NCD, JKN Kedah
    ===================================================================== */
 :root{
-  color-scheme: light;
-  --bg:#f3f4f1; --surface:#fcfcfb; --surface-2:#eef1ef; --border:#dde2df;
-  --ink:#13343b; --ink-2:#3e4e52; --muted:#5f6f73;
-  --brand:#13343b; --brand-ink:#f6f4ef; --accent:#b4502a;
-  --bar:#2a78d6; --bar-2:#86b6ef;
-  --good:#1e7a3a; --good-bg:#e3f2e6; --warn:#a85a00; --warn-bg:#fdf0dc;
-  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#6250d6;
-  --grid:#e6e9e7;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    color-scheme: dark;
-    --bg:#121615; --surface:#1a1f1e; --surface-2:#222827; --border:#2f3735;
-    --ink:#eef1ef; --ink-2:#c9d2cf; --muted:#9aa7a4;
-    --brand:#0d262b; --brand-ink:#f6f4ef; --accent:#f0a27e;
-    --bar:#3987e5; --bar-2:#1c5cab;
-    --good:#7fd093; --good-bg:#183021; --warn:#f2b45c; --warn-bg:#33260f;
-    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#9085e9;
-    --grid:#2a302f;
-  }
-}
-:root[data-theme="dark"]{
-  color-scheme: dark;
-  --bg:#121615; --surface:#1a1f1e; --surface-2:#222827; --border:#2f3735;
-  --ink:#eef1ef; --ink-2:#c9d2cf; --muted:#9aa7a4;
-  --brand:#0d262b; --brand-ink:#f6f4ef; --accent:#f0a27e;
-  --bar:#3987e5; --bar-2:#1c5cab;
-  --good:#7fd093; --good-bg:#183021; --warn:#f2b45c; --warn-bg:#33260f;
-  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#9085e9;
-  --grid:#2a302f;
+  --navy:#13343B; --navy-2:#1D454D; --teal:#1F7A72; --teal-bg:#E3EFEC;
+  --coral:#B4502A; --coral-bg:#FBE9E1; --gold:#B48600;
+  --bg:#F4F5F2; --surface:#FFFFFF; --surface-2:#EEF1F0; --border:#DCE2E0;
+  --ink:#13343B; --ink-2:#3E4E52; --muted:#5F6F73; --on-dark:#F6F4EF; --on-dark-2:#C9DAD6;
+  --good:#1E7A3A; --good-bg:#E3F2E6; --warn:#A85A00; --warn-bg:#FDF0DC;
+  --bar:#2A78D6; --bar-2:#9EC5F4;
+  --radius:14px; --shadow:0 1px 2px rgba(19,52,59,.06),0 4px 16px rgba(19,52,59,.06);
 }
 *{box-sizing:border-box}
-html,body{margin:0}
-body{background:var(--bg);color:var(--ink-2);font-family:'Public Sans',Arial,sans-serif;font-size:15px;line-height:1.45}
-button,input,select{font:inherit}
-.wrap{max-width:1280px;margin:0 auto;padding:0 20px}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--bg);color:var(--ink-2);font-family:'Public Sans',Arial,sans-serif;font-size:16px;line-height:1.55}
+a{color:var(--teal)}
+a:hover{color:var(--navy)}
+h1,h2,h3{color:var(--ink);margin:0;line-height:1.2}
+p{margin:0}
+button,select,input{font:inherit}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+:focus-visible{outline:3px solid var(--bar);outline-offset:2px;border-radius:6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 
-/* Header */
-header{background:var(--brand);color:var(--brand-ink)}
-header .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding-top:22px;padding-bottom:22px}
-.eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#f0a27e;margin:0 0 4px}
-h1{font-size:24px;line-height:1.2;margin:0;color:var(--brand-ink)}
-.asof{margin:6px 0 0;font-size:14px;color:#c9dad6}
-.asof b{color:var(--brand-ink)}
-.hdr-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;min-width:300px}
-.hdr-actions .btn{justify-content:center;white-space:nowrap}
-@media (max-width:520px){.hdr-actions{min-width:0;width:100%}}
-/* Brand strip (logo & nama jabatan) — sentiasa latar cerah */
-.brandbar{background:#ffffff;border-bottom:1px solid #e5e7eb}
+/* ---------- Brand strip & nav ---------- */
+.brandbar{background:#fff;border-bottom:1px solid #e5e7eb}
 .brand-inner{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
 @media (min-width:1024px){.brand-inner{justify-content:flex-start}}
 .brand-inner .logo-jata{height:64px;object-fit:contain}
@@ -70,737 +43,752 @@ h1{font-size:24px;line-height:1.2;margin:0;color:var(--brand-ink)}
 .brand-text span{font-size:14px;font-weight:700;line-height:1.25;text-transform:uppercase}
 .brand-text .kkm{color:#0b3d91}
 .brand-text .jkn{color:#374151}
-/* Password field with eye toggle */
-.pwd-wrap{position:relative;margin-bottom:8px}
-.pwd-wrap input{margin-bottom:0!important;padding-right:44px!important}
-.eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--muted);width:34px;height:34px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.eye:hover{background:var(--surface-2);color:var(--ink)}
-.eye svg{width:20px;height:20px}
-.btn{border:1px solid var(--border);background:var(--surface);color:var(--ink);padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
-.btn:hover{background:var(--surface-2)}
-.btn-ghost{background:transparent;color:var(--brand-ink);border-color:rgba(246,244,239,.35)}
-.btn-ghost:hover{background:rgba(246,244,239,.1)}
-.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.btn-primary:hover{filter:brightness(1.05);background:var(--accent)}
-:focus-visible{outline:2px solid var(--bar);outline-offset:2px}
+nav.top{position:sticky;top:0;z-index:20;background:var(--navy);box-shadow:0 2px 10px rgba(0,0,0,.12)}
+nav.top .wrap{display:flex;align-items:center;gap:6px;height:60px}
+nav.top .brand{color:var(--on-dark);font-weight:800;text-decoration:none;margin-right:auto;display:flex;align-items:center;gap:10px;font-size:17px}
+nav.top .brand i{width:30px;height:30px;border-radius:8px;background:var(--coral);display:inline-flex;align-items:center;justify-content:center}
+nav.top .links{display:flex;gap:2px}
+nav.top .links a{color:var(--on-dark-2);text-decoration:none;font-size:14px;font-weight:600;padding:8px 10px;border-radius:8px}
+nav.top .links a:hover{background:rgba(255,255,255,.08);color:#fff}
+.menu-btn{display:none;background:transparent;border:1px solid rgba(246,244,239,.35);color:#fff;border-radius:8px;padding:6px 10px}
+@media (max-width:980px){
+  .menu-btn{display:inline-flex}
+  nav.top .links{display:none;position:absolute;left:0;right:0;top:60px;background:var(--navy);flex-direction:column;padding:8px 20px 16px}
+  nav.top .links.open{display:flex}
+}
 
-/* Filters */
-.filters{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--border)}
-.filters .wrap{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;padding-top:14px;padding-bottom:14px}
-.f{display:flex;flex-direction:column;gap:4px;min-width:0}
-.f label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-.f input,.f select{border:1px solid var(--border);background:var(--surface);color:var(--ink);border-radius:8px;padding:7px 10px;height:38px;max-width:100%}
-.f select{min-width:180px}
-.f-grow{flex:1 1 220px}
-.f-grow select{width:100%}
-.scope{margin-left:auto;font-size:13px;color:var(--muted);align-self:center}
-.scope b{color:var(--ink)}
+/* ---------- Hero ---------- */
+.hero{background:linear-gradient(180deg,var(--navy) 0%,var(--navy-2) 100%);color:var(--on-dark)}
+.hero .wrap{display:grid;grid-template-columns:1.25fr 1fr;gap:40px;padding-top:56px;padding-bottom:56px;align-items:center}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#F0A27E}
+.hero h1{color:#fff;font-size:44px;font-weight:800;margin:10px 0 16px;letter-spacing:-.01em}
+.hero p.lead{font-size:18px;color:var(--on-dark-2);max-width:620px}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;border:1px solid transparent;cursor:pointer;line-height:1.2}
+.btn svg{width:18px;height:18px;flex:none}
+.btn-primary{background:var(--coral);color:#fff}
+.btn-primary:hover{background:#9c4322;color:#fff}
+.btn-light{background:#fff;color:var(--navy)}
+.btn-light:hover{background:#eef1f0;color:var(--navy)}
+.btn-ghost{background:transparent;color:#fff;border-color:rgba(246,244,239,.4)}
+.btn-ghost:hover{background:rgba(255,255,255,.08);color:#fff}
+.btn-outline{background:#fff;color:var(--navy);border-color:var(--border)}
+.btn-outline:hover{background:var(--surface-2);color:var(--navy)}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);padding:18px}
+.stat b{display:block;font-size:34px;font-weight:800;color:#fff;line-height:1.1}
+.stat span{font-size:14px;color:var(--on-dark-2)}
+@media (max-width:900px){.hero .wrap{grid-template-columns:1fr}.hero h1{font-size:34px}}
 
-main .wrap{padding-top:22px;padding-bottom:40px;display:flex;flex-direction:column;gap:22px}
-.section-title{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:6px 0 -8px}
-
-/* Cards */
-.grid{display:grid;gap:16px}
-.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+/* ---------- Sections ---------- */
+section.block{padding:56px 0}
+section.block.alt{background:var(--surface)}
+.sec-head{display:flex;flex-direction:column;gap:6px;margin-bottom:26px;max-width:760px}
+.sec-head h2{font-size:30px;font-weight:800}
+.sec-head p{color:var(--ink-2)}
+.grid{display:grid;gap:18px}
 .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
-.g-5-7{grid-template-columns:5fr 7fr}
-@media (max-width:980px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g-5-7,.g2{grid-template-columns:1fr}}
-@media (max-width:520px){.g4{grid-template-columns:1fr}.scope{margin-left:0}}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 20px;min-width:0}
-.card h2{font-size:16px;margin:0 0 2px;color:var(--ink)}
-.card .sub{font-size:13px;color:var(--muted);margin:0 0 12px}
-.stat .label{font-size:13px;font-weight:600;color:var(--muted);margin:0}
-.stat .value{font-size:36px;font-weight:700;color:var(--ink);line-height:1.1;margin:8px 0 4px;font-variant-numeric:tabular-nums}
-.stat .note{font-size:13px;color:var(--muted);margin:0}
-.stat.hero{background:var(--brand);border-color:var(--brand)}
-.stat.hero .label,.stat.hero .note{color:#c9dad6}
-.stat.hero .value{color:var(--brand-ink)}
-.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
-.pill.good{background:var(--good-bg);color:var(--good)}
-.pill.warn{background:var(--warn-bg);color:var(--warn)}
-.meter{height:8px;border-radius:999px;background:var(--surface-2);overflow:hidden;margin:10px 0 6px;position:relative}
-.meter span{display:block;height:100%;border-radius:999px;background:var(--bar)}
-.meter i{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);left:80%}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:980px){.g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);min-width:0}
+section.alt .card{background:var(--bg);box-shadow:none}
+.card h3{font-size:18px;font-weight:800;margin-bottom:8px}
+.card p{font-size:15px}
+.icon{width:42px;height:42px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:14px;flex:none}
+.icon svg{width:22px;height:22px}
+.i-teal{background:var(--teal-bg);color:var(--teal)}
+.i-coral{background:var(--coral-bg);color:var(--coral)}
+.i-navy{background:var(--surface-2);color:var(--navy)}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.p-teal{background:var(--teal-bg);color:var(--teal)}
+.p-coral{background:var(--coral-bg);color:var(--coral)}
+.p-navy{background:var(--surface-2);color:var(--navy)}
+.p-gold{background:#F7EED6;color:#7a5b00}
 
-.chart-box{position:relative;height:320px}
-.chart-box.tall{height:420px}
-.legend{display:flex;flex-direction:column;gap:6px;margin-top:12px;font-size:13px}
-.legend div{display:flex;align-items:center;gap:8px;color:var(--ink-2)}
-.legend i{width:12px;height:12px;border-radius:3px;flex:none}
-.legend span.n{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--ink)}
-.donut-row{display:grid;grid-template-columns:200px 1fr;gap:16px;align-items:center}
-@media (max-width:520px){.donut-row{grid-template-columns:1fr}}
-.donut-row .chart-box{height:200px}
+/* ---------- About: target pillars ---------- */
+.target b{display:block;font-size:30px;font-weight:800;color:var(--coral);line-height:1.1;margin:4px 0 6px}
+.disease{display:flex;gap:14px;align-items:flex-start}
+.disease .num{font-size:24px;font-weight:800;color:var(--teal);min-width:84px}
 
-/* Tables */
-.tbl-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:14px}
-th,td{padding:9px 8px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap}
-th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700}
-td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
-tbody tr:hover{background:var(--surface-2)}
-tfoot td{font-weight:700;color:var(--ink);border-top:2px solid var(--border)}
-.view-toggle{display:flex;gap:6px;margin-left:auto}
-.view-toggle button{border:1px solid var(--border);background:var(--surface);color:var(--muted);padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer}
-.view-toggle button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
-.card-head{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+/* ---------- Flow overview ---------- */
+.flow{display:flex;flex-direction:column;gap:10px}
+.flow-row{display:flex;gap:10px;align-items:stretch}
+.flow-step{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;position:relative}
+.flow-step .n{display:inline-flex;width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-size:13px;font-weight:800;align-items:center;justify-content:center;margin-right:8px}
+.flow-step b{color:var(--ink)}
+.flow-step.teal{border-top:4px solid var(--teal)}
+.flow-step.coral{border-top:4px solid var(--coral)}
+.flow-step.dark{background:var(--navy);color:var(--on-dark);border-color:var(--navy)}
+.flow-step.dark b{color:#fff}
+.flow-arrow{display:flex;justify-content:center;color:var(--muted)}
+.flow-arrow svg{width:22px;height:22px}
+@media (max-width:760px){.flow-row{flex-direction:column}}
 
-.outcome .value{font-size:30px}
-.outcome .pct{font-size:15px;font-weight:600;color:var(--muted);margin-left:6px}
-.outcome .target{font-size:12px;color:var(--muted)}
+.algo{margin:0;background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.algo a img{display:block;width:100%;height:auto;cursor:zoom-in}
+.algo figcaption{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 18px;border-top:1px solid var(--border);font-size:14px;color:var(--muted)}
 
-/* States */
-.banner{border-radius:10px;padding:12px 16px;font-size:14px}
+/* ---------- Documents ---------- */
+.doc{display:flex;flex-direction:column;gap:10px}
+.doc .meta{font-size:13px;color:var(--muted)}
+.doc .actions{margin-top:auto;padding-top:8px;display:flex;gap:8px;flex-wrap:wrap}
+
+/* ---------- Role tabs ---------- */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tab{border:1px solid var(--border);background:var(--surface);color:var(--ink-2);padding:10px 16px;border-radius:999px;font-weight:700;font-size:15px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.tab[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.tab svg{width:18px;height:18px}
+.panel{display:none}
+.panel.on{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
+@media (max-width:900px){.panel.on{grid-template-columns:1fr}}
+.checklist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.checklist li{display:flex;gap:10px;align-items:flex-start;font-size:15px}
+.checklist li svg{width:20px;height:20px;flex:none;color:var(--teal);margin-top:2px}
+.note{background:var(--coral-bg);border-radius:10px;padding:12px 14px;font-size:14px;color:#6e2f17}
+.kv{display:flex;flex-direction:column;gap:8px;font-size:15px}
+.kv div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--border);padding-bottom:6px}
+.kv div span:last-child{font-weight:700;color:var(--ink);text-align:right}
+
+/* ---------- Charts downloads ---------- */
+.chart-card{display:flex;flex-direction:column;gap:12px}
+.thumb{height:150px;border-radius:10px;background:linear-gradient(135deg,var(--surface-2),#fff);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.thumb .mini{display:flex;flex-direction:column;gap:6px;align-items:center;width:60%}
+.thumb .mini i{display:block;height:12px;border-radius:4px;background:var(--navy);opacity:.85}
+.thumb .mini i.t{background:var(--teal)} .thumb .mini i.c{background:var(--coral)}
+.thumb .tag{position:absolute;top:10px;left:10px}
+.dl{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ---------- Map ---------- */
+.filter-row{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin-bottom:18px}
+.f{display:flex;flex-direction:column;gap:4px}
+.f label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.f select,.f input{height:42px;border:1px solid var(--border);border-radius:10px;padding:0 12px;background:#fff;color:var(--ink);min-width:200px}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-left:auto}
+.hosp{display:flex;flex-direction:column;gap:10px}
+.hosp .tags{display:flex;gap:6px;flex-wrap:wrap}
+.hosp .kk{font-size:14px;color:var(--ink-2)}
+.hosp .kk b{color:var(--ink)}
+.dist-table{width:100%;border-collapse:collapse;font-size:15px;background:#fff;border-radius:var(--radius);overflow:hidden}
+.dist-table th,.dist-table td{padding:12px 14px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+.dist-table th{background:var(--surface-2);font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.dist-table td.d{font-weight:800;color:var(--ink);white-space:nowrap}
+.chip{display:inline-block;font-size:13px;padding:3px 9px;border-radius:999px;background:var(--teal-bg);color:#145a54;margin:2px 4px 2px 0;font-weight:600}
+.chip.no{background:var(--surface-2);color:var(--ink-2)}
+.chip.ai{background:#F7EED6;color:#7a5b00}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius)}
+
+/* ---------- Dashboard ---------- */
+.kpi-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}
+@media (max-width:900px){.kpi-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tile{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+.tile.dark{background:var(--navy);border-color:var(--navy)}
+.tile .l{font-size:13px;font-weight:700;color:var(--muted)}
+.tile.dark .l{color:var(--on-dark-2)}
+.tile .v{font-size:32px;font-weight:800;color:var(--ink);line-height:1.15;margin-top:6px;font-variant-numeric:tabular-nums}
+.tile.dark .v{color:#fff}
+.tile .s{font-size:13px;color:var(--muted);margin-top:4px}
+.tile.dark .s{color:var(--on-dark-2)}
+.meter{height:8px;border-radius:999px;background:var(--surface-2);overflow:hidden;position:relative;margin-top:10px}
+.meter span{display:block;height:100%;background:var(--bar);border-radius:999px}
+.meter i{position:absolute;top:-2px;bottom:-2px;left:80%;width:2px;background:var(--ink)}
+.bars{display:flex;flex-direction:column;gap:6px}
+.bar-row{display:grid;grid-template-columns:minmax(110px,34%) 1fr;gap:10px;align-items:center;font-size:14px}
+.bar-row .bl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track{position:relative;height:24px}
+.fill{position:absolute;left:0;top:3px;bottom:3px;border-radius:0 4px 4px 0;min-width:2px}
+.val{position:absolute;z-index:1;top:50%;transform:translateY(-50%);font-weight:700;color:var(--ink);padding-left:6px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tgt{position:absolute;top:-3px;bottom:-3px;border-left:2px dashed var(--ink);opacity:.6}
+.dash-status{font-size:14px;color:var(--muted)}
+.banner{border-radius:10px;padding:12px 16px;font-size:14px;margin-bottom:16px}
 .banner.err{background:var(--warn-bg);color:var(--warn);border:1px solid var(--warn)}
-.banner.demo{background:var(--surface-2);color:var(--ink);border:1px dashed var(--muted)}
-.loading{display:flex;align-items:center;gap:10px;color:var(--muted);padding:40px 0;justify-content:center}
-.spin{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--bar);border-radius:50%;animation:s 1s linear infinite}
-@keyframes s{to{transform:rotate(360deg)}}
-.hidden{display:none!important}
-.empty{color:var(--muted);font-size:14px;padding:30px 0;text-align:center}
+.banner.demo{background:var(--surface-2);border:1px dashed var(--muted);color:var(--ink)}
+.status-good{color:var(--good);font-weight:700}
+.status-warn{color:var(--warn);font-weight:700}
 
-/* Bars (no external library) */
-.bars{display:flex;flex-direction:column;gap:6px;position:relative}
-.bar-row{display:grid;grid-template-columns:minmax(120px,38%) 1fr;gap:10px;align-items:center;font-size:13px;border-radius:6px;padding:2px 0}
-.bar-row:hover{background:var(--surface-2)}
-.bar-row .bl{color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bar-track{position:relative;height:22px}
-.bar-fill{position:absolute;left:0;top:2px;bottom:2px;border-radius:0 4px 4px 0;min-width:2px}
-.bar-val{position:absolute;top:50%;transform:translateY(-50%);font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;padding-left:6px}
-.bar-target{position:absolute;top:-4px;bottom:-4px;border-left:2px dashed var(--ink);opacity:.7;pointer-events:none}
-.target-cap{display:grid;grid-template-columns:minmax(120px,38%) 1fr;gap:10px;font-size:11px;font-weight:700;color:var(--muted);margin-bottom:2px}
-.target-cap span{position:relative;height:14px}
-.target-cap b{position:absolute;transform:translateX(-50%);white-space:nowrap}
-.axis{display:grid;grid-template-columns:minmax(120px,38%) 1fr;gap:10px;font-size:11px;color:var(--muted);margin-top:4px}
-.axis span{display:flex;justify-content:space-between}
-.donut svg{width:100%;height:100%;display:block}
-.donut path{cursor:pointer;transition:opacity .15s}
-.donut:hover path{opacity:.55}.donut path:hover{opacity:1}
-.donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
-.donut-center b{font-size:22px;color:var(--ink)}.donut-center small{font-size:11px;color:var(--muted)}
-#tip{position:fixed;z-index:30;pointer-events:none;background:var(--ink);color:var(--surface);font-size:12px;padding:8px 10px;border-radius:8px;max-width:280px;line-height:1.4;box-shadow:0 4px 14px rgba(0,0,0,.2)}
-#tip b{display:block;margin-bottom:2px}
-@media (max-width:700px){.filters{position:static}}
-body{min-height:100vh;display:flex;flex-direction:column}
-main{flex:1 0 auto}
-.site-footer{background:#ffffff;border-top:1px solid #e5e7eb;margin-top:auto;padding:0}
-.site-footer .inner{max-width:1280px;margin:0 auto;padding:16px;text-align:center;font-size:12px;color:#6b7280}
-footer{font-size:12px;color:var(--muted);padding:0 0 30px}
-
-/* Modal */
-.modal{position:fixed;inset:0;background:rgba(10,20,22,.55);display:flex;align-items:center;justify-content:center;padding:16px;z-index:20}
-.modal-card{background:var(--surface);color:var(--ink-2);border-radius:14px;padding:22px;width:100%;max-width:420px;border:1px solid var(--border)}
-.modal-card h3{margin:0 0 6px;color:var(--ink);font-size:18px}
-.modal-card p{margin:0 0 14px;font-size:14px}
-.modal-card input{width:100%;border:1px solid var(--border);background:var(--surface);color:var(--ink);border-radius:8px;padding:9px 12px;margin-bottom:8px}
-.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px;flex-wrap:wrap}
-.err-text{color:var(--warn);font-size:13px;min-height:18px;margin:0}
-.admin-list{display:flex;flex-direction:column;gap:8px;font-size:14px;margin:12px 0}
-.admin-list div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--border);padding-bottom:6px}
-.admin-list b{color:var(--ink)}
+/* ---------- Contact & footer ---------- */
+.contact{background:var(--navy);color:var(--on-dark);border-radius:var(--radius);padding:28px;display:grid;grid-template-columns:1.3fr 1fr;gap:20px;align-items:center}
+.contact h3{color:#fff;font-size:22px}
+.contact p{color:var(--on-dark-2)}
+@media (max-width:760px){.contact{grid-template-columns:1fr}}
+footer.site{background:#fff;border-top:1px solid var(--border);padding:18px 0;font-size:13px;color:#6b7280;text-align:center}
 </style>
 </head>
 <body>
 
-<!-- Text & Logos -->
+<!-- Logo & nama jabatan -->
 <div class="brandbar">
   <div class="wrap brand-inner">
-    <!-- TUKAR URL GAMBAR DI SINI UNTUK HOSTING GITHUB -->
-    <img src="JATA NEGARA.png" alt="Jata Negara" class="logo-jata" onerror="this.onerror=null;this.src='https://placehold.co/100x100/eeeeee/333333?text=Jata+Negara'">
+    <!-- Logo: letak "JATA NEGARA.png" dan "LHI.png" dalam repo ini; jika tiada, guna fail dari repo dashboard -->
+    <img src="JATA NEGARA.png" alt="Jata Negara" class="logo-jata" onerror="this.onerror=null;this.src='https://ncdjknkedah.github.io/LHIKedah/JATA%20NEGARA.png'">
     <div class="brand-text">
       <span class="kkm">Kementerian Kesihatan Malaysia</span>
       <span class="jkn">Jabatan Kesihatan Negeri Kedah</span>
     </div>
-    <!-- TUKAR URL GAMBAR DI SINI UNTUK HOSTING GITHUB -->
-    <img src="LHI.png" alt="Logo LHI" class="logo-lhi" onerror="this.onerror=null;this.src='https://placehold.co/120x50/eeeeee/333333?text=LHI+Logo'">
+    <img src="LHI.png" alt="Logo Inisiatif Kesihatan Paru-paru Kebangsaan" class="logo-lhi" onerror="this.onerror=null;this.src='https://ncdjknkedah.github.io/LHIKedah/LHI.png'">
   </div>
 </div>
 
-<header>
+<nav class="top" aria-label="Navigasi utama">
   <div class="wrap">
-    <div>
-      <p class="eyebrow">Unit Penyakit Tidak Berjangkit (NCD)</p>
-      <h1>Dashboard Saringan Inisiatif Kesihatan Paru-paru (LHI)</h1>
-      <p class="asof">Tarikh Saringan Sehingga: <b id="asOf">—</b></p>
-    </div>
-    <div class="hdr-actions">
-      <a class="btn btn-ghost" id="lnkRujukan" target="_blank" rel="noopener">📁 Sumber Rujukan</a>
-      <a class="btn btn-ghost" id="lnkNalury" target="_blank" rel="noopener">🫁 Sistem NaLuRy</a>
-      <button class="btn btn-ghost" id="btnAdmin" type="button">🔒 Admin</button>
-      <button class="btn btn-ghost" id="btnRefresh" type="button" title="Muat semula data">↻ Muat semula</button>
+    <a class="brand" href="#utama"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v8"/><path d="M12 11c-2 0-3 2-4 4s-2 5-4 5c-1 0-1-2-1-4 0-4 2-8 5-9"/><path d="M12 11c2 0 3 2 4 4s2 5 4 5c1 0 1-2 1-4 0-4-2-8-5-9"/></svg></i>Hub LHI Kedah</a>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="navLinks">Menu</button>
+    <div class="links" id="navLinks">
+      <a href="#tentang">Tentang LHI</a>
+      <a href="#aliran">Aliran Pesakit</a>
+      <a href="#dokumen">Dokumen</a>
+      <a href="#pasukan">Panduan Pasukan</a>
+      <a href="#carta">Carta Alir</a>
+      <a href="#fasiliti">Fasiliti</a>
+      <a href="#dashboard">Pencapaian</a>
+      <a href="#hubungi">Hubungi</a>
     </div>
   </div>
-</header>
+</nav>
 
-<section class="filters" aria-label="Penapis">
+<main id="utama">
+
+<!-- ============ HERO ============ -->
+<section class="hero">
   <div class="wrap">
-    <div class="f"><label for="fFrom">Tarikh dari</label><input type="date" id="fFrom"></div>
-    <div class="f"><label for="fTo">Tarikh hingga</label><input type="date" id="fTo"></div>
-    <div class="f"><label for="fDistrict">Daerah</label><select id="fDistrict"></select></div>
-    <div class="f f-grow"><label for="fClinic">Fasiliti kesihatan</label><select id="fClinic"></select></div>
-    <button class="btn" id="btnReset" type="button">Set semula</button>
-    <div class="scope" id="scopeText"></div>
+    <div>
+      <p class="eyebrow">Hub Rujukan Sehenti</p>
+      <h1>Inisiatif Kesihatan Paru-paru Kebangsaan (LHI) Negeri Kedah</h1>
+      <p class="lead">Semua rujukan pelaksanaan saringan paru-paru di satu tempat: punca kuasa, garis panduan, carta alir untuk dicetak, pemetaan fasiliti dan pencapaian saringan semasa.</p>
+      <div class="ctas">
+        <a class="btn btn-primary" id="lnkNalury" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>Log masuk NaLuRy</a>
+        <a class="btn btn-light" id="lnkNaluryReg" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg>Daftar pengguna NaLuRy</a>
+        <a class="btn btn-ghost" href="#carta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>Muat turun carta alir</a>
+      </div>
+    </div>
+    <div class="stats" aria-label="Ringkasan pelaksanaan">
+      <div class="stat"><b id="stKK">18</b><span>KK berfasiliti X-ray (Fasa 1, 2026)</span></div>
+      <div class="stat"><b>6</b><span>Hospital rujukan LDCT</span></div>
+      <div class="stat"><b>3</b><span>Hospital berkepakaran Respiratori &amp; Patologi</span></div>
+      <div class="stat"><b>80%</b><span>Sasaran KPI liputan saringan perokok</span></div>
+    </div>
   </div>
 </section>
 
-<main>
+<!-- ============ TENTANG ============ -->
+<section class="block" id="tentang">
   <div class="wrap">
-    <div id="banner" class="hidden"></div>
-    <div id="loading" class="loading"><div class="spin"></div>Memuatkan data saringan…</div>
-
-    <div id="content" class="hidden" style="display:flex;flex-direction:column;gap:22px">
-
-      <!-- 1 & 5: Scorecards -->
-      <p class="section-title">Ringkasan</p>
-      <div class="grid g4">
-        <div class="card stat hero">
-          <p class="label" id="lblTotal">Jumlah saringan · Negeri Kedah</p>
-          <p class="value" id="vTotal">0</p>
-          <p class="note" id="nTotal"></p>
-        </div>
-        <div class="card stat">
-          <p class="label">Perokok* layak &amp; bersetuju disaring</p>
-          <p class="value" id="vElig">0</p>
-          <p class="note">Penyebut KPI</p>
-        </div>
-        <div class="card stat">
-          <p class="label">Perokok* layak yang menjalani X-ray dada</p>
-          <p class="value" id="vXray">0</p>
-          <p class="note">Pengangka KPI</p>
-        </div>
-        <div class="card stat">
-          <p class="label">KPI Liputan Saringan Perokok</p>
-          <p class="value" id="vKpi">—</p>
-          <div class="meter" aria-hidden="true"><span id="kpiBar" style="width:0%"></span><i title="Sasaran 80%"></i></div>
-          <p class="note"><span id="kpiPill"></span> Sasaran 80%</p>
-        </div>
-      </div>
-
-      <!-- 2, 3, 4 -->
-      <p class="section-title">Prestasi saringan</p>
-      <div class="grid g-5-7">
-        <div class="card">
-          <h2>Saringan mengikut program</h2>
-          <p class="sub">Bilangan saringan mengikut saluran program</p>
-          <div class="donut-row">
-            <div class="chart-box donut" id="chProgram" role="img" aria-label="Carta donut saringan mengikut program"></div>
-            <div class="legend" id="lgProgram"></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-head">
-            <div>
-              <h2 id="ttlArea">Saringan mengikut daerah</h2>
-              <p class="sub" id="subArea">Bilangan saringan, Negeri Kedah</p>
-            </div>
-            <div class="view-toggle" role="group" aria-label="Paparan">
-              <button type="button" data-view="chart" aria-pressed="true">Carta</button>
-              <button type="button" data-view="table" aria-pressed="false">Jadual</button>
-            </div>
-          </div>
-          <div id="areaChartBox"><div class="bars" id="chArea"></div></div>
-          <div id="areaTableBox" class="tbl-wrap hidden"></div>
-        </div>
-      </div>
-
-      <!-- 5: KPI breakdown -->
-      <p class="section-title">KPI Liputan Saringan Perokok</p>
+    <div class="sec-head">
+      <p class="eyebrow">Tentang LHI di Kedah</p>
+      <h2>Mengesan penyakit paru-paru lebih awal</h2>
+      <p>LHI ialah agenda strategik KKM 2025–2030 untuk memperkukuh pencegahan, saringan awal, diagnosis dan rawatan empat penyakit paru-paru. Di Kedah, Klinik Kesihatan menjadi pintu masuk saringan yang terus dihubungkan dengan perkhidmatan kepakaran hospital.</p>
+    </div>
+    <div class="grid g2" style="margin-bottom:18px">
       <div class="card">
-        <h2 id="ttlKpi">KPI mengikut daerah</h2>
-        <p class="sub">KPI = perokok* layak &amp; bersetuju yang menjalani X-ray dada ÷ perokok* layak &amp; bersetuju disaring × 100. Sasaran 80%.</p>
-        <div class="grid g-5-7">
-          <div><div class="bars" id="chKpi"></div></div>
-          <div class="tbl-wrap" id="kpiTable"></div>
+        <h3>Empat penyakit sasaran</h3>
+        <div class="grid" style="gap:14px;margin-top:12px">
+          <div class="disease"><span class="num">90–95%</span><p><b>Kanser paru-paru</b> didiagnos pada tahap 3–4. Kelangsungan hidup 5 tahun: 4% (tahap 4) berbanding 39.9% (tahap 1).</p></div>
+          <div class="disease"><span class="num">9.1%</span><p><b>COPD</b>: purata kadar insiden; antara 10 punca utama kematian dan sangat kurang didiagnos.</p></div>
+          <div class="disease"><span class="num">6.2%</span><p><b>Asma</b>: prevalens dewasa 2023, lebih 1.4 juta orang dewasa.</p></div>
+          <div class="disease"><span class="num">75–80</span><p><b>Tibi</b>: kes per 100,000 populasi; kematian 7.6 per 100,000 (2024).</p></div>
         </div>
       </div>
-
-      <!-- 6: Outcome -->
-      <p class="section-title">Hasil (outcome) pengesanan penyakit</p>
-      <div class="grid g4" id="outcomeCards"></div>
-      <p style="font-size:12px;color:var(--muted);margin:-10px 0 0">Sumber: kolum Final Diagnosis. % dikira berdasarkan jumlah saringan bagi skop penapis semasa.</p>
-
-      <footer>
-        * Perokok termasuk bekas perokok: Smoking Status = active, ex_smoker_lt15 atau ex_smoker_gt15. Layak &amp; bersetuju: Agreed to Further Screening = Yes.<br>
-        Sumber data: Database LHI Kedah (Google Sheet). <span id="loadedAt"></span>
-      </footer>
+      <div class="grid" style="gap:18px">
+        <div class="card target"><p class="eyebrow" style="color:var(--teal)">Sasaran 2030</p><b>Tahap 3–4 → 1–2</b><p>Stage-shift diagnosis kanser paru-paru ke tahap awal.</p></div>
+        <div class="card target"><b>↓ 30%</b><p>Kematian akibat kanser paru-paru, Tibi dan COPD.</p></div>
+        <div class="card target"><b>Asma &amp; COPD</b><p>Kurangkan serangan akut, kemasukan dan kemasukan semula wad.</p></div>
+      </div>
+    </div>
+    <div class="grid g3">
+      <div class="card"><div class="icon i-navy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg></div><h3>Fasa 1 · 2026</h3><p>Saringan di KK berfasiliti X-ray, minimum <b>1 saringan sehari</b> (5 seminggu) bagi setiap KK. KK tanpa X-ray menyaring dan merujuk ke KK berdekatan.</p></div>
+      <div class="card"><div class="icon i-teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/><path d="M21 21v-2a4 4 0 0 0-3-3.9"/></svg></div><h3>Siapa disaring</h3><p>Warganegara <b>≥18 tahun</b> yang berisiko (perokok, klien KBM, komorbid, hazard pekerjaan) atau bergejala (batuk ≥2 minggu, hemoptisis, sesak nafas).</p></div>
+      <div class="card"><div class="icon i-coral"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg></div><h3>Fasa 2 · 2027</h3><p>Diperluaskan ke semua KK di Negeri Kedah, tertakluk kepada penilaian pelaksanaan dan kapasiti fasiliti.</p></div>
     </div>
   </div>
+</section>
+
+<!-- ============ ALIRAN ============ -->
+<section class="block alt" id="aliran">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Aliran pesakit</p>
+      <h2>Aliran pesakit dari Klinik ke Hospital</h2>
+      <p>Algoritma bersepadu saringan dan pengurusan penyakit paru-paru (asma, COPD, kanser paru-paru dan Tibi), dari peringkat Klinik Kesihatan hingga rawatan pakar di hospital. Klik pada carta untuk paparan penuh.</p>
+    </div>
+    <figure class="algo">
+      <a href="carta/LHI_Algoritma_Saringan.png" target="_blank" rel="noopener" aria-label="Buka algoritma saringan LHI dalam saiz penuh">
+        <img src="carta/LHI_Algoritma_Saringan.png" alt="Algoritma Integrated Approach to Lung Health Screening and Management: aliran dari faktor risiko, saringan asma, COPD, kanser paru-paru dan Tibi di Klinik Kesihatan, hingga rujukan pakar dan MDT di hospital" loading="lazy">
+      </a>
+      <figcaption>
+        <span>Sumber: Garis Panduan Pelaksanaan LHI, KKM 2026</span>
+        <span class="dl">
+          <a class="btn btn-primary" href="carta/LHI_Algoritma_Saringan_A3.pdf" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg> A3 (PDF)</a>
+          <a class="btn btn-outline" href="carta/LHI_Algoritma_Saringan_A4.pdf" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg> A4 (PDF)</a>
+          <a class="btn btn-outline" href="carta/LHI_Algoritma_Saringan.png" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg> Paparan penuh</a>
+        </span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ DOKUMEN ============ -->
+<section class="block" id="dokumen">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Punca kuasa &amp; garis panduan</p>
+      <h2>Dokumen rujukan</h2>
+      <p>Rujuk dokumen ini sebagai asas pelaksanaan. Sekiranya terdapat percanggahan, Garis Panduan KKM diguna pakai.</p>
+    </div>
+    <div class="grid g3" id="docGrid"></div>
+  </div>
+</section>
+
+<!-- ============ PANDUAN PASUKAN ============ -->
+<section class="block alt" id="pasukan">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Panduan mengikut pasukan</p>
+      <h2>Apa yang perlu dilakukan oleh pasukan anda</h2>
+      <p>Pilih pasukan untuk melihat tugas utama, perkara yang perlu dikemas kini dalam NaLuRy dan carta alir yang berkaitan.</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Pasukan" id="tabs"></div>
+    <div id="panels"></div>
+  </div>
+</section>
+
+<!-- ============ CARTA ALIR ============ -->
+<section class="block" id="carta">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Untuk dicetak</p>
+      <h2>Carta alir &amp; rujukan pantas</h2>
+      <p>Muat turun dan cetak untuk ditampal di bilik konsultasi atau jabatan. Versi A4 untuk pencetak pejabat (cetak pada <b>Actual size / 100%</b>); versi A3 untuk cetakan poster.</p>
+    </div>
+    <div class="grid g3" id="chartGrid"></div>
+  </div>
+</section>
+
+<!-- ============ FASILITI ============ -->
+<section class="block alt" id="fasiliti">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Pemetaan fasiliti</p>
+      <h2>Fasiliti terlibat &amp; laluan rujukan</h2>
+      <p>KK berfasiliti X-ray, KK tanpa X-ray, hospital rujukan LDCT dan hospital berkepakaran Respiratori serta Patologi Anatomik.</p>
+    </div>
+
+    <div class="grid g3" id="hospGrid" style="margin-bottom:28px"></div>
+
+    <div class="filter-row">
+      <div class="f"><label for="fDist">Daerah</label><select id="fDist"></select></div>
+      <div class="f"><label for="fSearch">Cari klinik</label><input id="fSearch" type="search" placeholder="cth. Langgar"></div>
+      <div class="legend" aria-label="Petunjuk">
+        <span class="chip">KK dengan X-ray</span>
+        <span class="chip ai">AI-CXR</span>
+        <span class="chip no">KK tanpa X-ray</span>
+      </div>
+    </div>
+    <div class="tbl-wrap">
+      <table class="dist-table">
+        <thead><tr><th>Daerah</th><th>KK dengan X-ray</th><th>KK tanpa X-ray (rujuk ke KK X-ray)</th><th>Hospital LDCT</th><th>Respiratori &amp; Patologi</th></tr></thead>
+        <tbody id="distBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DASHBOARD ============ -->
+<section class="block" id="dashboard">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Pencapaian saringan</p>
+      <h2>Dashboard saringan semasa</h2>
+      <p>Data dikemas kini secara berkala daripada pangkalan data saringan LHI Kedah. <span class="dash-status" id="asOf"></span></p>
+    </div>
+    <div id="dashBanner" class="banner" hidden></div>
+    <div class="filter-row">
+      <div class="f"><label for="dDist">Paparan</label><select id="dDist"><option value="">Negeri Kedah</option></select></div>
+      <a class="btn btn-outline" id="lnkFullDash" target="_blank" rel="noopener" style="margin-left:auto">Buka dashboard penuh</a>
+    </div>
+    <div class="kpi-tiles">
+      <div class="tile dark"><div class="l" id="tScope">Jumlah saringan · Negeri Kedah</div><div class="v" id="tTotal">—</div><div class="s" id="tTotalS"></div></div>
+      <div class="tile"><div class="l">Perokok* layak &amp; bersetuju</div><div class="v" id="tElig">—</div><div class="s">Penyebut KPI</div></div>
+      <div class="tile"><div class="l">Perokok* menjalani X-ray dada</div><div class="v" id="tXray">—</div><div class="s">Pengangka KPI</div></div>
+      <div class="tile"><div class="l">KPI liputan saringan perokok</div><div class="v" id="tKpi">—</div><div class="meter" aria-hidden="true"><span id="tKpiBar" style="width:0"></span><i></i></div><div class="s" id="tKpiS">Sasaran 80%</div></div>
+    </div>
+    <div class="grid g2">
+      <div class="card"><h3 id="cTitle1">Saringan mengikut daerah</h3><p class="dash-status" style="margin-bottom:14px">Bilangan saringan</p><div class="bars" id="bars1"></div></div>
+      <div class="card"><h3 id="cTitle2">KPI mengikut daerah</h3><p class="dash-status" style="margin-bottom:14px">% perokok layak &amp; bersetuju yang menjalani X-ray · garis putus = sasaran 80%</p><div class="bars" id="bars2"></div></div>
+    </div>
+    <p class="dash-status" style="margin-top:14px">* Perokok termasuk bekas perokok (active, ex_smoker_lt15, ex_smoker_gt15).</p>
+  </div>
+</section>
+
+<!-- ============ HUBUNGI ============ -->
+<section class="block alt" id="hubungi">
+  <div class="wrap">
+    <div class="contact">
+      <div>
+        <p class="eyebrow">Hubungi</p>
+        <h3>Unit Kawalan Penyakit Tidak Berjangkit</h3>
+        <p style="margin-top:6px">Jabatan Kesihatan Negeri Kedah<br>Jalan Kuala Kedah, Simpang Kuala, 05400 Alor Setar, Kedah</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <a class="btn btn-light" href="tel:+6047741156"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>04-7741156</a>
+        <a class="btn btn-ghost" href="mailto:ncdjkn.kdh@moh.gov.my"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>ncdjkn.kdh@moh.gov.my</a>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 
-<!-- Footer -->
-<footer class="site-footer">
-  <div class="inner">
-    &copy; 2026 Inisiatif Kesihatan Paru-Paru Kebangsaan (LHI) - Jabatan Kesihatan Negeri Kedah.
-  </div>
-</footer>
-
-<div id="tip" class="hidden" role="tooltip"></div>
-
-<!-- Admin login -->
-<div class="modal hidden" id="mLogin" role="dialog" aria-modal="true" aria-labelledby="mLoginT">
-  <div class="modal-card">
-    <h3 id="mLoginT">Log masuk Admin</h3>
-    <p>Masukkan kata laluan admin.</p>
-    <div class="pwd-wrap"><input type="password" id="pwd" autocomplete="current-password" aria-label="Kata laluan"><button type="button" class="eye" id="btnEye" aria-label="Tunjuk kata laluan" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
-    <p class="err-text" id="pwdErr"></p>
-    <div class="modal-actions">
-      <button class="btn" type="button" data-close>Batal</button>
-      <button class="btn btn-primary" type="button" id="btnLogin">Log masuk</button>
-    </div>
-  </div>
-</div>
-
-<!-- Admin panel -->
-<div class="modal hidden" id="mAdmin" role="dialog" aria-modal="true" aria-labelledby="mAdminT">
-  <div class="modal-card">
-    <h3 id="mAdminT">Panel Admin</h3>
-    <div class="admin-list">
-      <div><span>Jumlah rekod dimuatkan</span><b id="aRows">—</b></div>
-      <div><span>Rekod terkini</span><b id="aLast">—</b></div>
-      <div><span>Data dimuatkan pada</span><b id="aLoaded">—</b></div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn" type="button" id="btnLogout">Log keluar</button>
-      <button class="btn" type="button" id="btnReload2">↻ Muat semula data</button>
-      <a class="btn btn-primary" id="lnkSheet" target="_blank" rel="noopener">Buka Google Sheet ↗</a>
-    </div>
-  </div>
-</div>
+<footer class="site">&copy; 2026 Inisiatif Kesihatan Paru-Paru Kebangsaan (LHI) - Jabatan Kesihatan Negeri Kedah.</footer>
 
 <script>
 /* =====================================================================
-   KONFIGURASI — ubah di sini sahaja
+   KONFIGURASI — kemas kini di sini sahaja
    ===================================================================== */
 const CONFIG = {
-  // Google Sheet sumber data (mesti dikongsi "Anyone with the link: Viewer")
-  SHEET_ID: '1PtcLb5XQPzAjYzE3PyLIJfWUzlS9ekJDwV0C6VBSYMk',
-  SHEET_NAME: '',            // kosong = tab pertama. Atau isi nama tab, cth 'Sheet1'
-  // Pautan butang di bahagian atas
-  RUJUKAN_URL: 'https://drive.google.com/drive/folders/19vabHyWyAMegeP0ppkRRGiCc0whTSjHE?usp=drive_link',
-  NALURY_URL: 'https://nalury.mrichealthcare.com/',
-  // Pautan yang dibuka oleh butang Admin
-  ADMIN_SHEET_URL: 'https://docs.google.com/spreadsheets/d/1PtcLb5XQPzAjYzE3PyLIJfWUzlS9ekJDwV0C6VBSYMk/edit?usp=drive_link',
-  // SHA-256 bagi kata laluan admin (bukan kata laluan sebenar)
-  ADMIN_HASH: '1ce52cb8cc1eae14755b14c5b9ecfb4f0decba3c7acd2f7b23fadac486bc356f',
-  KPI_TARGET: 80,
+  NALURY_URL: 'https://nalury.mrichealthcare.com',
+  NALURY_REG_URL: 'https://nalury.mrichealthcare.com/registration',
+  FULL_DASHBOARD_URL: 'https://ncdjknkedah.github.io/LHIKedah/dashboard.html',          // pautan dashboard saringan penuh (GitHub Pages), kosong = sembunyi butang
 
-  // Huruf kolum dalam Google Sheet
-  COL: {
-    date:     'A',   // Submission Date & Time
-    district: 'L',   // District
-    program:  'O',   // Program
-    clinic:   'R',   // Clinic / Designation
-    smoking:  'S',   // Smoking Status
-    agree:    'AQ',  // Agreed to Further Screening
-    xray:     'CU'   // Chest X-ray done
+  // Dokumen rujukan. url kosong = butang menghala ke folder Sumber Rujukan.
+  REF_FOLDER: 'https://drive.google.com/drive/folders/19vabHyWyAMegeP0ppkRRGiCc0whTSjHE?usp=drive_link',
+  DOCS: [
+    { tag: 'Punca kuasa', title: 'Surat Pekeliling Ketua Pengarah Kesihatan Bil. 22/2026', meta: '21 Ogos 2026 · Pelaksanaan saringan paru-paru di seluruh negara', url: '' },
+    { tag: 'KKM', title: 'Garis Panduan Pelaksanaan Inisiatif Kesihatan Paru-Paru Kebangsaan', meta: 'Bahagian Kawalan Penyakit, KKM · 2026', url: 'https://drive.google.com/file/d/1WYv-PKzlIcLCGFQn7cUp_EOhHNrwytjs/view?usp=sharing' },
+    { tag: 'JKN Kedah', title: 'Garis Panduan Pelaksanaan LHI Negeri Kedah', meta: 'Unit NCD, JKN Kedah · Edisi 2026', url: '' }
+  ],
+
+  // Carta alir (letak fail PDF dalam folder "carta/" di GitHub, nama seperti di bawah)
+  CHARTS: [
+    { team: 'Semua', title: 'Algoritma saringan LHI', desc: 'Aliran bersepadu dari Klinik Kesihatan ke hospital (landskap).', a4: 'carta/LHI_Algoritma_Saringan_A4.pdf', a3: 'carta/LHI_Algoritma_Saringan_A3.pdf', color: 'teal' },
+    { team: 'KK', title: 'Carta alir saringan', desc: 'Aliran saringan di bilik konsultasi untuk PP & FMS.', a4: 'carta/KK_Carta_Alir_A4.pdf', a3: 'carta/KK_Carta_Alir_A3.pdf', color: 'teal' },
+    { team: 'KK', title: 'Rujukan pantas saringan', desc: 'Kelayakan, kriteria LDCT, rujukan pakar dan NaLuRy.', a4: 'carta/KK_Rujukan_Pantas_A4.pdf', a3: 'carta/KK_Rujukan_Pantas_A3.pdf', color: 'teal' },
+    { team: 'Radiologi', title: 'Carta alir LDCT', desc: 'Dari semakan kriteria hingga kemas kini NaLuRy.', a4: 'carta/Radiologi_Carta_Alir_A4.pdf', a3: 'carta/Radiologi_Carta_Alir_A3.pdf', color: 'coral' },
+    { team: 'Radiologi', title: 'Rujukan pantas LDCT', desc: 'Kriteria, verifikasi CXR, Lung-RADS dan pemetaan KK.', a4: 'carta/Radiologi_Rujukan_Pantas_A4.pdf', a3: 'carta/Radiologi_Rujukan_Pantas_A3.pdf', color: 'coral' }
+  ],
+
+  // Hospital
+  HOSPITALS: [
+    { id: 'HSB',  name: 'Hospital Sultanah Bahiyah',   town: 'Alor Setar',   ct: true, respi: true, patho: true },
+    { id: 'HSAH', name: 'Hospital Sultan Abdul Halim', town: 'Sungai Petani', ct: true, respi: true, patho: true },
+    { id: 'HKLM', name: 'Hospital Kulim',              town: 'Kulim',        ct: true, respi: true, patho: true },
+    { id: 'HPDG', name: 'Hospital Pendang',            town: 'Pendang',      ct: true },
+    { id: 'HBLG', name: 'Hospital Baling',             town: 'Baling',       ct: true },
+    { id: 'HSM',  name: 'Hospital Sultanah Maliha',    town: 'Langkawi',     ct: true }
+  ],
+
+  // KK berfasiliti X-ray: daerah dan hospital rujukan LDCT
+  KK_XRAY: [
+    { kk: 'KK Bandar Alor Setar', d: 'Kota Setar', h: 'HSB' },
+    { kk: 'KK Dato’ Kumbar', d: 'Kota Setar', h: 'HSB' },
+    { kk: 'KK Langgar', d: 'Kota Setar', h: 'HSB' },
+    { kk: 'KK Pokok Sena', d: 'Kota Setar', h: 'HSB' },
+    { kk: 'KK Simpang Empat', d: 'Kota Setar', h: 'HPDG' },
+    { kk: 'KK Simpang Kuala', d: 'Kota Setar', h: 'HPDG' },
+    { kk: 'KK Tunjang', d: 'Kubang Pasu', h: 'HSB' },
+    { kk: 'KK Changlun', d: 'Kubang Pasu', h: 'HSB' },
+    { kk: 'KK Kepala Batas', d: 'Kubang Pasu', h: 'HSB' },
+    { kk: 'KK Pendang', d: 'Pendang', h: 'HPDG', ai: true },
+    { kk: 'KK Naka', d: 'Padang Terap', h: 'HPDG' },
+    { kk: 'KK Guar Chempedak', d: 'Yan', h: 'HPDG' },
+    { kk: 'KK Bandar Sungai Petani', d: 'Kuala Muda', h: 'HSAH' },
+    { kk: 'KK Taman Intan', d: 'Kuala Muda', h: 'HSAH' },
+    { kk: 'KK Kulim', d: 'Kulim', h: 'HKLM' },
+    { kk: 'KK Serdang', d: 'Bandar Baharu', h: 'HKLM' },
+    { kk: 'KK Jeniang', d: 'Sik', h: 'HBLG' },
+    { kk: 'KK Padang Matsirat', d: 'Langkawi', h: 'HSM' },
+    { kk: 'KK Air Hangat', d: 'Langkawi', h: 'HSM' },
+    { kk: 'KK Kuah', d: 'Langkawi', h: 'HSM' }
+  ],
+
+  // KK tanpa X-ray mengikut daerah (isi senarai; kosong = papar nota)
+  KK_NO_XRAY: {
+    'Baling': [], 'Bandar Baharu': [], 'Kota Setar': [], 'Kuala Muda': [], 'Kubang Pasu': [], 'Kulim': [],
+    'Langkawi': [], 'Padang Terap': [], 'Pendang': [], 'Sik': [], 'Yan': []
   },
-  // Gabungan daerah: nama di kiri dipaparkan sebagai nama di kanan (tidak sensitif huruf besar/kecil)
+  // Hospital Respiratori & Patologi bagi setiap daerah
+  RESPI_BY_DISTRICT: {
+    'Baling': 'HSAH', 'Bandar Baharu': 'HKLM', 'Kota Setar': 'HSB', 'Kuala Muda': 'HSAH', 'Kubang Pasu': 'HSB', 'Kulim': 'HKLM',
+    'Langkawi': 'HSB', 'Padang Terap': 'HSB', 'Pendang': 'HSB', 'Sik': 'HSAH', 'Yan': 'HSB'
+  },
+  // Daerah tanpa KK X-ray: hospital LDCT
+  LDCT_NO_KK: { 'Baling': 'HBLG' },
+
+  // Dashboard: Google Sheet (dikongsi "Anyone with the link: Viewer")
+  SHEET_ID: '1PtcLb5XQPzAjYzE3PyLIJfWUzlS9ekJDwV0C6VBSYMk',
+  SHEET_NAME: '',
+  COL: { date: 'A', district: 'L', clinic: 'R', smoking: 'S', agree: 'AQ', xray: 'CU' },
   DISTRICT_MERGE: { 'Pokok Sena': 'Kota Setar' },
   SMOKER_VALUES: ['active', 'ex_smoker_gt15', 'ex_smoker_lt15'],
   YES_VALUES: ['yes', 'ya', 'y', 'true', '1'],
-
-  // Hasil pengesanan penyakit — dibaca daripada kolum EJ (Final Diagnosis).
-  // Satu rekod dikira positif jika teks diagnosis sepadan dengan 'match' dan TIDAK sepadan dengan 'exclude'.
-  // Satu pesakit boleh dikira dalam lebih daripada satu penyakit (cth. Asthma-COPD overlap).
-  // Ubah corak di sini jika label dalam kolum EJ berbeza.
-  OUTCOME_COL: 'EJ',
-  OUTCOME_EXCLUDE: /(rule[sd]?\s*out|\br\/o\b|tiada|negati|normal|\bno\b|not\s+(detected|consistent))/i,
-  OUTCOMES: [
-    { key: 'kanser', label: 'Kanser paru-paru', target: 2, match: /(lung\s*(cancer|ca\b|carcinoma|malignan|neoplasm)|kanser\s*paru|\bn?sclc\b|bronchogenic)/i },
-    { key: 'tibi',   label: 'Tibi pulmonari',   target: 5, match: /(\bptb\b|pulmonary\s*(tb|tuberculosis)|tibi\s*paru|\btb\b|tuberculosis|tibi)/i,
-      exclude: /(latent|\bltbi\b|contact|kontak|extra\s*-?\s*pulmonary|\beptb\b)/i },
-    { key: 'asma',   label: 'Asma',             target: 5, match: /(asthma|\basma\b)/i },
-    { key: 'copd',   label: 'COPD',             target: 5, match: /(copd|chronic\s*obstructive|\bpppk\b)/i }
-  ]
+  KPI_TARGET: 80
 };
 
 /* ===================================================================== */
 const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const fmt = n => n.toLocaleString('ms-MY');
-const pct = (a, b) => b > 0 ? (a / b * 100) : null;
-const pctTxt = v => v == null ? '—' : (v >= 10 ? v.toFixed(1) : v.toFixed(2)).replace(/\.?0+$/, '') + '%';
-const norm = s => (s == null ? '' : String(s)).trim();
-const lc = s => norm(s).toLowerCase();
-const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-const esc = s => norm(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const ALL = '__all__';
-const NA = '(Tidak dinyatakan)';
+const H = id => CONFIG.HOSPITALS.find(h => h.id === id) || { name: id, id };
+const DISTRICTS = Object.keys(CONFIG.KK_NO_XRAY).sort((a, b) => a.localeCompare(b, 'ms'));
 
+const ICON = {
+  doc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>',
+  ext: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>',
+  dl: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>',
+  hosp: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/><path d="M12 7v6"/><path d="M9 10h6"/></svg>',
+  kk: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9v12h14V9"/><path d="M12 12v6"/><path d="M9 15h6"/></svg>',
+  walk: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13" cy="4" r="2"/><path d="m9 20 3-6 3 3v4"/><path d="m6 12 3-4 4 1 3 3 3 1"/></svg>',
+  scan: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="4"/></svg>',
+  lung: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v8"/><path d="M12 11c-2 0-3 2-4 4s-2 5-4 5c-1 0-1-2-1-4 0-4 2-8 5-9"/><path d="M12 11c2 0 3 2 4 4s2 5 4 5c1 0 1-2 1-4 0-4-2-8-5-9"/></svg>',
+  micro: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 1 0 0-14h-1"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2z"/><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"/></svg>'
+};
+
+/* ---------- Links ---------- */
+$('lnkNalury').href = CONFIG.NALURY_URL;
+$('lnkNaluryReg').href = CONFIG.NALURY_REG_URL;
+if (CONFIG.FULL_DASHBOARD_URL) $('lnkFullDash').href = CONFIG.FULL_DASHBOARD_URL; else $('lnkFullDash').hidden = true;
+$('menuBtn').addEventListener('click', () => {
+  const open = $('navLinks').classList.toggle('open');
+  $('menuBtn').setAttribute('aria-expanded', open);
+});
+document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click', () => { $('navLinks').classList.remove('open'); $('menuBtn').setAttribute('aria-expanded', 'false'); }));
+
+/* ---------- Documents ---------- */
+$('docGrid').innerHTML = CONFIG.DOCS.map((d, i) => {
+  const url = d.url || CONFIG.REF_FOLDER;
+  const cls = ['i-coral', 'i-navy', 'i-teal'][i % 3];
+  return `<article class="card doc"><div class="icon ${cls}">${ICON.doc}</div>
+    <span class="pill ${['p-coral', 'p-navy', 'p-teal'][i % 3]}" style="align-self:flex-start">${esc(d.tag)}</span>
+    <h3>${esc(d.title)}</h3><p class="meta">${esc(d.meta)}</p>
+    <div class="actions"><a class="btn btn-outline" href="${esc(url)}" target="_blank" rel="noopener">${ICON.ext}${d.url ? 'Buka dokumen' : 'Buka folder rujukan'}</a></div></article>`;
+}).join('') + `<article class="card doc" style="grid-column:1/-1;flex-direction:row;align-items:center;gap:16px;flex-wrap:wrap">
+  <div class="icon i-navy" style="margin:0">${ICON.doc}</div>
+  <div style="flex:1;min-width:220px"><h3 style="margin:0">Folder Sumber Rujukan LHI</h3><p class="meta">Semua dokumen, borang dan bahan taklimat di satu folder</p></div>
+  <a class="btn btn-primary" href="${esc(CONFIG.REF_FOLDER)}" target="_blank" rel="noopener">${ICON.ext}Buka folder</a></article>`;
+
+/* ---------- Team guides ---------- */
+const TEAMS = [
+  { id: 'kk', label: 'Klinik Kesihatan', icon: ICON.kk, chartsFor: 'KK',
+    intro: 'PP dan FMS di KK ialah pintu masuk saringan. Sasaran minimum 1 saringan sehari bagi setiap KK berfasiliti X-ray.',
+    tasks: ['Kenal pasti klien melalui NHSI, KBM, Klinik NCD, URTI dan OSCA. <b>Semua klien KBM wajib ditawarkan saringan.</b>',
+      'Semak kelayakan (Lampiran A): ≥18 tahun, berisiko atau bergejala, dan dapatkan persetujuan.',
+      'Isi BSLHI_KKM dalam NaLuRy.',
+      'Asma / COPD: PUMA ≥5 → spirometri (± FeNO).',
+      'Kanser / Tibi: X-ray dada ± ujian kahak. Abnormal → rujuk Pakar Respiratori / Perubatan.',
+      'CXR normal + risiko tinggi (50–70 tahun dan ≥20 pack-years, atau hazard + sejarah penyakit) → FMS rujuk LDCT.',
+      'CXR konvensional: hantar filem / DICOM ke Radiologi bersama borang LDCT. KK Pendang guna laporan AI.',
+      'Semak keputusan LDCT dalam NaLuRy. Lung-RADS 4A/4B/4X/S → rujuk segera Pakar Respiratori.'],
+    nalury: ['BSLHI_KKM', 'Keputusan CXR, spirometri, FeNO', 'Borang rujukan', 'Susulan keputusan hospital'],
+    note: 'Cop rasmi <b>INISIATIF KESIHATAN PARU-PARU KEBANGSAAN (LHI)</b> wajib pada semua borang X-ray, LDCT dan rujukan.' },
+  { id: 'outreach', label: 'Outreach', icon: ICON.walk, chartsFor: 'KK',
+    intro: 'Pasukan PP, PPP, JK, JM, sukarelawan KOSPEN dan NGO menjalankan saringan di komuniti dan institusi rentan. Sasaran liputan outreach 30%.',
+    tasks: ['Jalankan NHSI di komuniti sasaran atau institusi (penjara, pusat jagaan, komuniti Orang Asli).',
+      'Guna senarai semak Lampiran A untuk kenal pasti golongan berisiko dan bergejala.',
+      'Semak kelayakan (≥18 tahun, warganegara) dan dapatkan persetujuan.',
+      'Isi penilaian BSLHI_KKM di lapangan.',
+      'Beri surat rujukan rasmi ke KK terdekat untuk CXR, spirometri atau ujian kahak.',
+      'Klien perokok: tawarkan rujukan ke Klinik Berhenti Merokok (KBM).'],
+    nalury: ['BSLHI_KKM di lapangan', 'Rekod rujukan ke KK'],
+    note: 'Klien bergejala teruk (contohnya batuk berdarah atau sesak nafas) perlu dirujuk segera ke KK atau hospital berdekatan.' },
+  { id: 'radio', label: 'Radiologi', icon: ICON.scan, chartsFor: 'Radiologi',
+    intro: 'Jabatan Radiologi di 6 hospital rujukan mengesahkan CXR dan menjalankan LDCT bagi pesakit berisiko tinggi dengan CXR normal.',
+    tasks: ['Terima borang permohonan LDCT bercop LHI daripada FMS KK.',
+      'Semak kriteria: CXR normal + umur 50–70 tahun + Kategori 1 (≥20 pack-years) atau Kategori 2 (hazard + sejarah penyakit).',
+      'KK AI-CXR (KK Pendang): terima laporan AI. CXR konvensional: baca filem / DICOM yang dihantar KK.',
+      'CXR abnormal: laporkan dan maklum FMS (bukan untuk LDCT).',
+      'Jadualkan LDCT dalam ≤90 hari. Pesakit tidak hadir → maklum Penyelaras LHI KK.',
+      'Laporkan ikut Lung-RADS v2022. 4A/4B/4X/S → kemas kini dapatan dan maklum segera FMS.'],
+    nalury: ['Tarikh janji temu & kehadiran', 'Tarikh LDCT & dapatan', 'Kategori Lung-RADS & laporan'],
+    note: 'Rujukan ke Pakar Respiratori dibuat oleh FMS KK selepas menerima keputusan LDCT.' },
+  { id: 'respi', label: 'Respiratori', icon: ICON.lung, chartsFor: '',
+    intro: 'Pakar Respiratori / Perubatan Dalaman di HSB, HSAH dan Hospital Kulim menjadi pasukan utama diagnosis dan pengurusan MDT.',
+    tasks: ['Terima rujukan FMS: CXR abnormal, LDCT Lung-RADS 4A/4B/4X/S, asma / COPD dan Tibi mengikut kriteria Lampiran E.',
+      'Siasatan lanjut: CECT / PET untuk origin, staging dan resectability.',
+      'Pengambilan tisu: bronkoskopi, EBUS, pleuroskopi atau biopsi berpandu imej (bersama Radiologi).',
+      'Bincang kes dalam MDT: Respiratori, Onkologi, Pembedahan Torasik, Radiologi, Patologi, Perubatan Nuklear.',
+      'Sasaran: 80% kes disyaki kanser didiagnos ≤4 minggu dari tarikh rujukan.',
+      'Asma sukar dirawat → Severe Asthma Network; COPD frequent exacerbator → penilaian semula dan MDT.'],
+    nalury: ['Siasatan respiratori & kehadiran', 'Outcome (resectable / tidak)', 'Diagnosis akhir', 'Pelan rawatan'],
+    note: 'Diagnosis akhir dalam NaLuRy membolehkan KK membuat susulan dan diperlukan untuk indikator pengesanan (detection yield).' },
+  { id: 'patho', label: 'Patologi', icon: ICON.micro, chartsFor: '',
+    intro: 'Jabatan Patologi Anatomik di HSB, HSAH dan Hospital Kulim menyokong pengesahan diagnosis kanser paru-paru dan Tibi.',
+    tasks: ['Proses spesimen biopsi / sitologi daripada bronkoskopi, EBUS, pleuroskopi atau biopsi berpandu imej.',
+      'Klasifikasi histopatologi dan IHC (contohnya TTF1, Napsin A, p40).',
+      'Ujian molekular bila diperlukan (contohnya EGFR, ALK, ROS1).',
+      'Ujian Tibi: GeneXpert MTB/RIF, kultur dan sensitiviti.',
+      'Segerakan laporan kes bercop LHI untuk menyokong sasaran diagnosis ≤4 minggu.'],
+    nalury: ['Klasifikasi histopatologi', 'Tarikh siasatan', 'IHC & ujian molekular', 'Keputusan ujian Tibi'],
+    note: 'Keputusan TB juga perlu direkod dalam sistem Registri TB Kebangsaan mengikut amalan sedia ada.' }
+];
+$('tabs').innerHTML = TEAMS.map((t, i) => `<button class="tab" role="tab" id="tab-${t.id}" aria-controls="panel-${t.id}" aria-selected="${i === 0}">${t.icon}${esc(t.label)}</button>`).join('');
+$('panels').innerHTML = TEAMS.map((t, i) => {
+  const charts = CONFIG.CHARTS.filter(c => c.team === t.chartsFor);
+  return `<div class="panel ${i === 0 ? 'on' : ''}" role="tabpanel" id="panel-${t.id}" aria-labelledby="tab-${t.id}">
+    <div class="card"><h3>${esc(t.label)}</h3><p style="margin-bottom:16px">${t.intro}</p>
+      <ul class="checklist">${t.tasks.map(x => `<li>${ICON.check}<span>${x}</span></li>`).join('')}</ul></div>
+    <div class="grid" style="gap:18px;align-content:start">
+      <div class="card"><h3>Kemas kini dalam NaLuRy</h3><ul class="checklist" style="margin-top:8px">${t.nalury.map(x => `<li>${ICON.check}<span>${esc(x)}</span></li>`).join('')}</ul>
+        <a class="btn btn-primary" href="${esc(CONFIG.NALURY_URL)}" target="_blank" rel="noopener" style="margin-top:16px">${ICON.ext}Buka NaLuRy</a></div>
+      <div class="note">${t.note}</div>
+      ${charts.length ? `<div class="card"><h3>Carta alir berkaitan</h3><div class="grid" style="gap:10px;margin-top:8px">${charts.map(c => `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><span style="font-weight:600">${esc(c.title)}</span><span class="dl"><a class="btn btn-outline" style="padding:7px 12px" href="${esc(c.a4)}" download>${ICON.dl}A4</a><a class="btn btn-outline" style="padding:7px 12px" href="${esc(c.a3)}" download>${ICON.dl}A3</a></span></div>`).join('')}</div></div>` : ''}
+    </div></div>`;
+}).join('');
+const tabs = [...document.querySelectorAll('.tab')];
+function selectTab(i) {
+  tabs.forEach((b, j) => { b.setAttribute('aria-selected', j === i); b.tabIndex = j === i ? 0 : -1; });
+  document.querySelectorAll('.panel').forEach((p, j) => p.classList.toggle('on', j === i));
+}
+tabs.forEach((b, i) => {
+  b.addEventListener('click', () => selectTab(i));
+  b.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      const n = (i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length; selectTab(n); tabs[n].focus();
+    }
+  });
+});
+selectTab(0);
+
+/* ---------- Charts ---------- */
+$('chartGrid').innerHTML = CONFIG.CHARTS.map(c => `<article class="card chart-card">
+  <div class="thumb"><span class="pill ${c.color === 'coral' ? 'p-coral' : 'p-teal'} tag">${esc(c.team)}</span>
+    <div class="mini"><i style="width:80%"></i><i style="width:60%;opacity:.35"></i><i class="${c.color === 'coral' ? 'c' : 't'}" style="width:70%"></i><i style="width:50%;opacity:.35"></i><i class="${c.color === 'coral' ? 'c' : 't'}" style="width:65%"></i></div></div>
+  <h3>${esc(c.title)}</h3><p>${esc(c.desc)}</p>
+  <div class="dl"><a class="btn btn-primary" href="${esc(c.a4)}" download>${ICON.dl}A4 (PDF)</a><a class="btn btn-outline" href="${esc(c.a3)}" download>${ICON.dl}A3 (PDF)</a></div></article>`).join('');
+
+/* ---------- Facilities ---------- */
+$('hospGrid').innerHTML = CONFIG.HOSPITALS.map(h => {
+  const kks = CONFIG.KK_XRAY.filter(k => k.h === h.id).map(k => k.kk.replace(/^KK /, ''));
+  const extra = Object.entries(CONFIG.LDCT_NO_KK).filter(([, v]) => v === h.id).map(([d]) => `Daerah ${d}`);
+  return `<article class="card hosp"><div style="display:flex;gap:12px;align-items:center"><div class="icon ${h.respi ? 'i-coral' : 'i-navy'}" style="margin:0">${ICON.hosp}</div>
+    <div><h3 style="margin:0">${esc(h.name)}</h3><p class="dash-status">${esc(h.town)}</p></div></div>
+    <div class="tags"><span class="pill p-navy">CT scan / LDCT</span>${h.respi ? '<span class="pill p-coral">Respiratori</span>' : ''}${h.patho ? '<span class="pill p-gold">Patologi Anatomik</span>' : ''}</div>
+    <p class="kk"><b>${kks.length} KK merujuk LDCT:</b> ${kks.length ? esc(kks.join(', ')) : '—'}${extra.length ? ` · ${esc(extra.join(', '))}` : ''}</p></article>`;
+}).join('');
+$('fDist').innerHTML = '<option value="">Semua daerah</option>' + DISTRICTS.map(d => `<option>${esc(d)}</option>`).join('');
+function renderDist() {
+  const fd = $('fDist').value, q = $('fSearch').value.trim().toLowerCase();
+  const rows = DISTRICTS.filter(d => !fd || d === fd).map(d => {
+    const xr = CONFIG.KK_XRAY.filter(k => k.d === d);
+    const nx = CONFIG.KK_NO_XRAY[d] || [];
+    const all = xr.map(k => k.kk).concat(nx).join(' ').toLowerCase();
+    if (q && !all.includes(q) && !d.toLowerCase().includes(q)) return '';
+    const hs = [...new Set(xr.map(k => k.h).concat(CONFIG.LDCT_NO_KK[d] ? [CONFIG.LDCT_NO_KK[d]] : []))];
+    const mark = s => q && s.toLowerCase().includes(q) ? ' style="outline:2px solid var(--coral)"' : '';
+    return `<tr><td class="d">${esc(d)}</td>
+      <td>${xr.length ? xr.map(k => `<span class="chip${k.ai ? ' ai' : ''}"${mark(k.kk)}>${esc(k.kk)}${k.ai ? ' · AI' : ''}</span>`).join('') : '<span class="dash-status">Tiada KK X-ray — rujuk ke KK berdekatan</span>'}</td>
+      <td>${nx.length ? nx.map(k => `<span class="chip no"${mark(k)}>${esc(k)}</span>`).join('') : '<span class="dash-status">KK lain dalam daerah · senarai akan dikemas kini</span>'}</td>
+      <td>${hs.map(h => esc(H(h).name)).join('<br>') || '—'}</td>
+      <td>${esc(H(CONFIG.RESPI_BY_DISTRICT[d]).name)}</td></tr>`;
+  }).join('');
+  $('distBody').innerHTML = rows || '<tr><td colspan="5" class="dash-status">Tiada padanan.</td></tr>';
+}
+$('fDist').addEventListener('change', renderDist);
+$('fSearch').addEventListener('input', renderDist);
+renderDist();
+
+/* ---------- Dashboard ---------- */
+const lc = s => String(s ?? '').trim().toLowerCase();
+const isYes = v => CONFIG.YES_VALUES.includes(v);
 let DATA = [];
-let charts = {};
-let state = { from: '', to: '', district: ALL, clinic: ALL, view: 'chart' };
-let loadedAt = null;
-
-/* ---------- Data loading (Google Visualization API, JSON) ---------- */
-function colLetters() {
-  const set = new Set(Object.values(CONFIG.COL));
-  if (CONFIG.OUTCOME_COL) set.add(CONFIG.OUTCOME_COL.toUpperCase());
-  return [...set];
-}
-
-function parseDate(cell) {
-  if (!cell) return null;
-  const v = cell.v;
-  if (typeof v === 'string') {
-    const m = v.match(/^Date\((\d+),(\d+),(\d+)(?:,(\d+),(\d+),(\d+))?/);
-    if (m) return new Date(+m[1], +m[2], +m[3], +(m[4]||0), +(m[5]||0), +(m[6]||0));
-    const t = v.trim().match(/^(\d{4})-(\d{1,2})-(\d{1,2})(?:[ T](\d{1,2}):(\d{2})(?::(\d{2}))?)?/);
-    if (t) return new Date(+t[1], +t[2]-1, +t[3], +(t[4]||0), +(t[5]||0), +(t[6]||0));
-    const d = v.trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?/);
-    if (d) return new Date(+d[3], +d[2]-1, +d[1], +(d[4]||0), +(d[5]||0), +(d[6]||0));
-  }
-  if (cell.f) { const p = parseDate({ v: cell.f }); if (p) return p; }
-  return null;
-}
-const dkey = d => d ? `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}` : '';
-
-async function fetchSheet() {
-  const letters = colLetters();
-  const q = 'select ' + letters.join(',') + ' where ' + CONFIG.COL.date + ' is not null';
-  let url = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:json&headers=1&tq=${encodeURIComponent(q)}`;
-  if (CONFIG.SHEET_NAME) url += '&sheet=' + encodeURIComponent(CONFIG.SHEET_NAME);
-  url += '&_=' + Date.now();
-  const res = await fetch(url, { cache: 'no-store' });
-  if (!res.ok) throw new Error('HTTP ' + res.status);
-  const text = await res.text();
-  const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
-  if (json.status === 'error') throw new Error((json.errors || []).map(e => e.detailed_message || e.message).join('; '));
-  const idx = {}; letters.forEach((L, i) => idx[L] = i);
-  const C = CONFIG.COL;
-  const cellText = c => c == null ? '' : norm(c.f != null && typeof c.v !== 'string' ? c.f : c.v);
-  return (json.table.rows || []).map(r => {
-    const c = r.c || [];
-    const get = L => cellText(c[idx[L]]);
-    const d = parseDate(c[idx[C.date]]);
-    const rec = {
-      date: d, day: dkey(d),
-      district: mapDistrict(get(C.district)) || NA,
-      program: get(C.program) || NA,
-      clinic: get(C.clinic) || NA,
-      smoking: lc(get(C.smoking)),
-      agree: lc(get(C.agree)),
-      xray: lc(get(C.xray)),
-      dx: CONFIG.OUTCOME_COL ? get(CONFIG.OUTCOME_COL.toUpperCase()) : ''
-    };
-    return rec;
-  }).filter(r => r.date);
-}
-
-/* ---------- Demo data (?demo=1) for previewing without the sheet ---------- */
-function demoData() {
-  const dist = {
-    'Kota Setar':['KK Bandar Alor Setar','KK Dato’ Kumbar','KK Pokok Sena','KK Simpang Empat','KK Simpang Kuala','KK Langgar'],
-    'Kubang Pasu':['KK Tunjang','KK Changlun','KK Kepala Batas'], 'Pendang':['KK Pendang'], 'Padang Terap':['KK Naka'],
-    'Yan':['KK Guar Chempedak'], 'Kuala Muda':['KK Bandar Sungai Petani','KK Taman Intan'], 'Kulim':['KK Kulim'],
-    'Bandar Baharu':['KK Serdang'], 'Sik':['KK Jeniang'], 'Langkawi':['KK Padang Matsirat','KK Air Hangat','KK Kuah'], 'Baling':['KK Baling']
-  };
-  const progs = ['Klinik Kesihatan','Klinik Kesihatan','Klinik Kesihatan','KBM','NHSI','Outreach'];
-  const smk = ['never','never','active','active','ex_smoker_lt15','ex_smoker_gt15'];
-  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-  const pick = a => a[Math.floor(rnd() * a.length)];
-  const rows = []; const start = new Date(2025, 6, 7).getTime(), end = new Date(2026, 9, 8, 15, 59).getTime();
-  const ds = Object.keys(dist);
-  for (let i = 0; i < 1400; i++) {
-    const district = rnd() < 0.3 ? 'Pendang' : pick(ds);
-    const rawDistrict = rnd() < 0.15 ? 'POKOK SENA' : district;
-    const d = new Date(start + rnd() * (end - start));
-    const agree = rnd() < 0.88 ? 'yes' : 'no';
-    rows.push({ date: d, day: dkey(d), district: mapDistrict(rawDistrict), clinic: rawDistrict === 'POKOK SENA' ? 'KK Pokok Sena' : pick(dist[district]), program: pick(progs),
-      smoking: pick(smk), agree, xray: agree === 'yes' && rnd() < 0.78 ? 'yes' : 'no',
-      dx: (() => { const x = rnd(); return x < 0.012 ? 'Lung Cancer' : x < 0.04 ? 'Pulmonary TB' : x < 0.09 ? 'Asthma' : x < 0.15 ? 'COPD' : x < 0.5 ? 'Normal' : ''; })() });
-  }
-  rows.push({ date: new Date(end), day: dkey(new Date(end)), district: 'Pendang', clinic: 'KK Pendang', program: 'Klinik Kesihatan', smoking: 'active', agree: 'yes', xray: 'yes', dx: '' });
-  return rows;
-}
-
-/* ---------- Metrics ---------- */
-function hasDx(text, o) {
-  if (!o.match.test(text)) return false;
-  if (o.exclude && o.exclude.test(text)) return false;
-  // exclusion umum dinilai pada segmen diagnosis yang sepadan sahaja
-  const parts = text.split(/[;,\/\n+]|\band\b|\bdan\b/i).filter(p => o.match.test(p));
-  return parts.some(p => !CONFIG.OUTCOME_EXCLUDE.test(p));
-}
 function mapDistrict(d) {
   const k = lc(d);
-  for (const [from, to] of Object.entries(CONFIG.DISTRICT_MERGE || {})) if (lc(from) === k) return to;
-  return norm(d);
+  for (const [f, t] of Object.entries(CONFIG.DISTRICT_MERGE)) if (lc(f) === k) return t;
+  return String(d ?? '').trim() || '(Tidak dinyatakan)';
 }
-const byName = (a, b) => String(a).localeCompare(String(b), 'ms', { sensitivity: 'base' });
-const isSmoker = r => CONFIG.SMOKER_VALUES.includes(r.smoking);
-const isYes = v => CONFIG.YES_VALUES.includes(v);
-function metrics(rows) {
-  let total = rows.length, elig = 0, xray = 0;
-  const out = {}; CONFIG.OUTCOMES.forEach(o => out[o.key] = 0);
-  for (const r of rows) {
-    if (isSmoker(r) && isYes(r.agree)) { elig++; if (isYes(r.xray)) xray++; }
-    if (r.dx) for (const o of CONFIG.OUTCOMES) if (hasDx(r.dx, o)) out[o.key]++;
+function parseDate(c) {
+  if (!c) return null; const v = c.v;
+  if (typeof v === 'string') {
+    let m = v.match(/^Date\((\d+),(\d+),(\d+)/); if (m) return new Date(+m[1], +m[2], +m[3]);
+    m = v.trim().match(/^(\d{4})-(\d{1,2})-(\d{1,2})/); if (m) return new Date(+m[1], +m[2] - 1, +m[3]);
+    m = v.trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/); if (m) return new Date(+m[3], +m[2] - 1, +m[1]);
   }
-  return { total, elig, xray, kpi: pct(xray, elig), out };
+  if (c.f) return parseDate({ v: c.f });
+  return null;
 }
-function groupBy(rows, key) {
-  const m = new Map();
-  for (const r of rows) { const k = r[key]; if (!m.has(k)) m.set(k, []); m.get(k).push(r); }
-  return m;
+async function fetchSheet() {
+  const C = CONFIG.COL, L = Object.values(C);
+  const q = 'select ' + L.join(',') + ' where ' + C.date + ' is not null';
+  let url = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:json&headers=1&tq=${encodeURIComponent(q)}&_=${Date.now()}`;
+  if (CONFIG.SHEET_NAME) url += '&sheet=' + encodeURIComponent(CONFIG.SHEET_NAME);
+  const r = await fetch(url, { cache: 'no-store' }); if (!r.ok) throw new Error('HTTP ' + r.status);
+  const t = await r.text(); const j = JSON.parse(t.substring(t.indexOf('{'), t.lastIndexOf('}') + 1));
+  if (j.status === 'error') throw new Error((j.errors || []).map(e => e.detailed_message || e.message).join('; '));
+  const idx = {}; L.forEach((x, i) => idx[x] = i);
+  const txt = c => c == null ? '' : String(c.f != null && typeof c.v !== 'string' ? c.f : c.v ?? '').trim();
+  return (j.table.rows || []).map(row => {
+    const c = row.c || [];
+    return { date: parseDate(c[idx[C.date]]), district: mapDistrict(txt(c[idx[C.district]])), clinic: txt(c[idx[C.clinic]]),
+      smoking: lc(txt(c[idx[C.smoking]])), agree: lc(txt(c[idx[C.agree]])), xray: lc(txt(c[idx[C.xray]])) };
+  }).filter(r => r.date);
 }
-
-/* ---------- Filters ---------- */
-function filtered() {
-  return DATA.filter(r =>
-    (!state.from || r.day >= state.from) && (!state.to || r.day <= state.to) &&
-    (state.district === ALL || r.district === state.district) &&
-    (state.clinic === ALL || r.clinic === state.clinic));
+function demoData() {
+  let s = 11; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const out = []; const end = new Date(2026, 9, 15);
+  for (let i = 0; i < 1200; i++) {
+    const k = CONFIG.KK_XRAY[Math.floor(rnd() * CONFIG.KK_XRAY.length)];
+    const agree = rnd() < 0.9 ? 'yes' : 'no';
+    out.push({ date: new Date(end - rnd() * 4e10), district: rnd() < 0.05 ? 'Baling' : k.d, clinic: k.kk,
+      smoking: ['never', 'active', 'active', 'ex_smoker_lt15', 'ex_smoker_gt15', 'never'][Math.floor(rnd() * 6)],
+      agree, xray: agree === 'yes' && rnd() < 0.76 ? 'yes' : 'no' });
+  }
+  out.push({ date: end, district: 'Pendang', clinic: 'KK Pendang', smoking: 'active', agree: 'yes', xray: 'yes' });
+  return out;
 }
-const sortAlpha = arr => arr.sort((a, b) => a.localeCompare(b, 'ms'));
-function fillDistricts() {
-  const ds = sortAlpha([...new Set(DATA.map(r => r.district))]);
-  $('fDistrict').innerHTML = `<option value="${ALL}">Semua daerah</option>` + ds.map(d => `<option value="${esc(d)}">${esc(d)}</option>`).join('');
-  $('fDistrict').value = ds.includes(state.district) ? state.district : ALL;
-  if ($('fDistrict').value === ALL) state.district = ALL;
+function metrics(rows) {
+  let elig = 0, xr = 0;
+  for (const r of rows) if (CONFIG.SMOKER_VALUES.includes(r.smoking) && isYes(r.agree)) { elig++; if (isYes(r.xray)) xr++; }
+  return { total: rows.length, elig, xray: xr, kpi: elig ? xr / elig * 100 : null };
 }
-function fillClinics() {
-  const src = state.district === ALL ? DATA : DATA.filter(r => r.district === state.district);
-  const cs = sortAlpha([...new Set(src.map(r => r.clinic))]);
-  $('fClinic').innerHTML = `<option value="${ALL}">Semua fasiliti${state.district === ALL ? '' : ' di ' + esc(state.district)}</option>` + cs.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
-  if (!cs.includes(state.clinic)) state.clinic = ALL;
-  $('fClinic').value = state.clinic;
+const pctTxt = v => v == null ? '—' : (Math.round(v * 10) / 10) + '%';
+function hbars(el, items, opt = {}) {
+  if (!items.length) { el.innerHTML = '<p class="dash-status">Tiada data.</p>'; return; }
+  const max = opt.max || Math.max(...items.map(i => i.v)) * 1.12 || 1;
+  const tg = opt.target != null ? opt.target / max * 100 : null;
+  el.innerHTML = items.map(i => {
+    const w = Math.max(0, Math.min(100, i.v / max * 100)); const inside = w > 80;
+    return `<div class="bar-row" title="${esc(i.tip || '')}"><span class="bl">${esc(i.k)}</span><span class="track"><span class="fill" style="width:${w}%;background:${i.c || 'var(--bar)'}"></span>${tg != null ? `<span class="tgt" style="left:${tg}%"></span>` : ''}<span class="val" style="${inside ? `right:${100 - w}%;padding-right:6px;color:#fff` : `left:${w}%;margin-left:4px;padding:0 4px;background:var(--surface);border-radius:4px`}">${esc(i.t)}</span></span></div>`;
+  }).join('');
 }
-
-/* ---------- Rendering ---------- */
-
-function scopeName() {
-  if (state.clinic !== ALL) return state.clinic;
-  if (state.district !== ALL) return 'Daerah ' + state.district;
-  return 'Negeri Kedah';
-}
-
-function render() {
-  const rows = filtered();
+function groupBy(rows, key) { const m = new Map(); rows.forEach(r => { if (!m.has(r[key])) m.set(r[key], []); m.get(r[key]).push(r); }); return m; }
+function renderDash() {
+  const d = $('dDist').value;
+  const rows = d ? DATA.filter(r => r.district === d) : DATA;
   const m = metrics(rows);
-  const sName = scopeName();
-
-  $('scopeText').innerHTML = `Skop: <b>${esc(sName)}</b>${state.from || state.to ? ` · ${state.from || '…'} hingga ${state.to || '…'}` : ''}`;
-  $('lblTotal').textContent = 'Jumlah saringan · ' + sName;
-  $('vTotal').textContent = fmt(m.total);
-  $('nTotal').textContent = rows.length ? `${fmt(new Set(rows.map(r => r.clinic)).size)} fasiliti · ${fmt(new Set(rows.map(r => r.district)).size)} daerah` : 'Tiada rekod dalam julat ini';
-  $('vElig').textContent = fmt(m.elig);
-  $('vXray').textContent = fmt(m.xray);
-  $('vKpi').textContent = pctTxt(m.kpi);
-  $('kpiBar').style.width = Math.min(100, m.kpi || 0) + '%';
-  $('kpiPill').innerHTML = statusPill(m.kpi);
-
-  renderProgram(rows);
-  renderArea(rows);
-  renderKpi(rows, m);
-  renderOutcomes(m);
+  $('tScope').textContent = 'Jumlah saringan · ' + (d ? 'Daerah ' + d : 'Negeri Kedah');
+  $('tTotal').textContent = fmt(m.total);
+  $('tTotalS').textContent = `${fmt(new Set(rows.map(r => r.clinic)).size)} fasiliti`;
+  $('tElig').textContent = fmt(m.elig); $('tXray').textContent = fmt(m.xray);
+  $('tKpi').textContent = pctTxt(m.kpi);
+  $('tKpiBar').style.width = Math.min(100, m.kpi || 0) + '%';
+  $('tKpiS').innerHTML = m.kpi == null ? 'Sasaran 80%' : (m.kpi >= CONFIG.KPI_TARGET ? '<span class="status-good">✓ Capai sasaran 80%</span>' : '<span class="status-warn">▼ Bawah sasaran 80%</span>');
+  const key = d ? 'clinic' : 'district';
+  $('cTitle1').textContent = d ? 'Saringan mengikut fasiliti' : 'Saringan mengikut daerah';
+  $('cTitle2').textContent = d ? 'KPI mengikut fasiliti' : 'KPI mengikut daerah';
+  const g = [...groupBy(rows, key)].map(([k, v]) => ({ k, ...metrics(v) }));
+  const sorted = d ? g.sort((a, b) => b.total - a.total) : g.sort((a, b) => a.k.localeCompare(b.k, 'ms'));
+  hbars($('bars1'), sorted.map(x => ({ k: x.k, v: x.total, t: fmt(x.total) })));
+  hbars($('bars2'), sorted.filter(x => x.elig > 0).map(x => ({ k: x.k, v: x.kpi, t: pctTxt(x.kpi), c: x.kpi >= CONFIG.KPI_TARGET ? 'var(--bar)' : 'var(--coral)', tip: `X-ray ${x.xray} / layak ${x.elig}` })), { max: 100, target: CONFIG.KPI_TARGET });
 }
-
-function statusPill(v) {
-  if (v == null) return '<span class="pill warn">Tiada data</span>';
-  return v >= CONFIG.KPI_TARGET ? '<span class="pill good">✓ Capai</span>' : '<span class="pill warn">▼ Bawah</span>';
-}
-
-/* ---------- Lightweight charts (pure HTML/SVG) ---------- */
-const tip = () => $('tip');
-function showTip(e, html) { const t = tip(); t.innerHTML = html; t.classList.remove('hidden'); moveTip(e); }
-function moveTip(e) { const t = tip(); const x = Math.min(e.clientX + 14, innerWidth - t.offsetWidth - 8); const y = Math.min(e.clientY + 14, innerHeight - t.offsetHeight - 8); t.style.left = x + 'px'; t.style.top = y + 'px'; }
-function hideTip() { tip().classList.add('hidden'); }
-function bindTips(root) {
-  root.querySelectorAll('[data-tip]').forEach(el => {
-    el.addEventListener('mouseenter', e => showTip(e, el.dataset.tip));
-    el.addEventListener('mousemove', moveTip);
-    el.addEventListener('mouseleave', hideTip);
-  });
-}
-function niceMax(v) { if (v <= 0) return 1; const p = Math.pow(10, Math.floor(Math.log10(v))); for (const m of [1, 2, 2.5, 5, 10]) if (m * p >= v) return m * p; return 10 * p; }
-
-/* items: [{label, value, text, color, tip}] */
-function hbars(el, items, opts = {}) {
-  if (!items.length) { el.innerHTML = '<div class="empty">Tiada data untuk penapis ini</div>'; return; }
-  const max = opts.max || niceMax(Math.max(...items.map(i => i.value)));
-  const tgt = opts.target != null ? (opts.target / max * 100) : null;
-  let h = '';
-  if (tgt != null) h += `<div class="target-cap"><i></i><span><b style="left:${tgt}%">Sasaran ${opts.target}%</b></span></div>`;
-  h += items.map(i => {
-    const w = Math.max(0, Math.min(100, i.value / max * 100));
-    const inside = w > 82;
-    return `<div class="bar-row" data-tip="${esc(i.tip)}"><div class="bl" title="${esc(i.label)}">${esc(i.label)}</div>
-      <div class="bar-track"><div class="bar-fill" style="width:${w}%;background:${i.color}"></div>
-      ${tgt != null ? `<div class="bar-target" style="left:${tgt}%"></div>` : ''}
-      <span class="bar-val" style="${inside ? `right:${100 - w}%;padding-right:6px;color:#fff` : `left:${w}%`}">${esc(i.text)}</span></div></div>`;
-  }).join('');
-  h += `<div class="axis"><i></i><span><em style="font-style:normal">0</em><em style="font-style:normal">${opts.suffix ? max + opts.suffix : fmt(max)}</em></span></div>`;
-  el.innerHTML = h;
-  bindTips(el);
-}
-
-function donut(el, items, total) {
-  if (!total) { el.innerHTML = '<div class="empty">Tiada data</div>'; return; }
-  const R = 90, r = 56, C = 100; let a0 = -Math.PI / 2;
-  const pt = (rad, a) => [C + rad * Math.cos(a), C + rad * Math.sin(a)];
-  const paths = items.map(it => {
-    const frac = it.value / total; let a1 = a0 + frac * Math.PI * 2;
-    if (frac >= 0.9999) a1 = a0 + Math.PI * 2 - 0.0001;
-    const large = a1 - a0 > Math.PI ? 1 : 0;
-    const [x0, y0] = pt(R, a0), [x1, y1] = pt(R, a1), [x2, y2] = pt(r, a1), [x3, y3] = pt(r, a0);
-    const d = `M${x0},${y0} A${R},${R} 0 ${large} 1 ${x1},${y1} L${x2},${y2} A${r},${r} 0 ${large} 0 ${x3},${y3} Z`;
-    a0 = a1;
-    return `<path d="${d}" fill="${it.color}" stroke="${css('--surface')}" stroke-width="2" data-tip="${esc(it.tip)}"></path>`;
-  }).join('');
-  el.innerHTML = `<svg viewBox="0 0 200 200" aria-hidden="true">${paths}</svg><div class="donut-center"><b>${fmt(total)}</b><small>saringan</small></div>`;
-  bindTips(el);
-}
-
-function renderProgram(rows) {
-  const g = [...groupBy(rows, 'program')].map(([k, v]) => [k, v.length]).sort((a, b) => b[1] - a[1]);
-  let items = g;
-  if (g.length > 6) { const rest = g.slice(5).reduce((s, x) => s + x[1], 0); items = [...g.slice(0, 5), ['Lain-lain', rest]]; }
-  const colors = ['--s1','--s2','--s3','--s4','--s5','--s6'].map(css);
-  const total = rows.length;
-  $('lgProgram').innerHTML = items.length ? items.map(([k, n], i) =>
-    `<div><i style="background:${colors[i]}"></i>${esc(k)}<span class="n">${fmt(n)} <span style="color:var(--muted)">(${pctTxt(pct(n, total))})</span></span></div>`).join('') : '';
-  donut($('chProgram'), items.map(([k, n], i) => ({ value: n, color: colors[i], tip: `<b>${esc(k)}</b>${fmt(n)} saringan (${pctTxt(pct(n, total))})` })), total);
-}
-
-function renderArea(rows) {
-  const byDistrict = state.district === ALL;
-  const key = byDistrict ? 'district' : 'clinic';
-  $('ttlArea').textContent = byDistrict ? 'Saringan mengikut daerah' : 'Saringan mengikut fasiliti kesihatan';
-  $('subArea').textContent = byDistrict ? 'Bilangan saringan, Negeri Kedah' : 'Bilangan saringan, Daerah ' + state.district;
-  const g = [...groupBy(rows, key)].map(([k, v]) => [k, v.length])
-    .sort(byDistrict ? (a, b) => byName(a[0], b[0]) : (a, b) => b[1] - a[1]);
-  hbars($('chArea'), g.map(([k, n]) => ({ label: k, value: n, text: fmt(n),
-    color: state.clinic !== ALL && k !== state.clinic ? css('--bar-2') : css('--bar'),
-    tip: `<b>${esc(k)}</b>${fmt(n)} saringan · ${pctTxt(pct(n, rows.length))} daripada skop` })));
-  const head = byDistrict ? 'Daerah' : 'Fasiliti kesihatan';
-  $('areaTableBox').innerHTML = `<table><thead><tr><th>${head}</th><th class="num">Saringan</th><th class="num">% skop</th></tr></thead><tbody>` +
-    g.map(([k, n]) => `<tr><td>${esc(k)}</td><td class="num">${fmt(n)}</td><td class="num">${pctTxt(pct(n, rows.length))}</td></tr>`).join('') +
-    `</tbody><tfoot><tr><td>Jumlah</td><td class="num">${fmt(rows.length)}</td><td class="num">100%</td></tr></tfoot></table>`;
-  applyView();
-}
-
-function renderKpi(rows, total) {
-  const byDistrict = state.district === ALL;
-  const key = byDistrict ? 'district' : 'clinic';
-  $('ttlKpi').textContent = byDistrict ? 'KPI mengikut daerah · Negeri Kedah' : 'KPI mengikut fasiliti kesihatan · Daerah ' + state.district;
-  const g = [...groupBy(rows, key)].map(([k, v]) => ({ k, ...metrics(v) }))
-    .sort(byDistrict ? (a, b) => byName(a.k, b.k) : (a, b) => (b.kpi ?? -1) - (a.kpi ?? -1) || b.elig - a.elig);
-  const T = CONFIG.KPI_TARGET;
-  hbars($('chKpi'), g.filter(x => x.elig > 0).map(x => ({ label: x.k, value: x.kpi, text: pctTxt(x.kpi),
-    color: x.kpi >= T ? css('--bar') : css('--s2'),
-    tip: `<b>${esc(x.k)}</b>KPI ${pctTxt(x.kpi)} · ${x.kpi >= T ? 'capai' : 'bawah'} sasaran<br>X-ray ${fmt(x.xray)} / layak &amp; setuju ${fmt(x.elig)}` })),
-    { max: 100, target: T, suffix: '%' });
-  const head = byDistrict ? 'Daerah' : 'Fasiliti kesihatan';
-  $('kpiTable').innerHTML = `<table><thead><tr><th>${head}</th><th class="num">Layak &amp; setuju*</th><th class="num">X-ray</th><th class="num">KPI</th><th>Status</th></tr></thead><tbody>` +
-    g.map(x => `<tr><td>${esc(x.k)}</td><td class="num">${fmt(x.elig)}</td><td class="num">${fmt(x.xray)}</td><td class="num">${pctTxt(x.kpi)}</td><td>${statusPill(x.kpi)}</td></tr>`).join('') +
-    `</tbody><tfoot><tr><td>${esc(byDistrict ? 'Negeri Kedah' : 'Daerah ' + state.district)}</td><td class="num">${fmt(total.elig)}</td><td class="num">${fmt(total.xray)}</td><td class="num">${pctTxt(total.kpi)}</td><td>${statusPill(total.kpi)}</td></tr></tfoot></table>`;
-}
-
-function renderOutcomes(m) {
-  $('outcomeCards').innerHTML = CONFIG.OUTCOMES.map(o => {
-    const n = m.out[o.key], p = pct(n, m.total);
-    return `<div class="card stat outcome"><p class="label">${esc(o.label)}</p><p class="value">${fmt(n)}<span class="pct">${pctTxt(p)}</span></p><p class="target">Sasaran pengesanan ${o.target}%</p></div>`;
-  }).join('');
-}
-
-function applyView() {
-  document.querySelectorAll('.view-toggle button').forEach(b => b.setAttribute('aria-pressed', b.dataset.view === state.view));
-  $('areaChartBox').classList.toggle('hidden', state.view !== 'chart');
-  $('areaTableBox').classList.toggle('hidden', state.view !== 'table');
-}
-
-/* ---------- Load ---------- */
-async function load() {
-  $('loading').classList.remove('hidden');
-  $('content').classList.add('hidden');
-  $('banner').className = 'hidden';
+async function loadDash() {
   const demo = new URLSearchParams(location.search).has('demo');
   try {
     DATA = demo ? demoData() : await fetchSheet();
-    loadedAt = new Date();
-    if (demo) { $('banner').className = 'banner demo'; $('banner').textContent = 'Mod DEMO: data rekaan untuk tujuan paparan sahaja.'; }
-    if (!DATA.length) throw new Error('Tiada rekod ditemui dalam Google Sheet.');
+    if (!DATA.length) throw new Error('Tiada rekod.');
+    if (demo) { $('dashBanner').hidden = false; $('dashBanner').className = 'banner demo'; $('dashBanner').textContent = 'Mod DEMO: data rekaan untuk paparan sahaja.'; }
     const last = DATA.reduce((a, r) => r.date > a ? r.date : a, DATA[0].date);
-    const first = DATA.reduce((a, r) => r.date < a ? r.date : a, DATA[0].date);
-    $('asOf').textContent = dkey(last);
-    $('fFrom').min = $('fTo').min = dkey(first);
-    $('fFrom').max = $('fTo').max = dkey(last);
-    $('loadedAt').textContent = `${fmt(DATA.length)} rekod · dimuatkan ${loadedAt.toLocaleString('ms-MY')}.`;
-    $('aRows').textContent = fmt(DATA.length);
-    $('aLast').textContent = last.toLocaleString('ms-MY');
-    $('aLoaded').textContent = loadedAt.toLocaleString('ms-MY');
-    fillDistricts(); fillClinics();
-    $('loading').classList.add('hidden');
-    $('content').classList.remove('hidden');
-    render();
+    $('asOf').textContent = 'Data saringan sehingga: ' + last.toLocaleDateString('ms-MY', { day: 'numeric', month: 'long', year: 'numeric' }) + '.';
+    const ds = [...new Set(DATA.map(r => r.district))].sort((a, b) => a.localeCompare(b, 'ms'));
+    $('dDist').innerHTML = '<option value="">Negeri Kedah</option>' + ds.map(x => `<option>${esc(x)}</option>`).join('');
+    renderDash();
   } catch (e) {
     console.error(e);
-    $('loading').classList.add('hidden');
-    $('banner').className = 'banner err';
-    $('banner').innerHTML = `<b>Data tidak dapat dimuatkan.</b> Pastikan Google Sheet dikongsi sebagai “Anyone with the link: Viewer” dan SHEET_ID dalam CONFIG betul. <br><small>Butiran: ${esc(e.message)}</small>`;
+    $('dashBanner').hidden = false; $('dashBanner').className = 'banner err';
+    $('dashBanner').innerHTML = '<b>Data pencapaian tidak dapat dimuatkan buat masa ini.</b> Sila cuba semula kemudian.';
+    $('bars1').innerHTML = $('bars2').innerHTML = '<p class="dash-status">—</p>';
   }
 }
-
-/* ---------- Events ---------- */
-$('fFrom').addEventListener('change', e => { state.from = e.target.value; render(); });
-$('fTo').addEventListener('change', e => { state.to = e.target.value; render(); });
-$('fDistrict').addEventListener('change', e => { state.district = e.target.value; state.clinic = ALL; fillClinics(); render(); });
-$('fClinic').addEventListener('change', e => {
-  state.clinic = e.target.value;
-  if (state.clinic !== ALL && state.district === ALL) {
-    const r = DATA.find(x => x.clinic === state.clinic);
-    if (r) { state.district = r.district; $('fDistrict').value = r.district; fillClinics(); }
-  }
-  render();
-});
-$('btnReset').addEventListener('click', () => {
-  state = { ...state, from: '', to: '', district: ALL, clinic: ALL };
-  $('fFrom').value = $('fTo').value = ''; $('fDistrict').value = ALL; fillClinics(); render();
-});
-document.querySelectorAll('.view-toggle button').forEach(b => b.addEventListener('click', () => { state.view = b.dataset.view; applyView(); }));
-$('btnRefresh').addEventListener('click', load);
-$('btnReload2').addEventListener('click', () => { closeModals(); load(); });
-matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => DATA.length && render());
-
-/* ---------- Admin ---------- */
-function closeModals() { document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden')); }
-function isAdmin() { try { return sessionStorage.getItem('lhiAdmin') === '1'; } catch { return false; } }
-async function sha256(s) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
-  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
-}
-$('btnAdmin').addEventListener('click', () => {
-  if (isAdmin()) { $('mAdmin').classList.remove('hidden'); return; }
-  $('pwd').value = ''; $('pwd').type = 'password'; $('btnEye').innerHTML = EYE_OPEN; $('pwdErr').textContent = '';
-  $('mLogin').classList.remove('hidden'); setTimeout(() => $('pwd').focus(), 50);
-});
-async function tryLogin() {
-  const ok = (await sha256($('pwd').value)) === CONFIG.ADMIN_HASH;
-  if (!ok) { $('pwdErr').textContent = 'Kata laluan tidak sah.'; return; }
-  try { sessionStorage.setItem('lhiAdmin', '1'); } catch {}
-  closeModals(); $('mAdmin').classList.remove('hidden');
-}
-$('btnLogin').addEventListener('click', tryLogin);
-$('pwd').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
-$('btnLogout').addEventListener('click', () => { try { sessionStorage.removeItem('lhiAdmin'); } catch {} closeModals(); });
-$('lnkSheet').href = CONFIG.ADMIN_SHEET_URL;
-$('lnkRujukan').href = CONFIG.RUJUKAN_URL;
-$('lnkNalury').href = CONFIG.NALURY_URL;
-const EYE_OPEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
-const EYE_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.1 10.1 0 0 1 12 19c-6.5 0-10-7-10-7a18.4 18.4 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.1 9.1 0 0 1 12 4c6.5 0 10 7 10 7a18.5 18.5 0 0 1-2.16 3.19"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="2" y1="2" x2="22" y2="22"/></svg>';
-$('btnEye').addEventListener('click', () => {
-  const show = $('pwd').type === 'password';
-  $('pwd').type = show ? 'text' : 'password';
-  $('btnEye').innerHTML = show ? EYE_OFF : EYE_OPEN;
-  $('btnEye').setAttribute('aria-pressed', show);
-  $('btnEye').setAttribute('aria-label', show ? 'Sembunyi kata laluan' : 'Tunjuk kata laluan');
-  $('pwd').focus();
-});
-document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', closeModals));
-document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if (e.target === m) closeModals(); }));
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModals(); });
-
-load();
+$('dDist').addEventListener('change', renderDash);
+loadDash();
 </script>
 </body>
 </html>
