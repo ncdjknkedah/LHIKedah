@@ -2,297 +2,410 @@
 <html lang="ms">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Dashboard Saringan LHI Kedah</title>
+<meta name="description" content="Dashboard pencapaian saringan Inisiatif Kesihatan Paru-paru Kebangsaan (LHI) Negeri Kedah">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
 /* =====================================================================
-   Dashboard Saringan LHI Negeri Kedah
-   Unit NCD, Jabatan Kesihatan Negeri Kedah
+   Dashboard Saringan LHI Negeri Kedah · Unit NCD, JKN Kedah
+   Susun atur: jalur logo putih, hero biru gelap + jalur LHI, menu tepi melekat (desktop),
+   tab bawah + penapis boleh dilipat (telefon).
    ===================================================================== */
 :root{
-  color-scheme: light;
-  --bg:#f3f4f1; --surface:#fcfcfb; --surface-2:#eef1ef; --border:#dde2df;
-  --ink:#13343b; --ink-2:#3e4e52; --muted:#5f6f73;
-  --brand:#13343b; --brand-ink:#f6f4ef; --accent:#b4502a;
-  --bar:#2a78d6; --bar-2:#86b6ef;
+  color-scheme:light;
+  --bg:#F2F4F3; --surface:#FFFFFF; --surface-2:#EEF2F1; --border:#D7DFDD; --soft:#E7EDEB;
+  --ink:#13262B; --ink-2:#3B4D52; --muted:#5A6B70;
+  --navy:#13343B; --navy-ink:#F3F6F5; --navy-muted:#B4C9C6; --navy-line:#2E525A;
+  --accent:#F0A27E; --accent-ink:#B4502A; --accent-soft:#FBE9E1;
+  --teal:#1F7A72; --teal-soft:#E1F0EE;
+  --bar:#2a78d6; --bar-2:#9EC5F4;
   --good:#1e7a3a; --good-bg:#e3f2e6; --warn:#a85a00; --warn-bg:#fdf0dc;
   --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#6250d6;
-  --grid:#e6e9e7;
+  --f-display:"Archivo","Arial Narrow",Arial,sans-serif;
+  --f-body:"IBM Plex Sans","Segoe UI",Roboto,Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --r:10px;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    color-scheme: dark;
-    --bg:#121615; --surface:#1a1f1e; --surface-2:#222827; --border:#2f3735;
-    --ink:#eef1ef; --ink-2:#c9d2cf; --muted:#9aa7a4;
-    --brand:#0d262b; --brand-ink:#f6f4ef; --accent:#f0a27e;
-    --bar:#3987e5; --bar-2:#1c5cab;
-    --good:#7fd093; --good-bg:#183021; --warn:#f2b45c; --warn-bg:#33260f;
-    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#9085e9;
-    --grid:#2a302f;
-  }
-}
-:root[data-theme="dark"]{
-  color-scheme: dark;
-  --bg:#121615; --surface:#1a1f1e; --surface-2:#222827; --border:#2f3735;
-  --ink:#eef1ef; --ink-2:#c9d2cf; --muted:#9aa7a4;
-  --brand:#0d262b; --brand-ink:#f6f4ef; --accent:#f0a27e;
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --bg:#0E1517; --surface:#162124; --surface-2:#1C292D; --border:#2A3A3E; --soft:#1E2C30;
+  --ink:#E6EEEC; --ink-2:#C3D0CD; --muted:#93A6A3;
+  --navy:#0B2228; --navy-ink:#EEF4F3; --navy-muted:#92AEAA; --navy-line:#24434A;
+  --accent:#F0A27E; --accent-ink:#F0A27E; --accent-soft:#3A2419;
+  --teal:#5BBFB5; --teal-soft:#15322F;
   --bar:#3987e5; --bar-2:#1c5cab;
   --good:#7fd093; --good-bg:#183021; --warn:#f2b45c; --warn-bg:#33260f;
   --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#9085e9;
-  --grid:#2a302f;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E1517; --surface:#162124; --surface-2:#1C292D; --border:#2A3A3E; --soft:#1E2C30;
+  --ink:#E6EEEC; --ink-2:#C3D0CD; --muted:#93A6A3;
+  --navy:#0B2228; --navy-ink:#EEF4F3; --navy-muted:#92AEAA; --navy-line:#24434A;
+  --accent:#F0A27E; --accent-ink:#F0A27E; --accent-soft:#3A2419;
+  --teal:#5BBFB5; --teal-soft:#15322F;
+  --bar:#3987e5; --bar-2:#1c5cab;
+  --good:#7fd093; --good-bg:#183021; --warn:#f2b45c; --warn-bg:#33260f;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#9085e9;
 }
 *{box-sizing:border-box}
-html,body{margin:0}
-body{background:var(--bg);color:var(--ink-2);font-family:'Public Sans',Arial,sans-serif;font-size:15px;line-height:1.45}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink-2);font:400 15.5px/1.55 var(--f-body);-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--navy)}
 button,input,select{font:inherit}
-.wrap{max-width:1280px;margin:0 auto;padding:0 20px}
+img{max-width:100%}
+a{color:var(--teal);text-underline-offset:3px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;margin:0;color:var(--ink);text-wrap:balance}
+p{margin:0}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1240px;margin:0 auto}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.hidden{display:none!important}
 
-/* Header */
-header{background:var(--brand);color:var(--brand-ink)}
-header .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding-top:22px;padding-bottom:22px}
-.eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#f0a27e;margin:0 0 4px}
-h1{font-size:24px;line-height:1.2;margin:0;color:var(--brand-ink)}
-.asof{margin:6px 0 0;font-size:14px;color:#c9dad6}
-.asof b{color:var(--brand-ink)}
-.hdr-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;min-width:300px}
-.hdr-actions .btn{justify-content:center;white-space:nowrap}
-@media (max-width:520px){.hdr-actions{min-width:0;width:100%}}
-/* Brand strip (logo & nama jabatan) — sentiasa latar cerah */
-.brandbar{background:#ffffff;border-bottom:1px solid #e5e7eb}
-.brand-inner{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
-@media (min-width:1024px){.brand-inner{justify-content:flex-start}}
-.brand-inner .logo-jata{height:64px;object-fit:contain}
-.brand-inner .logo-lhi{height:48px;object-fit:contain}
-.brand-text{display:flex;flex-direction:column;justify-content:center;padding:0 16px 0 4px;border-right:2px solid #d1d5db;text-align:center}
-@media (min-width:1024px){.brand-text{text-align:left}}
-.brand-text span{font-size:14px;font-weight:700;line-height:1.25;text-transform:uppercase}
-.brand-text .kkm{color:#0b3d91}
-.brand-text .jkn{color:#374151}
-/* Password field with eye toggle */
-.pwd-wrap{position:relative;margin-bottom:8px}
-.pwd-wrap input{margin-bottom:0!important;padding-right:44px!important}
-.eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--muted);width:34px;height:34px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.eye:hover{background:var(--surface-2);color:var(--ink)}
-.eye svg{width:20px;height:20px}
-.btn{border:1px solid var(--border);background:var(--surface);color:var(--ink);padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
-.btn:hover{background:var(--surface-2)}
-.btn-ghost{background:transparent;color:var(--brand-ink);border-color:rgba(246,244,239,.35)}
-.btn-ghost:hover{background:rgba(246,244,239,.1)}
-.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.btn-primary:hover{filter:brightness(1.05);background:var(--accent)}
-:focus-visible{outline:2px solid var(--bar);outline-offset:2px}
+/* ---------- jalur logo ---------- */
+.brand{background:#FFFFFF;color:#13202D;border-bottom:1px solid #DCE2E8}
+.brand .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.org{display:flex;align-items:center;gap:12px;min-width:0}
+.org img{height:56px;width:auto;flex:none}
+.org-t{font:800 .9rem/1.25 var(--f-display);letter-spacing:.02em;text-transform:uppercase;color:#0b3d91;min-width:0}
+.org-t span{display:block;font-weight:700;font-size:.82rem;color:#374151}
+.partner{height:50px;width:auto;flex:none}
 
-/* Filters */
-.filters{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--border)}
-.filters .wrap{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;padding-top:14px;padding-bottom:14px}
+/* ---------- hero ---------- */
+.hero{background:var(--navy);color:var(--navy-ink)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;padding-block:34px 32px;align-items:center}
+.eyebrow{font:600 .74rem/1.4 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--navy-muted)}
+.hero h1{font-size:clamp(1.8rem,3.8vw,2.8rem);font-weight:800;margin-top:10px;letter-spacing:-.01em;color:var(--navy-ink)}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.lede{margin-top:10px;max-width:58ch;color:var(--navy-muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{font:600 .76rem/1 var(--f-mono);padding:8px 10px;border:1px solid var(--navy-line);border-radius:4px;color:var(--navy-ink)}
+.chip b{color:var(--accent);font-weight:600}
+.quick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:20px;max-width:640px}
+.quick a,.quick button{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:12px;border:1px solid var(--navy-line);border-radius:8px;background:transparent;color:var(--navy-ink);text-decoration:none;font:600 .85rem/1.2 var(--f-body);min-height:76px;cursor:pointer;text-align:left;transition:border-color .15s,background .15s}
+.quick a:hover,.quick button:hover{border-color:var(--accent);background:rgba(255,255,255,.04)}
+.quick svg{width:22px;height:22px;color:var(--accent);flex:none}
+.kpicard{background:rgba(0,0,0,.18);border:1px solid var(--navy-line);border-radius:12px;padding:20px}
+.kpicard h4{margin:0;font:600 .72rem/1.3 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--navy-muted)}
+.kpirow{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px}
+.kpirow b{display:block;font:800 2.6rem/1 var(--f-display);font-variant-numeric:tabular-nums;color:var(--navy-ink)}
+.kpirow .k b{color:var(--accent)}
+.kpirow span{font-size:.85rem;color:var(--navy-muted)}
+.hmeter{position:relative;height:8px;border-radius:4px;background:var(--navy-line);margin-top:14px;overflow:visible}
+.hmeter span{display:block;height:100%;border-radius:4px;background:var(--accent)}
+.hmeter i{position:absolute;top:-4px;bottom:-4px;left:80%;width:2px;background:var(--navy-ink)}
+.kpicard p{font-size:.85rem;color:var(--navy-muted);margin-top:12px}
+.stripe{height:10px;background:repeating-linear-gradient(-45deg,var(--accent) 0 14px,#0B2228 14px 28px)}
+
+/* ---------- penapis ---------- */
+.filters{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--border)}
+.filters .wrap{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;padding-block:12px}
+.ftoggle{display:none}
 .f{display:flex;flex-direction:column;gap:4px;min-width:0}
-.f label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-.f input,.f select{border:1px solid var(--border);background:var(--surface);color:var(--ink);border-radius:8px;padding:7px 10px;height:38px;max-width:100%}
+.f label{font:600 .7rem/1.2 var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.f input,.f select{border:1px solid var(--border);background:var(--surface);color:var(--ink);border-radius:8px;padding:7px 10px;height:40px;max-width:100%}
 .f select{min-width:180px}
-.f-grow{flex:1 1 220px}
-.f-grow select{width:100%}
+.f-grow{flex:1 1 220px}.f-grow select{width:100%}
+.btn{border:1px solid var(--border);background:var(--surface);color:var(--ink);padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;height:40px}
+.btn:hover{background:var(--surface-2)}
+.btn-primary{background:var(--accent-ink);border-color:var(--accent-ink);color:#fff}
+.btn-primary:hover{filter:brightness(1.07);background:var(--accent-ink)}
 .scope{margin-left:auto;font-size:13px;color:var(--muted);align-self:center}
 .scope b{color:var(--ink)}
 
-main .wrap{padding-top:22px;padding-bottom:40px;display:flex;flex-direction:column;gap:22px}
-.section-title{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:6px 0 -8px}
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:220px minmax(0,1fr);gap:36px;padding-block:28px 56px}
+.rail{position:sticky;top:96px;align-self:start}
+.rail ol{list-style:none;margin:0;padding:0;display:grid;gap:2px;counter-reset:r}
+.rail a{display:flex;gap:10px;align-items:baseline;padding:8px 10px;border-radius:6px;text-decoration:none;color:var(--ink);font-weight:600;font-size:.94rem;transition:background .15s}
+.rail ol a::before{counter-increment:r;content:counter(r,decimal-leading-zero);font:600 .72rem var(--f-mono);color:var(--muted)}
+.rail a:hover{background:var(--surface)}
+.rail a.on{background:var(--navy);color:var(--navy-ink)}
+.rail ol a.on::before{color:var(--accent)}
+.hot{margin-top:18px;padding:14px;border:1px solid var(--border);border-radius:var(--r);background:var(--surface);font-size:.85rem;display:grid;gap:4px}
+.hot b.t{font:600 .7rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.hot .row{display:flex;justify-content:space-between;gap:8px}
+.hot .row span:last-child{font-weight:600;color:var(--ink);text-align:right}
+.hot a{margin-top:8px;font-weight:600}
+main{min-width:0;flex:1 0 auto}
+.content{display:grid;gap:48px}
+.sec{scroll-margin-top:96px;min-width:0}
+.sec>h2{font-size:clamp(1.35rem,2.3vw,1.75rem);font-weight:800;padding-bottom:10px;border-bottom:2px solid var(--ink);margin-bottom:18px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.sec>h2 small{font:500 .82rem var(--f-body);color:var(--muted)}
 
-/* Cards */
-.grid{display:grid;gap:16px}
+/* ---------- kad ---------- */
+.grid{display:grid;gap:14px}
 .g4{grid-template-columns:repeat(4,minmax(0,1fr))}
 .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .g-5-7{grid-template-columns:5fr 7fr}
-@media (max-width:980px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g-5-7,.g2{grid-template-columns:1fr}}
-@media (max-width:520px){.g4{grid-template-columns:1fr}.scope{margin-left:0}}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 20px;min-width:0}
-.card h2{font-size:16px;margin:0 0 2px;color:var(--ink)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;min-width:0}
+.card h3{font-size:1.05rem;margin:0 0 2px}
 .card .sub{font-size:13px;color:var(--muted);margin:0 0 12px}
-.stat .label{font-size:13px;font-weight:600;color:var(--muted);margin:0}
-.stat .value{font-size:36px;font-weight:700;color:var(--ink);line-height:1.1;margin:8px 0 4px;font-variant-numeric:tabular-nums}
-.stat .note{font-size:13px;color:var(--muted);margin:0}
-.stat.hero{background:var(--brand);border-color:var(--brand)}
-.stat.hero .label,.stat.hero .note{color:#c9dad6}
-.stat.hero .value{color:var(--brand-ink)}
-.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.stat .label{font:600 .7rem/1.35 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.stat .value{font:800 2.2rem/1.1 var(--f-display);color:var(--ink);margin:10px 0 4px;font-variant-numeric:tabular-nums}
+.stat .note{font-size:13px;color:var(--muted)}
+.stat.hero{background:var(--navy);border-color:var(--navy)}
+.stat.hero .label,.stat.hero .note{color:var(--navy-muted)}
+.stat.hero .value{color:var(--navy-ink)}
+.pill{display:inline-flex;align-items:center;gap:6px;font:600 .72rem/1 var(--f-mono);padding:5px 8px;border-radius:4px;white-space:nowrap;text-transform:uppercase;letter-spacing:.04em}
 .pill.good{background:var(--good-bg);color:var(--good)}
 .pill.warn{background:var(--warn-bg);color:var(--warn)}
-.meter{height:8px;border-radius:999px;background:var(--surface-2);overflow:hidden;margin:10px 0 6px;position:relative}
+.meter{height:8px;border-radius:999px;background:var(--surface-2);overflow:visible;margin:10px 0 8px;position:relative}
 .meter span{display:block;height:100%;border-radius:999px;background:var(--bar)}
 .meter i{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);left:80%}
-
-.chart-box{position:relative;height:320px}
-.chart-box.tall{height:420px}
-.legend{display:flex;flex-direction:column;gap:6px;margin-top:12px;font-size:13px}
+.legend{display:flex;flex-direction:column;gap:7px;font-size:13.5px}
 .legend div{display:flex;align-items:center;gap:8px;color:var(--ink-2)}
 .legend i{width:12px;height:12px;border-radius:3px;flex:none}
-.legend span.n{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--ink)}
-.donut-row{display:grid;grid-template-columns:200px 1fr;gap:16px;align-items:center}
-@media (max-width:520px){.donut-row{grid-template-columns:1fr}}
-.donut-row .chart-box{height:200px}
-
-/* Tables */
-.tbl-wrap{overflow-x:auto}
+.legend span.n{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+.donut-row{display:grid;grid-template-columns:200px 1fr;gap:18px;align-items:center}
+.chart-box{position:relative;height:200px}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 table{width:100%;border-collapse:collapse;font-size:14px}
 th,td{padding:9px 8px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap}
-th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700}
+th{font:600 .68rem/1.3 var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 tbody tr:hover{background:var(--surface-2)}
 tfoot td{font-weight:700;color:var(--ink);border-top:2px solid var(--border)}
 .view-toggle{display:flex;gap:6px;margin-left:auto}
-.view-toggle button{border:1px solid var(--border);background:var(--surface);color:var(--muted);padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer}
+.view-toggle button{border:1px solid var(--border);background:var(--surface);color:var(--muted);padding:5px 10px;border-radius:6px;font:600 .72rem var(--f-mono);text-transform:uppercase;cursor:pointer}
 .view-toggle button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
 .card-head{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.outcome .value{font-size:2rem}
+.outcome .pct{font:600 .95rem var(--f-body);color:var(--muted);margin-left:6px}
+.note-s{font-size:12.5px;color:var(--muted);margin-top:10px}
+.callout{border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 var(--r) var(--r) 0;padding:12px 16px;font-size:.92rem;color:var(--ink)}
 
-.outcome .value{font-size:30px}
-.outcome .pct{font-size:15px;font-weight:600;color:var(--muted);margin-left:6px}
-.outcome .target{font-size:12px;color:var(--muted)}
-
-/* States */
-.banner{border-radius:10px;padding:12px 16px;font-size:14px}
+/* ---------- keadaan ---------- */
+.banner{border-radius:10px;padding:12px 16px;font-size:14px;margin-bottom:18px}
 .banner.err{background:var(--warn-bg);color:var(--warn);border:1px solid var(--warn)}
 .banner.demo{background:var(--surface-2);color:var(--ink);border:1px dashed var(--muted)}
-.loading{display:flex;align-items:center;gap:10px;color:var(--muted);padding:40px 0;justify-content:center}
+.loading{display:flex;align-items:center;gap:10px;color:var(--muted);padding:60px 0;justify-content:center}
 .spin{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--bar);border-radius:50%;animation:s 1s linear infinite}
 @keyframes s{to{transform:rotate(360deg)}}
-.hidden{display:none!important}
 .empty{color:var(--muted);font-size:14px;padding:30px 0;text-align:center}
 
-/* Bars (no external library) */
+/* ---------- carta bar ---------- */
 .bars{display:flex;flex-direction:column;gap:6px;position:relative}
-.bar-row{display:grid;grid-template-columns:minmax(120px,38%) 1fr;gap:10px;align-items:center;font-size:13px;border-radius:6px;padding:2px 0}
+.bar-row{display:grid;grid-template-columns:minmax(110px,36%) 1fr;gap:10px;align-items:center;font-size:13px;border-radius:6px;padding:2px 0}
 .bar-row:hover{background:var(--surface-2)}
 .bar-row .bl{color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bar-track{position:relative;height:22px}
 .bar-fill{position:absolute;left:0;top:2px;bottom:2px;border-radius:0 4px 4px 0;min-width:2px}
-.bar-val{position:absolute;top:50%;transform:translateY(-50%);font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;padding-left:6px}
-.bar-target{position:absolute;top:-4px;bottom:-4px;border-left:2px dashed var(--ink);opacity:.7;pointer-events:none}
-.target-cap{display:grid;grid-template-columns:minmax(120px,38%) 1fr;gap:10px;font-size:11px;font-weight:700;color:var(--muted);margin-bottom:2px}
+.bar-val{position:absolute;top:50%;transform:translateY(-50%);font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;padding-left:6px;z-index:1}
+.bar-target{position:absolute;top:-4px;bottom:-4px;border-left:2px dashed var(--ink);opacity:.6;pointer-events:none}
+.target-cap{display:grid;grid-template-columns:minmax(110px,36%) 1fr;gap:10px;font:600 .68rem var(--f-mono);color:var(--muted);margin-bottom:2px}
 .target-cap span{position:relative;height:14px}
 .target-cap b{position:absolute;transform:translateX(-50%);white-space:nowrap}
-.axis{display:grid;grid-template-columns:minmax(120px,38%) 1fr;gap:10px;font-size:11px;color:var(--muted);margin-top:4px}
+.axis{display:grid;grid-template-columns:minmax(110px,36%) 1fr;gap:10px;font-size:11px;color:var(--muted);margin-top:4px}
 .axis span{display:flex;justify-content:space-between}
 .donut svg{width:100%;height:100%;display:block}
 .donut path{cursor:pointer;transition:opacity .15s}
 .donut:hover path{opacity:.55}.donut path:hover{opacity:1}
 .donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
-.donut-center b{font-size:22px;color:var(--ink)}.donut-center small{font-size:11px;color:var(--muted)}
-#tip{position:fixed;z-index:30;pointer-events:none;background:var(--ink);color:var(--surface);font-size:12px;padding:8px 10px;border-radius:8px;max-width:280px;line-height:1.4;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+.donut-center b{font:800 1.4rem var(--f-display);color:var(--ink)}.donut-center small{font-size:11px;color:var(--muted)}
+#tip{position:fixed;z-index:70;pointer-events:none;background:var(--ink);color:var(--surface);font-size:12px;padding:8px 10px;border-radius:8px;max-width:280px;line-height:1.4;box-shadow:0 4px 14px rgba(0,0,0,.2)}
 #tip b{display:block;margin-bottom:2px}
-@media (max-width:700px){.filters{position:static}}
-body{min-height:100vh;display:flex;flex-direction:column}
-main{flex:1 0 auto}
-.site-footer{background:#ffffff;border-top:1px solid #e5e7eb;margin-top:auto;padding:0}
-.site-footer .inner{max-width:1280px;margin:0 auto;padding:16px;text-align:center;font-size:12px;color:#6b7280}
-footer{font-size:12px;color:var(--muted);padding:0 0 30px}
 
-/* Modal */
-.modal{position:fixed;inset:0;background:rgba(10,20,22,.55);display:flex;align-items:center;justify-content:center;padding:16px;z-index:20}
+/* ---------- footer ---------- */
+.site-footer{background:#FFFFFF;border-top:1px solid #E5E7EB}
+.site-footer .inner{max-width:1240px;margin:0 auto;padding:16px;text-align:center;font-size:12px;color:#6B7280}
+
+/* ---------- tab bawah (telefon) ---------- */
+.tabbar{display:none}
+
+/* ---------- modal ---------- */
+.modal{position:fixed;inset:0;background:rgba(10,20,22,.55);display:flex;align-items:center;justify-content:center;padding:16px;z-index:80}
 .modal-card{background:var(--surface);color:var(--ink-2);border-radius:14px;padding:22px;width:100%;max-width:420px;border:1px solid var(--border)}
-.modal-card h3{margin:0 0 6px;color:var(--ink);font-size:18px}
+.modal-card h3{margin:0 0 6px;font-size:1.15rem}
 .modal-card p{margin:0 0 14px;font-size:14px}
-.modal-card input{width:100%;border:1px solid var(--border);background:var(--surface);color:var(--ink);border-radius:8px;padding:9px 12px;margin-bottom:8px}
+.modal-card input{width:100%;border:1px solid var(--border);background:var(--surface);color:var(--ink);border-radius:8px;padding:9px 12px;height:42px}
+.pwd-wrap{position:relative;margin-bottom:8px}
+.pwd-wrap input{padding-right:44px}
+.eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--muted);width:34px;height:34px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.eye:hover{background:var(--surface-2);color:var(--ink)}
+.eye svg{width:20px;height:20px}
 .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px;flex-wrap:wrap}
 .err-text{color:var(--warn);font-size:13px;min-height:18px;margin:0}
 .admin-list{display:flex;flex-direction:column;gap:8px;font-size:14px;margin:12px 0}
 .admin-list div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--border);padding-bottom:6px}
 .admin-list b{color:var(--ink)}
+
+/* ---------- tablet ---------- */
+@media (max-width:1000px){
+  .hero .wrap{grid-template-columns:1fr;gap:22px}
+  .shell{grid-template-columns:minmax(0,1fr);gap:0;padding-top:0}
+  .rail{position:sticky;top:var(--fh,64px);z-index:15;background:var(--bg);margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding:8px max(16px,env(safe-area-inset-left,0px));border-bottom:1px solid var(--border);margin-bottom:22px}
+  .rail ol{display:flex;overflow-x:auto;gap:4px;scrollbar-width:none}
+  .rail ol::-webkit-scrollbar{display:none}
+  .rail a{white-space:nowrap;font-size:.88rem}
+  .hot{display:none}
+  .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g-5-7,.g2{grid-template-columns:1fr}
+  .sec{scroll-margin-top:120px}
+  .filters{position:sticky;top:0}
+  .filters .wrap{padding-block:8px;gap:10px}
+  .ftoggle{display:flex;width:100%;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--border);background:var(--surface);border-radius:8px;padding:9px 12px;color:var(--ink);font-weight:600;font-size:14px;cursor:pointer}
+  .ftoggle small{font:500 .8rem var(--f-body);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+  .ftoggle svg{width:18px;height:18px;flex:none;transition:transform .2s}
+  .filters[data-open="true"] .ftoggle svg{transform:rotate(180deg)}
+  .filters:not([data-open="true"]) .fbody{display:none}
+  .fbody{display:grid!important;grid-template-columns:1fr 1fr;gap:10px;width:100%}
+  .filters:not([data-open="true"]) .fbody{display:none!important}
+  .fbody .f-grow,.fbody .fd{grid-column:1/-1}
+  .fbody .f select,.fbody .f input{width:100%;min-width:0}
+  .fbody .btn{grid-column:1/-1;justify-content:center}
+  .scope{display:none}
+}
+
+/* ---------- telefon ---------- */
+@media (max-width:760px){
+  body{font-size:15px;padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
+  .brand .wrap{padding-block:8px;gap:10px}
+  .org img{height:38px}
+  .org-t{font-size:.66rem}
+  .org-t span{font-size:.6rem}
+  .partner{height:34px}
+  .hero .wrap{padding-block:20px;gap:16px}
+  .hero h1{font-size:1.6rem;margin-top:8px}
+  .lede{font-size:.92rem}
+  .eyebrow{font-size:.62rem}
+  .chips{margin-top:12px}
+  .chip{font-size:.68rem;padding:6px 8px}
+  .quick{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:16px;max-width:none}
+  .quick a,.quick button{flex-direction:row;align-items:center;min-height:50px;padding:10px 12px;background:rgba(255,255,255,.04)}
+  .kpicard{padding:14px}
+  .kpirow b{font-size:2rem}
+  .rail{display:none!important}
+  .shell{padding-block:18px 32px}
+  .content{gap:36px}
+  .sec{scroll-margin-top:70px}
+  .sec>h2{font-size:1.35rem;margin-bottom:14px}
+  .sec>h2 small{display:block;width:100%}
+  .g4{grid-template-columns:1fr 1fr;gap:10px}
+  .card{padding:14px 16px}
+  .stat .value{font-size:1.75rem}
+  .donut-row{grid-template-columns:1fr}
+  .donut-row .chart-box{height:190px;max-width:220px;margin:0 auto;width:100%}
+  .bar-row,.target-cap,.axis{grid-template-columns:minmax(92px,34%) 1fr}
+  .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--surface);border-top:1px solid var(--border);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
+  .tabbar a{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px;border-radius:8px;text-decoration:none;color:var(--muted);font-size:.68rem;font-weight:600;-webkit-tap-highlight-color:transparent}
+  .tabbar svg{width:22px;height:22px}
+  .tabbar a.on{color:var(--ink);background:var(--accent-soft)}
+}
+@media (max-width:380px){.g4{grid-template-columns:1fr}}
+@media print{.filters,.rail,.tabbar,.quick,.stripe{display:none!important}.hero{background:#fff;color:#000}.shell{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
-<!-- Text & Logos -->
-<div class="brandbar">
-  <div class="wrap brand-inner">
-    <!-- TUKAR URL GAMBAR DI SINI UNTUK HOSTING GITHUB -->
-    <img src="JATA NEGARA.png" alt="Jata Negara" class="logo-jata" onerror="this.onerror=null;this.src='https://placehold.co/100x100/eeeeee/333333?text=Jata+Negara'">
-    <div class="brand-text">
-      <span class="kkm">Kementerian Kesihatan Malaysia</span>
-      <span class="jkn">Jabatan Kesihatan Negeri Kedah</span>
-    </div>
-    <!-- TUKAR URL GAMBAR DI SINI UNTUK HOSTING GITHUB -->
-    <img src="LHI.png" alt="Logo LHI" class="logo-lhi" onerror="this.onerror=null;this.src='https://placehold.co/120x50/eeeeee/333333?text=LHI+Logo'">
-  </div>
-</div>
-
-<header>
+<header class="brand gut">
   <div class="wrap">
-    <div>
-      <p class="eyebrow">Unit Penyakit Tidak Berjangkit (NCD)</p>
-      <h1>Dashboard Saringan Inisiatif Kesihatan Paru-paru (LHI)</h1>
-      <p class="asof">Tarikh Saringan Sehingga: <b id="asOf">—</b></p>
+    <div class="org">
+      <img src="JATA NEGARA.png" alt="Jata Negara" onerror="this.onerror=null;this.src='https://ncdjknkedah.github.io/LHIKedah/JATA%20NEGARA.png'">
+      <div class="org-t">Kementerian Kesihatan Malaysia<span>Jabatan Kesihatan Negeri Kedah</span></div>
     </div>
-    <div class="hdr-actions">
-      <a class="btn btn-ghost" id="lnkRujukan" target="_blank" rel="noopener">📁 Sumber Rujukan</a>
-      <a class="btn btn-ghost" id="lnkNalury" target="_blank" rel="noopener">🫁 Sistem NaLuRy</a>
-      <button class="btn btn-ghost" id="btnAdmin" type="button">🔒 Admin</button>
-      <button class="btn btn-ghost" id="btnRefresh" type="button" title="Muat semula data">↻ Muat semula</button>
-    </div>
+    <img class="partner" src="LHI.png" alt="Logo Inisiatif Kesihatan Paru-paru Kebangsaan" onerror="this.onerror=null;this.src='https://ncdjknkedah.github.io/LHIKedah/LHI.png'">
   </div>
 </header>
 
-<section class="filters" aria-label="Penapis">
+<section class="hero gut" id="atas">
   <div class="wrap">
-    <div class="f"><label for="fFrom">Tarikh dari</label><input type="date" id="fFrom"></div>
-    <div class="f"><label for="fTo">Tarikh hingga</label><input type="date" id="fTo"></div>
-    <div class="f"><label for="fDistrict">Daerah</label><select id="fDistrict"></select></div>
-    <div class="f f-grow"><label for="fClinic">Fasiliti kesihatan</label><select id="fClinic"></select></div>
-    <button class="btn" id="btnReset" type="button">Set semula</button>
+    <div>
+      <p class="eyebrow">Unit Penyakit Tidak Berjangkit (NCD) · JKN Kedah</p>
+      <h1>Dashboard Saringan <em>LHI</em> Negeri Kedah</h1>
+      <p class="lede">Pencapaian saringan Inisiatif Kesihatan Paru-paru Kebangsaan mengikut negeri, daerah dan fasiliti kesihatan.</p>
+      <div class="chips">
+        <span class="chip">Data sehingga <b id="asOf">—</b></span>
+        <span class="chip">Sasaran KPI <b>80%</b></span>
+        <span class="chip"><b id="chipRows">—</b> rekod</span>
+      </div>
+      <nav class="quick" aria-label="Pautan pantas">
+        <a id="lnkRujukan" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Sumber rujukan</a>
+        <a id="lnkNalury" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v8"/><path d="M12 11c-2 0-3 2-4 4s-2 5-4 5c-1 0-1-2-1-4 0-4 2-8 5-9"/><path d="M12 11c2 0 3 2 4 4s2 5 4 5c1 0 1-2 1-4 0-4-2-8-5-9"/></svg>Sistem NaLuRy</a>
+        <button id="btnAdmin" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Admin</button>
+        <button id="btnRefresh" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>Muat semula</button>
+      </nav>
+    </div>
+    <aside class="kpicard" aria-label="Ringkasan KPI">
+      <h4 id="hScope">KPI liputan saringan perokok · Negeri Kedah</h4>
+      <div class="kpirow">
+        <div class="k"><b id="hKpi">—</b><span>KPI semasa (sasaran 80%)</span></div>
+        <div><b id="hTotal">—</b><span>jumlah saringan</span></div>
+      </div>
+      <div class="hmeter" aria-hidden="true"><span id="hKpiBar" style="width:0"></span><i></i></div>
+      <p id="hNote">KPI = perokok layak &amp; bersetuju yang menjalani X-ray dada ÷ perokok layak &amp; bersetuju × 100.</p>
+    </aside>
+  </div>
+</section>
+<div class="stripe" aria-hidden="true"></div>
+
+<section class="filters gut" id="filters" aria-label="Penapis" data-open="false">
+  <div class="wrap">
+    <button class="ftoggle" id="fToggle" type="button" aria-expanded="false" aria-controls="fBody"><span>Penapis</span><small id="fSummary">Negeri Kedah · semua tarikh</small><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+    <div class="fbody" id="fBody" style="display:contents">
+      <div class="f"><label for="fFrom">Tarikh dari</label><input type="date" id="fFrom"></div>
+      <div class="f"><label for="fTo">Tarikh hingga</label><input type="date" id="fTo"></div>
+      <div class="f fd"><label for="fDistrict">Daerah</label><select id="fDistrict"></select></div>
+      <div class="f f-grow"><label for="fClinic">Fasiliti kesihatan</label><select id="fClinic"></select></div>
+      <button class="btn" id="btnReset" type="button">Set semula</button>
+    </div>
     <div class="scope" id="scopeText"></div>
   </div>
 </section>
 
-<main>
-  <div class="wrap">
+<div class="shell gut wrap">
+  <nav class="rail" aria-label="Kandungan">
+    <ol>
+      <li><a href="#ringkasan">Ringkasan</a></li>
+      <li><a href="#program">Program</a></li>
+      <li><a href="#kawasan">Daerah &amp; fasiliti</a></li>
+      <li><a href="#kpi">KPI perokok</a></li>
+      <li><a href="#hasil">Hasil pengesanan</a></li>
+    </ol>
+    <div class="hot">
+      <b class="t">Skop paparan</b>
+      <div class="row"><span>Skop</span><span id="rScope">—</span></div>
+      <div class="row"><span>Rekod</span><span id="rRows">—</span></div>
+      <div class="row"><span>Data sehingga</span><span id="rAsOf">—</span></div>
+      <a id="lnkHub" href="https://ncdjknkedah.github.io/LHIKedah/">Hub Rujukan LHI Kedah →</a>
+    </div>
+  </nav>
+
+  <main>
     <div id="banner" class="hidden"></div>
     <div id="loading" class="loading"><div class="spin"></div>Memuatkan data saringan…</div>
 
-    <div id="content" class="hidden" style="display:flex;flex-direction:column;gap:22px">
+    <div id="content" class="content hidden">
+      <section class="sec" id="ringkasan">
+        <h2>Ringkasan <small id="sumScope">Negeri Kedah</small></h2>
+        <div class="grid g4">
+          <div class="card stat hero"><p class="label" id="lblTotal">Jumlah saringan</p><p class="value" id="vTotal">0</p><p class="note" id="nTotal"></p></div>
+          <div class="card stat"><p class="label">Perokok* layak &amp; bersetuju</p><p class="value" id="vElig">0</p><p class="note">Penyebut KPI</p></div>
+          <div class="card stat"><p class="label">Perokok* menjalani X-ray dada</p><p class="value" id="vXray">0</p><p class="note">Pengangka KPI</p></div>
+          <div class="card stat"><p class="label">KPI liputan saringan perokok</p><p class="value" id="vKpi">—</p><div class="meter" aria-hidden="true"><span id="kpiBar" style="width:0%"></span><i title="Sasaran 80%"></i></div><p class="note"><span id="kpiPill"></span> Sasaran 80%</p></div>
+        </div>
+      </section>
 
-      <!-- 1 & 5: Scorecards -->
-      <p class="section-title">Ringkasan</p>
-      <div class="grid g4">
-        <div class="card stat hero">
-          <p class="label" id="lblTotal">Jumlah saringan · Negeri Kedah</p>
-          <p class="value" id="vTotal">0</p>
-          <p class="note" id="nTotal"></p>
-        </div>
-        <div class="card stat">
-          <p class="label">Perokok* layak &amp; bersetuju disaring</p>
-          <p class="value" id="vElig">0</p>
-          <p class="note">Penyebut KPI</p>
-        </div>
-        <div class="card stat">
-          <p class="label">Perokok* layak yang menjalani X-ray dada</p>
-          <p class="value" id="vXray">0</p>
-          <p class="note">Pengangka KPI</p>
-        </div>
-        <div class="card stat">
-          <p class="label">KPI Liputan Saringan Perokok</p>
-          <p class="value" id="vKpi">—</p>
-          <div class="meter" aria-hidden="true"><span id="kpiBar" style="width:0%"></span><i title="Sasaran 80%"></i></div>
-          <p class="note"><span id="kpiPill"></span> Sasaran 80%</p>
-        </div>
-      </div>
-
-      <!-- 2, 3, 4 -->
-      <p class="section-title">Prestasi saringan</p>
-      <div class="grid g-5-7">
+      <section class="sec" id="program">
+        <h2>Saringan mengikut program <small>Saluran pintu masuk saringan</small></h2>
         <div class="card">
-          <h2>Saringan mengikut program</h2>
-          <p class="sub">Bilangan saringan mengikut saluran program</p>
           <div class="donut-row">
             <div class="chart-box donut" id="chProgram" role="img" aria-label="Carta donut saringan mengikut program"></div>
             <div class="legend" id="lgProgram"></div>
           </div>
         </div>
+      </section>
+
+      <section class="sec" id="kawasan">
+        <h2><span id="ttlArea">Saringan mengikut daerah</span> <small id="subArea">Bilangan saringan</small></h2>
         <div class="card">
-          <div class="card-head">
-            <div>
-              <h2 id="ttlArea">Saringan mengikut daerah</h2>
-              <p class="sub" id="subArea">Bilangan saringan, Negeri Kedah</p>
-            </div>
+          <div class="card-head" style="margin-bottom:10px">
+            <p class="sub" style="margin:0">Pilih daerah dalam penapis untuk melihat pecahan mengikut fasiliti kesihatan.</p>
             <div class="view-toggle" role="group" aria-label="Paparan">
               <button type="button" data-view="chart" aria-pressed="true">Carta</button>
               <button type="button" data-view="table" aria-pressed="false">Jadual</button>
@@ -301,42 +414,40 @@ footer{font-size:12px;color:var(--muted);padding:0 0 30px}
           <div id="areaChartBox"><div class="bars" id="chArea"></div></div>
           <div id="areaTableBox" class="tbl-wrap hidden"></div>
         </div>
-      </div>
+      </section>
 
-      <!-- 5: KPI breakdown -->
-      <p class="section-title">KPI Liputan Saringan Perokok</p>
-      <div class="card">
-        <h2 id="ttlKpi">KPI mengikut daerah</h2>
-        <p class="sub">KPI = perokok* layak &amp; bersetuju yang menjalani X-ray dada ÷ perokok* layak &amp; bersetuju disaring × 100. Sasaran 80%.</p>
+      <section class="sec" id="kpi">
+        <h2 id="ttlKpi">KPI liputan saringan perokok</h2>
+        <p class="callout" style="margin-bottom:14px">KPI = perokok* layak &amp; bersetuju yang menjalani X-ray dada ÷ perokok* layak &amp; bersetuju disaring × 100. <b>Sasaran 80%.</b></p>
         <div class="grid g-5-7">
-          <div><div class="bars" id="chKpi"></div></div>
-          <div class="tbl-wrap" id="kpiTable"></div>
+          <div class="card"><h3>Carta KPI</h3><p class="sub">Garis putus = sasaran 80%</p><div class="bars" id="chKpi"></div></div>
+          <div class="card"><h3>Jadual KPI</h3><p class="sub">Layak &amp; setuju, X-ray dan status</p><div class="tbl-wrap" id="kpiTable"></div></div>
         </div>
-      </div>
+      </section>
 
-      <!-- 6: Outcome -->
-      <p class="section-title">Hasil (outcome) pengesanan penyakit</p>
-      <div class="grid g4" id="outcomeCards"></div>
-      <p style="font-size:12px;color:var(--muted);margin:-10px 0 0">Sumber: kolum Final Diagnosis. % dikira berdasarkan jumlah saringan bagi skop penapis semasa.</p>
+      <section class="sec" id="hasil">
+        <h2>Hasil pengesanan penyakit <small>Daripada kolum Final Diagnosis</small></h2>
+        <div class="grid g4" id="outcomeCards"></div>
+        <p class="note-s">% dikira berdasarkan jumlah saringan bagi skop penapis semasa.</p>
+      </section>
 
-      <footer>
-        * Perokok termasuk bekas perokok: Smoking Status = active, ex_smoker_lt15 atau ex_smoker_gt15. Layak &amp; bersetuju: Agreed to Further Screening = Yes.<br>
-        Sumber data: Database LHI Kedah (Google Sheet). <span id="loadedAt"></span>
-      </footer>
+      <p class="note-s">* Perokok termasuk bekas perokok: Smoking Status = active, ex_smoker_lt15 atau ex_smoker_gt15. Layak &amp; bersetuju: Agreed to Further Screening = Yes.<br>Sumber data: Database LHI Kedah (Google Sheet). <span id="loadedAt"></span></p>
     </div>
-  </div>
-</main>
+  </main>
+</div>
 
-<!-- Footer -->
-<footer class="site-footer">
-  <div class="inner">
-    &copy; 2026 Inisiatif Kesihatan Paru-Paru Kebangsaan (LHI) - Jabatan Kesihatan Negeri Kedah.
-  </div>
-</footer>
+<footer class="site-footer"><div class="inner">&copy; 2026 Inisiatif Kesihatan Paru-Paru Kebangsaan (LHI) - Jabatan Kesihatan Negeri Kedah.</div></footer>
+
+<nav class="tabbar" aria-label="Navigasi">
+  <a href="#ringkasan" data-sec="ringkasan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Ringkasan</a>
+  <a href="#program" data-sec="program"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.2 15.9A10 10 0 1 1 8 2.8"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>Program</a>
+  <a href="#kawasan" data-sec="kawasan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Daerah</a>
+  <a href="#kpi" data-sec="kpi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg>KPI</a>
+  <a href="#hasil" data-sec="hasil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v8"/><path d="M12 11c-2 0-3 2-4 4s-2 5-4 5c-1 0-1-2-1-4 0-4 2-8 5-9"/><path d="M12 11c2 0 3 2 4 4s2 5 4 5c1 0 1-2 1-4 0-4-2-8-5-9"/></svg>Hasil</a>
+</nav>
 
 <div id="tip" class="hidden" role="tooltip"></div>
 
-<!-- Admin login -->
 <div class="modal hidden" id="mLogin" role="dialog" aria-modal="true" aria-labelledby="mLoginT">
   <div class="modal-card">
     <h3 id="mLoginT">Log masuk Admin</h3>
@@ -350,7 +461,6 @@ footer{font-size:12px;color:var(--muted);padding:0 0 30px}
   </div>
 </div>
 
-<!-- Admin panel -->
 <div class="modal hidden" id="mAdmin" role="dialog" aria-modal="true" aria-labelledby="mAdminT">
   <div class="modal-card">
     <h3 id="mAdminT">Panel Admin</h3>
@@ -579,8 +689,16 @@ function render() {
   const m = metrics(rows);
   const sName = scopeName();
 
-  $('scopeText').innerHTML = `Skop: <b>${esc(sName)}</b>${state.from || state.to ? ` · ${state.from || '…'} hingga ${state.to || '…'}` : ''}`;
-  $('lblTotal').textContent = 'Jumlah saringan · ' + sName;
+  const dateTxt = state.from || state.to ? `${state.from || '…'} hingga ${state.to || '…'}` : 'semua tarikh';
+  $('scopeText').innerHTML = `Skop: <b>${esc(sName)}</b>${state.from || state.to ? ' · ' + dateTxt : ''}`;
+  $('fSummary').textContent = `${sName} · ${dateTxt}`;
+  $('sumScope').textContent = sName + (state.from || state.to ? ' · ' + dateTxt : '');
+  $('rScope').textContent = sName;
+  $('hScope').textContent = 'KPI liputan saringan perokok · ' + sName;
+  $('hKpi').textContent = pctTxt(m.kpi);
+  $('hTotal').textContent = fmt(m.total);
+  $('hKpiBar').style.width = Math.min(100, m.kpi || 0) + '%';
+  $('lblTotal').textContent = 'Jumlah saringan';
   $('vTotal').textContent = fmt(m.total);
   $('nTotal').textContent = rows.length ? `${fmt(new Set(rows.map(r => r.clinic)).size)} fasiliti · ${fmt(new Set(rows.map(r => r.district)).size)} daerah` : 'Tiada rekod dalam julat ini';
   $('vElig').textContent = fmt(m.elig);
@@ -627,7 +745,7 @@ function hbars(el, items, opts = {}) {
     return `<div class="bar-row" data-tip="${esc(i.tip)}"><div class="bl" title="${esc(i.label)}">${esc(i.label)}</div>
       <div class="bar-track"><div class="bar-fill" style="width:${w}%;background:${i.color}"></div>
       ${tgt != null ? `<div class="bar-target" style="left:${tgt}%"></div>` : ''}
-      <span class="bar-val" style="${inside ? `right:${100 - w}%;padding-right:6px;color:#fff` : `left:${w}%`}">${esc(i.text)}</span></div></div>`;
+      <span class="bar-val" style="${inside ? `right:${100 - w}%;padding-right:6px;color:#fff` : `left:${w}%;margin-left:3px;padding:0 4px;background:var(--surface);border-radius:4px`}">${esc(i.text)}</span></div></div>`;
   }).join('');
   h += `<div class="axis"><i></i><span><em style="font-style:normal">0</em><em style="font-style:normal">${opts.suffix ? max + opts.suffix : fmt(max)}</em></span></div>`;
   el.innerHTML = h;
@@ -666,7 +784,7 @@ function renderArea(rows) {
   const byDistrict = state.district === ALL;
   const key = byDistrict ? 'district' : 'clinic';
   $('ttlArea').textContent = byDistrict ? 'Saringan mengikut daerah' : 'Saringan mengikut fasiliti kesihatan';
-  $('subArea').textContent = byDistrict ? 'Bilangan saringan, Negeri Kedah' : 'Bilangan saringan, Daerah ' + state.district;
+  $('subArea').textContent = byDistrict ? 'Negeri Kedah' : 'Daerah ' + state.district;
   const g = [...groupBy(rows, key)].map(([k, v]) => [k, v.length])
     .sort(byDistrict ? (a, b) => byName(a[0], b[0]) : (a, b) => b[1] - a[1]);
   hbars($('chArea'), g.map(([k, n]) => ({ label: k, value: n, text: fmt(n),
@@ -722,7 +840,8 @@ async function load() {
     if (!DATA.length) throw new Error('Tiada rekod ditemui dalam Google Sheet.');
     const last = DATA.reduce((a, r) => r.date > a ? r.date : a, DATA[0].date);
     const first = DATA.reduce((a, r) => r.date < a ? r.date : a, DATA[0].date);
-    $('asOf').textContent = dkey(last);
+    $('asOf').textContent = $('rAsOf').textContent = dkey(last);
+    $('chipRows').textContent = $('rRows').textContent = fmt(DATA.length);
     $('fFrom').min = $('fTo').min = dkey(first);
     $('fFrom').max = $('fTo').max = dkey(last);
     $('loadedAt').textContent = `${fmt(DATA.length)} rekod · dimuatkan ${loadedAt.toLocaleString('ms-MY')}.`;
@@ -800,7 +919,27 @@ document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click
 document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if (e.target === m) closeModals(); }));
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModals(); });
 
-load();
+/* ---------- Navigasi & penapis mudah alih ---------- */
+$('fToggle').addEventListener('click', () => {
+  const open = $('filters').dataset.open !== 'true';
+  $('filters').dataset.open = open; $('fToggle').setAttribute('aria-expanded', open);
+});
+function setFh() { document.documentElement.style.setProperty('--fh', $('filters').offsetHeight + 'px'); }
+addEventListener('resize', setFh); setFh();
+const SECS = ['ringkasan', 'program', 'kawasan', 'kpi', 'hasil'];
+function markActive(id) {
+  document.querySelectorAll('.rail a, .tabbar a').forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + id));
+  const r = document.querySelector('.rail a.on'); if (r && innerWidth <= 1000) r.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+}
+function onScroll() {
+  let cur = SECS[0];
+  for (const id of SECS) { const el = $(id); if (el && el.getBoundingClientRect().top < innerHeight * 0.35) cur = id; }
+  markActive(cur);
+}
+addEventListener('scroll', onScroll, { passive: true });
+document.querySelectorAll('.tabbar a, .rail a').forEach(a => a.addEventListener('click', () => { $('filters').dataset.open = 'false'; $('fToggle').setAttribute('aria-expanded', 'false'); }));
+
+load().then(onScroll);
 </script>
 </body>
 </html>
